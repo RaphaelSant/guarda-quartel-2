@@ -43,9 +43,9 @@ export default function CivisPe() {
             <Navbar />
             <div className="d-flex align-items-center justify-content-center mt-4 p-0 d-print-none">
                 <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><Link to='/'>Página Inicial</Link></li>
-                        <li class="breadcrumb-item active" aria-current="page">Registro de Civil</li>
+                    <ol className="breadcrumb">
+                        <li className="breadcrumb-item"><Link to='/'>Página Inicial</Link></li>
+                        <li className="breadcrumb-item active" aria-current="page">Registro de Civil</li>
                     </ol>
                 </nav>
             </div>
@@ -57,7 +57,7 @@ export default function CivisPe() {
             <div className={`container d-flex flex-column justify-content-center align-items-center ${estiloImpressao.container_local}`}>
                 <ImpressaoHeader titulo="Entrada e saída de civis" />
 
-                <table className="table text-center table-bordered border-dark-subtle table-hover">
+                <table className="table text-center table-bordered border-dark table-hover">
                     <thead>
                         <tr>
                             <th scope="col">Nome</th>
@@ -79,11 +79,11 @@ export default function CivisPe() {
                                 <tr key={civis.id} className="align-middle">
                                     <td>{civis.nome}</td>
                                     <td>{civis.cpf}</td>
-                                    <td>{civis.dia}</td>
-                                    <td>{civis.horarioEntrada}</td>
-                                    <td className={`${civis.horarioSaida === "OM" ? 'bg-danger text-white fw-bold' : ''}`}>{civis.horarioSaida}</td>
+                                    <td>{civis.data}</td>
+                                    <td>{civis.horaEntrada}</td>
+                                    <td className={`${civis.horaSaida === "OM" ? 'bg-danger text-white fw-bold' : ''}`}>{civis.horaSaida}</td>
                                     <td>{civis.destino}</td>
-                                    <td>Data Ref</td>
+                                    <td>{civis.svRef}</td>
                                     <td className="d-print-none">
                                         <div className="d-flex align-items-center justify-content-center gap-3">
                                             <div>

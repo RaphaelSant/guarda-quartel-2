@@ -1,0 +1,30 @@
+.login_container {
+  background: url("../../assets/img/bg_login.jpg") !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login_form {
+  /* From https://css.glass */
+  background: rgba(0, 154, 255, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(12.9px);
+  -webkit-backdrop-filter: blur(12.9px);
+  width: 550px;
+  margin: 0 auto;
+  padding: 50px 20px;
+  border-radius: 15px;
+}
+
+.msg {
+  margin: 0 auto;
+}
+
+.logo {
+  width: 150px !important;
+}
