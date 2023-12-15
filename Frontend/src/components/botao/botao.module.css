@@ -1,16 +1,16 @@
-.bnt-base {
+.bnt_base {
     color: #fff !important;
 }
 
-.bnt-base:hover {
+.bnt_base:hover {
     color: #fff !important;
 }
 
-.btn-registro {
+.btn_registro {
     background-color: #008BD2 !important;
 }
 
-.btn-registro:hover {
+.btn_registro:hover {
     background-color: #0075af !important;
 }
 

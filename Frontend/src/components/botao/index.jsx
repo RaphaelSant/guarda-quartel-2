@@ -1,12 +1,12 @@
 import React from "react";
-import "./botao.css";
+import botaoEstilo from "./botao.module.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAddressCard, faHouse, faPrint } from "@fortawesome/free-solid-svg-icons";
 
 export function NovoRegistro(props) {
     return (
-        <Link to={props.link} className="btn bnt-base btn-md btn-registro">
+        <Link to={props.link} className={`btn btn-md ${botaoEstilo.btn_registro} ${botaoEstilo.bnt_base}`}>
             <FontAwesomeIcon icon={faAddressCard} className="me-2"/>
             {props.titulo}
         </Link>
@@ -15,7 +15,7 @@ export function NovoRegistro(props) {
 
 export function PaginaInicial(props) {
     return (
-        <Link to="/" className={`btn bnt-base btn-md paginaIncial me-2 ${props.estilo}`}>
+        <Link to="/" className={`btn btn-md me-2 ${botaoEstilo.paginaIncial} ${botaoEstilo.bnt_base}`}>
             <FontAwesomeIcon icon={faHouse} className="me-2"/>
             {props.titulo}
         </Link>

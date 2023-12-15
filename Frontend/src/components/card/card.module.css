@@ -1,4 +1,4 @@
-.card-base {
+.card_base {
     width: 130px !important;
     height: 130px !important;
     color: #fff !important;
@@ -8,7 +8,7 @@
     align-items: center !important;
 }
 
-.card-base p {
+.card_base p {
     margin-bottom: 0 !important;
 }
 

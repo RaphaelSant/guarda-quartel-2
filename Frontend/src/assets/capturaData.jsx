@@ -10,7 +10,8 @@ export function capturaData() {
     const dia = String(data.getDate()).padStart(2, '0'); // Adiciona zeros à esquerda, se necessário
     const mes = String(data.getMonth() + 1).padStart(2, '0'); // Adiciona zeros à esquerda, o mês começa em 0 (janeiro)
     const ano = data.getFullYear();
-    return `${dia}/${mes}/${ano}`;
+    //return `${dia}/${mes}/${ano}`;
+    return `${ano}-${mes}-${dia}`;
 }
 
 export function capturaMes() {

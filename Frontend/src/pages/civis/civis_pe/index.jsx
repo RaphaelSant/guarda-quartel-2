@@ -6,7 +6,7 @@ import estiloImpressao from "../../../components/impressao/css/PrintPortrait.mod
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
-import "../../../components/css/estiloTabela.css";
+import "../../../css/estiloTabela.css";
 import Navbar from "../../../components/navbar";
 
 
@@ -41,13 +41,18 @@ export default function CivisPe() {
     return (
         <>
             <Navbar />
-            <h5 className="mt-4 mb-0 text-center d-print-none">
-                Civil &gt; <strong style={{ color: "#008BD2" }}>Registro</strong>
-            </h5>
+            <div className="d-flex align-items-center justify-content-center mt-4 p-0 d-print-none">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><Link to='/'>Página Inicial</Link></li>
+                        <li class="breadcrumb-item active" aria-current="page">Registro de Civil</li>
+                    </ol>
+                </nav>
+            </div>
             <p className="text-center d-print-none">Entrada e saída de civis</p>
             <div className="text-center mb-4 d-print-none">
                 <PaginaInicial titulo="Página Inicial" />
-                <NovoRegistro link="#" titulo="Novo Registro" />
+                <NovoRegistro link="/civis_pe/registro" titulo="Novo Registro" />
             </div>
             <div className={`container d-flex flex-column justify-content-center align-items-center ${estiloImpressao.container_local}`}>
                 <ImpressaoHeader titulo="Entrada e saída de civis" />
@@ -61,6 +66,7 @@ export default function CivisPe() {
                             <th scope="col">Entrada</th>
                             <th scope="col">Saída</th>
                             <th scope="col">Destino</th>
+                            <th scope="col">Sv Ref</th>
                             <th scope="col" className="d-print-none">
                                 Ação
                             </th>
@@ -77,6 +83,7 @@ export default function CivisPe() {
                                     <td>{civis.horarioEntrada}</td>
                                     <td className={`${civis.horarioSaida === "OM" ? 'bg-danger text-white fw-bold' : ''}`}>{civis.horarioSaida}</td>
                                     <td>{civis.destino}</td>
+                                    <td>Data Ref</td>
                                     <td className="d-print-none">
                                         <div className="d-flex align-items-center justify-content-center gap-3">
                                             <div>
