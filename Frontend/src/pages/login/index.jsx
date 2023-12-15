@@ -12,21 +12,21 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8081/login", {
+      const response = await axios.post('http://localhost:8081/login', {
         usuario: usuario,
-        senha: senha,
+        senha: senha
       });
 
-      if (response.status === 200) {
-        localStorage.setItem("token", response.data.token);
-        setMensagem("Usuário autenticado!");
+      if (response.data.token) {
+        localStorage.setItem('token', response.data.token);
         window.location.href = "/home";
-        // history.push('/paginaProtegida');
+        console.log('ok');
+        // Redirecionar ou realizar outras operações após o login
       } else {
-        setMensagem("Credenciais inválidas");
+        console.log(mensagem);
       }
     } catch (error) {
-      setMensagem("Erro ao autenticar usuário");
+      console.log(error);
     }
   };
 

@@ -53,6 +53,11 @@ app.post("/login", (req, res) => {
   });
 });
 
+// Rota protegida
+app.get("/recursoProtegido", verificarToken, (req, res) => {
+  res.status(200).send("Acesso permitido ao recurso protegido");
+});
+
 // Middleware para verificar o token em rotas protegidas
 function verificarToken(req, res, next) {
   const token = req.headers["authorization"];

@@ -52,7 +52,7 @@ export default function RegistroCivil() {
 
     return (
         <>
-        ${console.log(capturaData())}
+        {console.log(capturaData())}
             <Navbar />
             <div className="d-flex align-items-center justify-content-center mt-4 p-0 d-print-none">
                 <nav aria-label="breadcrumb">
