@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import estiloLogin from "./login.module.css";
 
+import estiloLogin from "./login.module.css";
 import logo from "../../assets/img/Logo.png";
+
+import { verificarAutenticacao } from '../../components/autenticacao';
 
 export default function Login() {
   const [usuario, setUsuario] = useState("");
@@ -19,9 +21,16 @@ export default function Login() {
 
       if (response.data.token) {
         localStorage.setItem('token', response.data.token);
-        window.location.href = "/home";
-        console.log('ok');
-        // Redirecionar ou realizar outras operações após o login
+
+        // Verifique a autenticação após o login
+        const autenticado = await verificarAutenticacao();
+
+        if (autenticado) {
+          window.location.href = "/home";
+          setMensagem('Usuário autenticado!');
+        } else {
+          setMensagem('Usuário não autenticado');
+        }
       } else {
         console.log(mensagem);
       }
@@ -75,11 +84,10 @@ export default function Login() {
           </button>
           {mensagem && (
             <p
-              className={`${estiloLogin.msg} text-center mt-2 ${
-                mensagem === "Usuário autenticado!"
-                  ? "alert alert-success"
-                  : "alert alert-danger"
-              }`}
+              className={`${estiloLogin.msg} text-center mt-2 ${mensagem === "Usuário autenticado!"
+                ? "alert alert-success"
+                : "alert alert-danger"
+                }`}
             >
               {mensagem}
             </p>

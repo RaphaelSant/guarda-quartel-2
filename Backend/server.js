@@ -11,7 +11,7 @@ const db = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "root123",
-  database: "sisconex",
+  database: "sisregex",
 });
 
 db.connect();
@@ -27,6 +27,51 @@ app.get("/civis_pe", (req, res) => {
   db.query(sql, (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
+  });
+});
+app.get("/civis_pe/selectId/:id", (req, res) => {
+  const id = req.params.id;
+  const sql = "SELECT * FROM civis_pe WHERE id = ?"; // Consulta SQL para buscar o registro pelo ID
+  db.query(sql, id, (err, data) => {
+    if (err) return res.json(err);
+    if (data.length === 0) {
+      return res.json({ message: "Registro não encontrado" });
+    }
+    return res.json(data[0]); // Retorna o primeiro registro encontrado (se houver)
+  });
+});
+// Rota para inserir dados.
+app.post("/civis_pe", (req, res) => {
+  const { cpf, data, dataEntrada, destino, horaEntrada, horaSaida, nome} = req.body;
+  const sql = "INSERT INTO civis_pe (cpf, dataEntrada, destino, horaEntrada, horaSaida, nome) VALUES (?, ?, ?, ?, ?, ?)";
+  
+  db.query(sql, [cpf, dataEntrada, destino, horaEntrada, horaSaida, nome], (err, result) => {
+    if (err) return res.status(500).send(err);
+    
+    return res.status(200).json({ message: "Dados inseridos com sucesso!" });
+  });
+});
+app.put("/civis_pe/:id", (req, res) => {
+  const id = req.params.id;
+  const { cpf, dataEntrada, destino, horaEntrada, horaSaida, nome } = req.body;
+  const sql = "UPDATE civis_pe SET cpf=?, dataEntrada=?, destino=?, horaEntrada=?, horaSaida=?, nome=? WHERE id=?";
+
+  db.query(sql, [cpf, dataEntrada, destino, horaEntrada, horaSaida, nome, id], (err, result) => {
+    if (err) return res.status(500).send(err);
+
+    return res.status(200).json({ message: "Dados atualizados com sucesso!" });
+  });
+});
+// Rota para deletar dados.
+app.delete("/civis_pe/:id", (req, res) => {
+  const civisId = req.params.id;
+  const sql = `DELETE FROM civis_pe WHERE id = ?`;
+  db.query(sql, civisId, (err, result) => {
+    if (err) return res.json(err);
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Registro não encontrado" });
+    }
+    return res.json({ message: "Registro deletado com sucesso" });
   });
 });
 
