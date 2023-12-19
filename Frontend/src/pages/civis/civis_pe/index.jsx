@@ -17,12 +17,52 @@ import {
   Imprimir,
   NovoRegistro2,
 } from "../../../components/botao";
+import clearForm from "../../../components/util/clearForm";
+import { formatDate, formatTime } from "../../../components/util/formatDateTime";
 
 export default function CivisPe() {
-
-  // Utilidades para o modal de EDIÇÃO / ATUALIZAÇÃO
+  // Estado para receber os dados gravados no BD
   const [data, setData] = useState([]);
 
+  // Efeito que busca os dados no banco e salva no estado 'data'
+  useEffect(() => {
+    // Executa um efeito após a renderização inicial do componente
+
+    // Faz uma requisição para buscar dados de uma API em http://localhost:8081/civis_pe
+    fetch("http://localhost:8081/civis_pe")
+      // Converte a resposta para JSON
+      .then((res) => res.json())
+      // Define os dados recebidos no estado 'data' do componente
+      .then((data) => setData(data))
+      // Captura e lida com erros, caso ocorram na requisição
+      .catch((err) => console.log(err));
+  }), [];
+
+  // Função para buscar dados da API e atualizar o estado 'data'
+  const fetchData = async () => {
+    try {
+      // Faz uma requisição para buscar dados da API em http://localhost:8081/civis_pe
+      const res = await fetch("http://localhost:8081/civis_pe");
+
+      // Converte a resposta da requisição para o formato JSON
+      const fetchedData = await res.json();
+
+      // Atualiza o estado 'data' do componente com os dados obtidos da API
+      setData(fetchedData);
+    } catch (err) {
+      // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
+      alert(err)
+      console.log(err);
+    }
+  };
+
+  // Este useEffect será executado após a montagem inicial do componente
+  useEffect(() => {
+    // Chama a função fetchData para buscar dados da API e atualizar o estado 'data'
+    fetchData();
+  }, []);
+
+  // Utilidades para o modal de EDIÇÃO / ATUALIZAÇÃO
   const [id, setId] = useState([]);
   const [nome, setNome] = useState([]);
   const [cpf, setCpf] = useState([]);
@@ -31,18 +71,24 @@ export default function CivisPe() {
   const [horaEntrada, setHoraEntrada] = useState([]);
   const [horaSaida, setHoraSaida] = useState([]);
 
+  // Busca de dados por Id para a edição
   const buscarDadosPorId = async (id) => {
     try {
+      // Faz uma requisição GET para obter os dados de um registro específico com o ID fornecido
       const response = await axios.get(`http://localhost:8081/civis_pe/selectId/${id}`);
       const data = response.data;
+
+      // Cria uma instância de um modal usando Bootstrap
       const editModal = new bootstrap.Modal(document.getElementById("editarRegistro"));
 
 
-      // Verifica se há dados retornados antes de definir os estados
+      // Verifica se há dados retornados antes de definir os estados para evitar erros
       if (data) {
 
+        // Formata a data de entrada para o formato 'yyyy-MM-dd'
         const dataEntrada = format(new Date(data.dataEntrada), 'yyyy-MM-dd');
 
+        // Define os estados com os dados obtidos da requisição, usando valores padrão vazios caso não haja dados
         setId(data.id || "");
         setNome(data.nome || "");
         setCpf(data.cpf || "");
@@ -50,17 +96,24 @@ export default function CivisPe() {
         setDestino(data.destino || "");
         setHoraEntrada(data.horaEntrada || "");
         setHoraSaida(data.horaSaida || "");
+
+        // Mostra o modal de edição após definir os estados com os dados
         editModal.show();
       }
 
     } catch (error) {
+      // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
+      alert(error);
       console.error("Erro ao buscar dados:", error);
     }
   };
 
+  // Ao clicar no botão atualizar dados do modal de edição essa função será executada
   const atualizarDadosPorId = async (id) => {
     try {
+      // Envia uma requisição PUT para atualizar os dados do registro com o ID fornecido
       const response = await axios.put(`http://localhost:8081/civis_pe/${id}`, {
+        // Envia os dados a serem atualizados no corpo da requisição
         nome,
         cpf,
         dataEntrada,
@@ -69,37 +122,31 @@ export default function CivisPe() {
         horaSaida,
       });
 
-      console.log(response.data);
-      alert(response.data.message); // Exibe o alerta
+      // Exibe um alerta com a mensagem da resposta para informar o usuário sobre o resultado da operação
+      alert(response.data.message);
+
+      // Limpa o formulário após a atualização dos dados
       clearForm();
+
+      // Retorna os dados da resposta da requisição
       return response.data;
     } catch (error) {
+      // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
+      alert('Erro ao atualizar dados:', error);
       console.error('Erro ao atualizar dados:', error);
+
+      // Lança o erro novamente para ser tratado por quem chamou essa função
       throw error;
     }
   };
 
-  function formatDate(dateString) {
-    const date = parseISO(dateString); // Converte a string para um objeto de data
-    const formattedDate = format(date, "dd/MM/yyyy"); // Formata a data para dd/MM/yyyy
-    return formattedDate;
-  }
-  function formatTime(timeString) {
-    const [hours, minutes] = timeString.split(":");
-    return `${hours}:${minutes}`;
-  }
-
-  useEffect(() => {
-    fetch("http://localhost:8081/civis_pe")
-      .then((res) => res.json())
-      .then((data) => setData(data))
-      .catch((err) => console.log(err));
-  }), [];
-
   // Registro do civil pelo modal:
   const handleRegistrarSubmit = async (event) => {
+
+    // Previne o comportamento padrão do formulário ao ser submetido (evita atualziar a página)
     event.preventDefault();
 
+    // Coleta os valores dos campos do formulário
     const cpf = document.getElementById('cpf').value;
     const dataEntrada = document.getElementById('data-entrada').value;
     const destino = document.getElementById('destino').value;
@@ -107,6 +154,7 @@ export default function CivisPe() {
     const nome = document.getElementById('nome-completo').value;
     const svRef = document.getElementById('data-svRef').value;
 
+    // Organiza os dados coletados em um objeto
     const dados = {
       cpf,
       dataEntrada,
@@ -117,77 +165,69 @@ export default function CivisPe() {
     };
 
     try {
+      // Envia uma requisição POST para adicionar um novo registro
       const response = await fetch('http://localhost:8081/civis_pe', {
+        // Utiliza o método POST
         method: 'POST',
         headers: {
+          // Define o tipo de conteúdo como JSON
           'Content-Type': 'application/json',
         },
+        // Converte o objeto 'dados' para JSON e o envia no corpo da requisição
         body: JSON.stringify(dados),
       });
 
+      // Converte a resposta da requisição para JSON
       const responseData = await response.json();
-      clearForm();
-      alert(responseData.message); // Resposta do servidor após a inserção
 
-      // Atualiza os dados na tela após a inserção
+      // Limpa o formulário após a inserção
+      clearForm();
+
+      // Exibe um alerta com a mensagem recebida do servidor após a inserção
+      alert(responseData.message);
+
+      // Atualiza os dados na tela após a inserção 
+      // (supõe-se que fetchData() é uma função que busca os dados atualizados)
       fetchData();
 
-
     } catch (error) {
-      console.error('Erro:', error);
+      // Em caso de erro na requisição, exibe um alerta
+      alert('Erro:', error);
     }
   };
-
-  const clearForm = () => {
-    const inputs = document.querySelectorAll('input'); // Seleciona todos os inputs
-    inputs.forEach((input) => {
-      input.value = ''; // Limpa o valor de cada input
-    });
-  };
-  
-  const fetchData = async () => {
-    try {
-      const res = await fetch("http://localhost:8081/civis_pe");
-      const fetchedData = await res.json();
-      setData(fetchedData);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   // Função para deletar um registro pelo ID
   const deleteRegistro = async (id) => {
+    // Envia uma requisição DELETE para a URL específica do ID fornecido
     try {
       const response = await fetch(`http://localhost:8081/civis_pe/${id}`, {
-        method: 'DELETE',
+        method: 'DELETE', // Utiliza o método DELETE para indicar a exclusão do recurso
       });
 
+      // Converte a resposta da requisição para JSON
       const data = await response.json();
-      console.log(data); // Mensagem de sucesso ou erro após a exclusão
+
+      // Exibe um alerta da mensagem retornada após a exclusão (mensagem de sucesso ou erro)
+      alert(data);
     } catch (error) {
-      console.log('Erro:', error);
+      // Em caso de erro na requisição, Exibe um alerta
+      alert('Erro:', error)
     }
   };
 
-  const deleteCivilConfirmacao = (id, nome, cpf) => {
+  // Função executada ao clicar no botao Deletar
+  const handleDeleteRegistro = (id, nome, cpf) => {
+    // Exibe um diálogo de confirmação ao usuário, mostrando os detalhes do registro que será excluído
     const shouldDelete = window.confirm(
       `Tem certeza de que deseja excluir este registro? Nome: ${nome} CPF: ${cpf}`
-    ); // Exibe um diálogo de confirmação
+    );
 
     if (shouldDelete) {
-      deleteRegistro(id); // Chama a função de exclusão se o usuário confirmar
+      // Chama a função de exclusão se o usuário confirmar
+      deleteRegistro(id);
     }
   };
 
-  const teste = (id) => {
-
-    buscarDadosPorId(id)
-
-  };
 
   return (
     <>
@@ -241,8 +281,8 @@ export default function CivisPe() {
 
                   <td>{formatDate(civis.dataEntrada)}</td>
                   <td>{formatTime(civis.horaEntrada)}</td>
-                  <td className={`${civis.horaSaida === null ? "bg-danger text-white fw-bold" : ""}`}>
-                    {civis.horaSaida ? formatTime(civis.horaSaida) : 'OM'}</td>
+                  <td className={`${civis.horaSaida === null || civis.horaSaida === '00:00:00' ? "bg-danger text-white fw-bold" : ""}`}>
+                    {civis.horaSaida === null || civis.horaSaida === '00:00:00' ? 'OM' : formatTime(civis.horaSaida)}</td>
                   <td>{civis.destino}</td>
 
                   <td className="d-print-none">{civis.svRef ? formatDate(civis.svRef) : 'Valor padrão'}</td>
@@ -263,7 +303,7 @@ export default function CivisPe() {
                         <button
                           className="bnt-acao"
                           onClick={() =>
-                            deleteCivilConfirmacao(id, civis.nome, civis.cpf)
+                            handleDeleteRegistro(id, civis.nome, civis.cpf)
                           }
                         >
                           <FontAwesomeIcon icon={faTrash} color="#FF0000" />
@@ -318,7 +358,8 @@ export default function CivisPe() {
                     type="text"
                     className="form-control"
                     id="cpf"
-                    placeholder="Insira o CPF"
+                    placeholder="000.000.000-00"
+                    name="cpf"
                     maxLength="14"
                     required
                   />
@@ -405,7 +446,7 @@ export default function CivisPe() {
         <div className="modal-dialog modal-dialog-centered modal-lg">
           <div className="modal-content">
             <div className="modal-header">
-              <h1 className="modal-title fs-5" id="editarRegistroLabel"><FontAwesomeIcon icon={faPenToSquare} className="me-2"/> Editar Registro</h1>
+              <h1 className="modal-title fs-5" id="editarRegistroLabel"><FontAwesomeIcon icon={faPenToSquare} className="me-2" /> Editar Registro</h1>
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body" id="modal-body">
