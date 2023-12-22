@@ -4,8 +4,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "../../pages/homepage";
 import CivisPe from "../../pages/civis/civis_pe";
 import Login from "../../pages/login";
-import ConfigSv from "../../pages/configuracaoSv"
 import ErroPage from "../../pages/erros";
+import CivisVeiculo from "../../pages/civis/civis_veiculo";
 
 import { verificarAutenticacao } from "../autenticacao";
 
@@ -30,7 +30,7 @@ export default function Rotas() {
           <>
             <Route exact path="/home" element={<HomePage />} />
             <Route exact path="/civis_pe" element={<CivisPe />} />
-            <Route exact path="/config_sv" element={<ConfigSv />} />
+            <Route exact path="/civis_veiculo" element={<CivisVeiculo />} />
           </>
         ) : (
           // Redirecionar para a página de Login se o usuário não estiver autenticado

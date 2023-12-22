@@ -21,7 +21,7 @@ import {
 import clearForm from "../../../components/util/clearForm";
 import { formatDate, formatTime } from "../../../components/util/formatDateTime";
 
-export default function CivisPe() {
+export default function CivisVeiculo() {
   const [registroCpf, setRegistroCpf] = useState(['']);
 
   // Estado para receber os dados gravados no BD
@@ -32,7 +32,7 @@ export default function CivisPe() {
     // Executa um efeito após a renderização inicial do componente
 
     // Faz uma requisição para buscar dados de uma API em http://localhost:8081/civis_pe
-    fetch("http://localhost:8081/civis_pe")
+    fetch("http://localhost:8081/civis_veiculo")
       // Converte a resposta para JSON
       .then((res) => res.json())
       // Define os dados recebidos no estado 'data' do componente
@@ -240,7 +240,7 @@ export default function CivisPe() {
               <Link to="/home">Página Inicial</Link>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              Registro de Civil
+              Registro de Civil de Veículo
             </li>
           </ol>
         </nav>
@@ -258,7 +258,8 @@ export default function CivisPe() {
           <thead>
             <tr>
               <th scope="col">Nome</th>
-              <th scope="col">CPF</th>
+              <th scope="col">CNH</th>
+              <th scope="col">Placa</th>
               <th scope="col">Data</th>
               <th scope="col">Entrada</th>
               <th scope="col">Saída</th>
@@ -275,8 +276,9 @@ export default function CivisPe() {
                 <tr key={civis.id} className="align-middle">
                   <td>{civis.nome}</td>
 
-                  <td>{civis.cpf}</td>
+                  <td>{civis.cnh}</td>
 
+                  <td>{civis.placa}</td>
                   <td>{formatDate(civis.dataEntrada)}</td>
                   <td>{formatTime(civis.horaEntrada)}</td>
                   <td className={`${civis.horaSaida === null || civis.horaSaida === '00:00:00' ? "bg-danger text-white fw-bold" : ""}`}>

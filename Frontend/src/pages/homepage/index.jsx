@@ -12,7 +12,7 @@ export default function HomePage() {
             <h3>Civis</h3>
             <div className="d-flex mt-2">
                 <CardCivis link="/civis_pe" titulo="Registro" />
-                <CardCivis link="#" titulo="Veículo" />
+                <CardCivis link="/civis_veiculo" titulo="Veículo" />
             </div>
             <hr />
             <h3>Militares</h3>

@@ -24,11 +24,13 @@ export default function Navbar() {
         </Link>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
-            <li className="nav-item d-flex">
-              <Link to="/config_sv" className="nav-link">
-                <FontAwesomeIcon icon={faGear} /> Configuração do Sv
-              </Link>
-            </li>
+            {/* 
+              <li className="nav-item d-flex">
+                <Link to="/config_sv" className="nav-link">
+                  <FontAwesomeIcon icon={faGear} /> Configuração do Sv
+                </Link>
+              </li> 
+            */}
             <li className="nav-item d-flex">
               <a target="_blank" className="nav-link" href="#" rel="noreferrer">
                 <FontAwesomeIcon icon={faBook} /> Manual
