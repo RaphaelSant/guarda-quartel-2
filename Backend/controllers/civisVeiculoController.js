@@ -5,7 +5,7 @@ const router = express.Router();
 
 // Rota para ler (Read) os dados a serem exibidos para o usuário
 router.get("/civis_veiculo", (req, res) => {
-    const sql = "SELECT * FROM civis_veiculo";
+    const sql = "SELECT * FROM civis_veiculo order by dataEntrada, horaEntrada";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
@@ -27,10 +27,15 @@ router.get("/civis_veiculo/selectId/:id", (req, res) => {
 
 // Rota para realizar novos registro de dados.
 router.post("/civis_veiculo", (req, res) => {
-    const { cpf, data, dataEntrada, destino, horaEntrada, horaSaida, nome } = req.body;
-    const sql = "INSERT INTO civis_veiculo (cpf, dataEntrada, destino, horaEntrada, horaSaida, nome) VALUES (?, ?, ?, ?, ?, ?)";
+    const { nome, cnh, placa, dataEntrada, horaEntrada, horaSaida, destino } = req.body;
+    const sql = "INSERT INTO civis_veiculo (nome, cnh, placa, dataEntrada, horaEntrada, horaSaida, destino) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-    db.query(sql, [cpf, dataEntrada, destino, horaEntrada, horaSaida, nome], (err, result) => {
+    // Validação dos dados
+    if (!nome || !cnh || !placa || !dataEntrada || !horaEntrada || !destino) {
+        return res.status(400).json({ message: "Todos os campos são obrigatórios." });
+    }
+
+    db.query(sql, [nome, cnh, placa, dataEntrada, horaEntrada, horaSaida, destino], (err, result) => {
         if (err) return res.status(500).send(err);
 
         return res.status(200).json({ message: "Dados inseridos com sucesso!" });
@@ -38,22 +43,23 @@ router.post("/civis_veiculo", (req, res) => {
 });
 
 // Rota para atualizar dados
-router.put("/civis_pe/:id", (req, res) => {
+router.put("/civis_veiculo/:id", (req, res) => {
     const id = req.params.id;
-    const { cpf, dataEntrada, destino, horaEntrada, horaSaida, nome } = req.body;
-    const sql = "UPDATE civis_pe SET cpf=?, dataEntrada=?, destino=?, horaEntrada=?, horaSaida=?, nome=? WHERE id=?";
+    const { nome, cnh, placa, dataEntrada, horaEntrada, horaSaida, destino } = req.body;
+    const sql = "UPDATE civis_veiculo SET nome=?, cnh=?, placa=?, dataEntrada=?, horaEntrada=?, horaSaida=?, destino=? WHERE id=?";
 
-    db.query(sql, [cpf, dataEntrada, destino, horaEntrada, horaSaida, nome, id], (err, result) => {
+    db.query(sql, [nome, cnh, placa, dataEntrada, horaEntrada, horaSaida, destino, id], (err, result) => {
         if (err) return res.status(500).send(err);
 
         return res.status(200).json({ message: "Dados atualizados com sucesso!" });
     });
 });
 
+
 // Rota para deletar dados.
-router.delete("/civis_pe/:id", (req, res) => {
+router.delete("/civis_veiculo/:id", (req, res) => {
     const civisId = req.params.id;
-    const sql = `DELETE FROM civis_pe WHERE id = ?`;
+    const sql = `DELETE FROM civis_veiculo WHERE id = ?`;
     db.query(sql, civisId, (err, result) => {
         if (err) return res.json(err);
         if (result.affectedRows === 0) {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPenToSquare, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle";
@@ -11,7 +11,6 @@ import ImpressaoHeader from "../../../components/impressao/impressaoHeader";
 import ImpressaoFooter from "../../../components/impressao/impressaoFooter";
 import estiloImpressao from "../../../components/impressao/css/PrintPortrait.module.css";
 import "../../../css/estiloTabela.css";
-import { cpfMask } from "../../../components/mask/cpf";
 
 import Navbar from "../../../components/navbar";
 import {
@@ -22,8 +21,6 @@ import clearForm from "../../../components/util/clearForm";
 import { formatDate, formatTime } from "../../../components/util/formatDateTime";
 
 export default function CivisVeiculo() {
-  const [registroCpf, setRegistroCpf] = useState(['']);
-
   // Estado para receber os dados gravados no BD
   const [data, setData] = useState([]);
 
@@ -31,7 +28,7 @@ export default function CivisVeiculo() {
   useEffect(() => {
     // Executa um efeito após a renderização inicial do componente
 
-    // Faz uma requisição para buscar dados de uma API em http://localhost:8081/civis_pe
+    // Faz uma requisição para buscar dados de uma API em http://localhost:8081/civis_veiculo
     fetch("http://localhost:8081/civis_veiculo")
       // Converte a resposta para JSON
       .then((res) => res.json())
@@ -44,8 +41,8 @@ export default function CivisVeiculo() {
   // Função para buscar dados da API e atualizar o estado 'data'
   const fetchData = async () => {
     try {
-      // Faz uma requisição para buscar dados da API em http://localhost:8081/civis_pe
-      const res = await fetch("http://localhost:8081/civis_pe");
+      // Faz uma requisição para buscar dados da API em http://localhost:8081/civis_veiculo
+      const res = await fetch("http://localhost:8081/civis_veiculo");
 
       // Converte a resposta da requisição para o formato JSON
       const fetchedData = await res.json();
@@ -65,20 +62,11 @@ export default function CivisVeiculo() {
     fetchData();
   }, []);
 
-  // Utilidades para o modal de EDIÇÃO / ATUALIZAÇÃO
-  const [id, setId] = useState([]);
-  const [nome, setNome] = useState([]);
-  const [cpf, setCpf] = useState([]);
-  const [dataEntrada, setDataEntrada] = useState([]);
-  const [destino, setDestino] = useState([]);
-  const [horaEntrada, setHoraEntrada] = useState([]);
-  const [horaSaida, setHoraSaida] = useState([]);
-
   // Busca de dados por Id para a edição
   const buscarDadosPorId = async (id) => {
     try {
       // Faz uma requisição GET para obter os dados de um registro específico com o ID fornecido
-      const response = await axios.get(`http://localhost:8081/civis_pe/selectId/${id}`);
+      const response = await axios.get(`http://localhost:8081/civis_veiculo/selectId/${id}`);
       const data = response.data;
 
       // Cria uma instância de um modal usando Bootstrap
@@ -94,11 +82,12 @@ export default function CivisVeiculo() {
         // Define os estados com os dados obtidos da requisição, usando valores padrão vazios caso não haja dados
         setId(data.id || "");
         setNome(data.nome || "");
-        setCpf(data.cpf || "");
+        setCnh(data.cnh || "");
+        setPlaca(data.placa || "");
         setDataEntrada(dataEntrada || "");
-        setDestino(data.destino || "");
         setHoraEntrada(data.horaEntrada || "");
         setHoraSaida(data.horaSaida || "");
+        setDestino(data.destino || "");
 
         // Mostra o modal de edição após definir os estados com os dados
         editModal.show();
@@ -111,18 +100,29 @@ export default function CivisVeiculo() {
     }
   };
 
+
+    // Utilidades para o modal de EDIÇÃO / ATUALIZAÇÃO
+    const [id, setId] = useState([]);
+    const [nome, setNome] = useState([]);
+    const [cnh, setCnh] = useState([]);
+    const [placa, setPlaca] = useState([]);
+    const [dataEntrada, setDataEntrada] = useState([]);
+    const [horaEntrada, setHoraEntrada] = useState([]);
+    const [horaSaida, setHoraSaida] = useState([]);
+    const [destino, setDestino] = useState([]);
   // Ao clicar no botão atualizar dados do modal de edição essa função será executada
   const atualizarDadosPorId = async (id) => {
     try {
       // Envia uma requisição PUT para atualizar os dados do registro com o ID fornecido
-      const response = await axios.put(`http://localhost:8081/civis_pe/${id}`, {
+      const response = await axios.put(`http://localhost:8081/civis_veiculo/${id}`, {
         // Envia os dados a serem atualizados no corpo da requisição
         nome,
-        cpf,
+        cnh,
+        placa,
         dataEntrada,
-        destino,
         horaEntrada,
         horaSaida,
+        destino,
       });
 
       // Exibe um alerta com a mensagem da resposta para informar o usuário sobre o resultado da operação
@@ -150,24 +150,26 @@ export default function CivisVeiculo() {
     event.preventDefault();
 
     // Coleta os valores dos campos do formulário
-    const cpf = document.getElementById('cpf').value;
+    const nome = document.getElementById('nome-completo').value;
+    const cnh = document.getElementById('cnh').value;
+    const placa = document.getElementById('placa').value;
     const dataEntrada = document.getElementById('data-entrada').value;
     const destino = document.getElementById('destino').value;
     const horaEntrada = document.getElementById('hora-entrada').value;
-    const nome = document.getElementById('nome-completo').value;
 
     // Organiza os dados coletados em um objeto
     const dados = {
-      cpf,
-      dataEntrada,
-      destino,
-      horaEntrada,
       nome,
+      cnh,
+      placa,
+      dataEntrada,
+      horaEntrada,
+      destino,
     };
 
     try {
       // Envia uma requisição POST para adicionar um novo registro
-      const response = await fetch('http://localhost:8081/civis_pe', {
+      const response = await fetch('http://localhost:8081/civis_veiculo', {
         // Utiliza o método POST
         method: 'POST',
         headers: {
@@ -183,7 +185,6 @@ export default function CivisVeiculo() {
 
       // Limpa o formulário após a inserção
       clearForm();
-      setRegistroCpf('');
 
       // Exibe um alerta com a mensagem recebida do servidor após a inserção
       alert(responseData.message);
@@ -202,7 +203,7 @@ export default function CivisVeiculo() {
   const deleteRegistro = async (id) => {
     // Envia uma requisição DELETE para a URL específica do ID fornecido
     try {
-      const response = await fetch(`http://localhost:8081/civis_pe/${id}`, {
+      const response = await fetch(`http://localhost:8081/civis_veiculo/${id}`, {
         method: 'DELETE', // Utiliza o método DELETE para indicar a exclusão do recurso
       });
 
@@ -218,10 +219,10 @@ export default function CivisVeiculo() {
   };
 
   // Função executada ao clicar no botao Deletar
-  const handleDeleteRegistro = (id, nome, cpf) => {
+  const handleDeleteRegistro = (id, nome, placa) => {
     // Exibe um diálogo de confirmação ao usuário, mostrando os detalhes do registro que será excluído
     const shouldDelete = window.confirm(
-      `Tem certeza de que deseja excluir este registro? Nome: ${nome} CPF: ${cpf}`
+      `Tem certeza de que deseja excluir este registro? Nome: ${nome} Placa: ${placa}`
     );
 
     if (shouldDelete) {
@@ -301,7 +302,7 @@ export default function CivisVeiculo() {
                         <button
                           className="bnt-acao"
                           onClick={() =>
-                            handleDeleteRegistro(id, civis.nome, civis.cpf)
+                            handleDeleteRegistro(id, civis.nome, civis.placa)
                           }
                         >
                           <FontAwesomeIcon icon={faTrash} color="#FF0000" />
@@ -349,25 +350,40 @@ export default function CivisVeiculo() {
                 </div>
 
                 <div className="col-md-6">
-                  <label htmlFor="cpf" className="form-label">
-                    CPF
+                  <label htmlFor="cnh" className="form-label">
+                    CNH
                   </label>
                   <input
                     type="text"
                     className="form-control"
-                    id="cpf"
-                    value={registroCpf}
-                    onChange={(e) => setRegistroCpf(cpfMask(e.target.value))}
-                    placeholder="000.000.000-00"
-                    name="cpf"
-                    maxLength="14"
+                    id="cnh"
+                    placeholder="N° de registro"
+                    name="cnh"
+                    maxLength="50"
+                    required
+                  />
+                  <div className="valid-feedback">OK!</div>
+                  <div className="invalid-feedback">Campo obrigatório.</div>
+                </div>
+                
+                <div className="col-md-4">
+                  <label htmlFor="placa" className="form-label">
+                    Placa
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="placa"
+                    placeholder="N° de registro"
+                    name="placa"
+                    maxLength="8"
                     required
                   />
                   <div className="valid-feedback">OK!</div>
                   <div className="invalid-feedback">Campo obrigatório.</div>
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                   <label htmlFor="data-entrada" className="form-label">
                     Data de Entrada
                   </label>
@@ -383,7 +399,7 @@ export default function CivisVeiculo() {
                   <div className="invalid-feedback">Campo obrigatório.</div>
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                   <label htmlFor="hora-entrada" className="form-label">
                     Horário de Entrada
                   </label>
@@ -440,7 +456,7 @@ export default function CivisVeiculo() {
 
                 noValidate
               >
-                <div className="col-md-6">
+                <div className="col-md-12">
                   <label htmlFor="nome-completo" className="form-label">
                     Nome Completo
                   </label>
@@ -458,17 +474,35 @@ export default function CivisVeiculo() {
                 </div>
 
                 <div className="col-md-6">
-                  <label htmlFor="cpf" className="form-label">
-                    CPF
+                  <label htmlFor="cnh" className="form-label">
+                    CNH
                   </label>
                   <input
                     type="text"
                     className="form-control"
-                    id="cpf"
-                    placeholder="Insira o CPF"
+                    id="cnh"
+                    placeholder="N° do Registro"
                     maxLength="14"
-                    value={cpf}
-                    onChange={(e) => setCpf(e.target.value)}
+                    value={cnh}
+                    onChange={(e) => setCnh(e.target.value)}
+                    required
+                  />
+                  <div className="valid-feedback">OK!</div>
+                  <div className="invalid-feedback">Campo obrigatório.</div>
+                </div>
+
+                <div className="col-md-6">
+                  <label htmlFor="placa" className="form-label">
+                    Placa
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="placa"
+                    placeholder="Placa do veículo"
+                    maxLength="14"
+                    value={placa}
+                    onChange={(e) => setPlaca(e.target.value)}
                     required
                   />
                   <div className="valid-feedback">OK!</div>
@@ -510,13 +544,13 @@ export default function CivisVeiculo() {
                 </div>
 
                 <div className="col-md-4">
-                  <label htmlFor="hora-entrada" className="form-label">
+                  <label htmlFor="hora-saida" className="form-label">
                     Horário de Saída
                   </label>
                   <input
                     type="time"
                     className="form-control"
-                    id="hora-entrada"
+                    id="hora-saida"
                     placeholder="Insira o horário de entrada"
                     value={horaSaida}
                     onChange={(e) => setHoraSaida(e.target.value)}

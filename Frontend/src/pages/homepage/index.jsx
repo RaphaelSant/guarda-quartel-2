@@ -15,15 +15,17 @@ export default function HomePage() {
                 <CardCivis link="/civis_veiculo" titulo="Veículo" />
             </div>
             <hr />
-            <h3>Militares</h3>
+            <h3>Militares do pelotão</h3>
             <div className="d-flex mt-2">
-                <CardMilitares link="#" titulo="Durante o expediente" />
-                <CardMilitares link="#" titulo="Fora de expediente" />
-                <CardMilitares link="#" titulo="Viatura do pelotão" />
+                <CardMilitares link="/pelotao_durante_expediente" titulo="Durante o expediente" />
+                <CardMilitares link="/pelotao_fora_expediente" titulo="Fora de expediente" />
+                <CardMilitares link="/pelotao_viatura" titulo="Viatura do pelotão" />
             </div>
             <hr />
             <h3>Outras Organizações Militares</h3>
             <div className="d-flex mt-2">
+                <CardOutrasOm link="#" titulo="Durante o expediente" />
+                <CardOutrasOm link="#" titulo="Fora de expediente" />
                 <CardOutrasOm link="#" titulo="Viatura" />
             </div>
             <hr />
