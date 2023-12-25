@@ -12,6 +12,8 @@ import PelotaoForaExped from "../../pages/pelotao/foraExpediente";
 import PelotaoViatura from "../../pages/pelotao/viatura";
 
 import { verificarAutenticacao } from "../autenticacao";
+import OutraOmDuranteExpediente from "../../pages/outraOm/duranteExpediente";
+import OutraOmForaExpediente from "../../pages/outraOm/foraExpediente";
 
 export default function Rotas() {
   const [autenticado, setAutenticado] = useState(false);
@@ -38,6 +40,8 @@ export default function Rotas() {
             <Route exact path="/pelotao_durante_expediente" element={<PelotaoDuranteExped />} />
             <Route exact path="/pelotao_fora_expediente" element={<PelotaoForaExped />} />
             <Route exact path="/pelotao_viatura" element={<PelotaoViatura />} />
+            <Route exact path="/outra_om_durante_expediente" element={<OutraOmDuranteExpediente />} />
+            <Route exact path="/outra_om_fora_expediente" element={<OutraOmForaExpediente />} />
           </>
         ) : (
           // Redirecionar para a página de Login se o usuário não estiver autenticado

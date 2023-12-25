@@ -8,6 +8,8 @@ const civisVeiculoController = require("./controllers/civisVeiculoController.js"
 const pelotaoDuranteExpController = require("./controllers/pelotaoDuranteExpedController.js");
 const pelotaoForaExpController = require("./controllers/pelotaoForaExpedController.js");
 const pelotaoViaturaController = require("./controllers/pelotaoViaturaController.js");
+const outraOmDuranteExpediente = require("./controllers/outraOmDuranteExpedController.js");
+const outraOmForaExpediente = require("./controllers/outraOmForaExpedController.js");
 
 const verificarToken = require("./middlewares/authMiddleware.js");
 
@@ -22,11 +24,16 @@ app.get("/", (re, res) => {
 
 // Controllers
 app.use("/", loginController);
+
 app.use("/", civisPeController);
 app.use("/", civisVeiculoController);
+
 app.use("/", pelotaoDuranteExpController);
 app.use("/", pelotaoForaExpController);
 app.use("/", pelotaoViaturaController);
+
+app.use("/", outraOmDuranteExpediente);
+app.use("/", outraOmForaExpediente);
 
 // Rota protegida
 app.get("/recursoProtegido", verificarToken, (req, res) => {

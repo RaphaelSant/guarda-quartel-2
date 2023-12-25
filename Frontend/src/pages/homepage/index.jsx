@@ -24,8 +24,8 @@ export default function HomePage() {
             <hr />
             <h3>Outras Organizações Militares</h3>
             <div className="d-flex mt-2">
-                <CardOutrasOm link="#" titulo="Durante o expediente" />
-                <CardOutrasOm link="#" titulo="Fora de expediente" />
+                <CardOutrasOm link="/outra_om_durante_expediente" titulo="Durante o expediente" />
+                <CardOutrasOm link="/outra_om_fora_expediente" titulo="Fora de expediente" />
                 <CardOutrasOm link="#" titulo="Viatura" />
             </div>
             <hr />
