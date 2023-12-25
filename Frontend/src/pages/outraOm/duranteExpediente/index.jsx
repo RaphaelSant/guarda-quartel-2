@@ -443,7 +443,7 @@ export default function OutraOmDuranteExpediente() {
                                         type="text"
                                         className="form-control"
                                         id="origem"
-                                        placeholder="Insira o Origem / Destino"
+                                        placeholder="Insira a Origem / Destino"
                                         required
                                     />
                                     <div className="valid-feedback">OK!</div>
@@ -606,7 +606,7 @@ export default function OutraOmDuranteExpediente() {
                                         type="text"
                                         className="form-control"
                                         id="origem"
-                                        placeholder="Insira o origem"
+                                        placeholder="Insira a origem / destino"
                                         value={origem}
                                         onChange={(e) => setOrigem(e.target.value)}
                                         required

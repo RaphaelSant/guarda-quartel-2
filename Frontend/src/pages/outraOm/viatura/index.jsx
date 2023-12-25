@@ -9,7 +9,7 @@ import "bootstrap/dist/js/bootstrap.bundle";
 
 import ImpressaoHeader from "../../../components/impressao/impressaoHeader";
 import ImpressaoFooter from "../../../components/impressao/impressaoFooter";
-import estiloImpressao from "../../../components/impressao/css/PrintPortrait.module.css";
+import estiloImpressao from "../../../components/impressao/css/PrintLandscape.module.css";
 import "../../../css/estiloTabela.css";
 
 import Navbar from "../../../components/navbar";
@@ -20,7 +20,7 @@ import {
 import clearForm from "../../../components/util/clearForm";
 import { formatDate, formatTime } from "../../../components/util/formatDateTime";
 
-export default function OutraOmForaExpediente() {
+export default function OutraOmViatura() {
     // Estado para receber os dados gravados no BD
     const [data, setData] = useState([]);
 
@@ -29,8 +29,8 @@ export default function OutraOmForaExpediente() {
     useEffect(() => {
         // Executa um efeito após a renderização inicial do componente
 
-        // Faz uma requisição para buscar dados de uma API em http://localhost:8081/outra_om_fora_expediente
-        fetch("http://localhost:8081/outra_om_fora_expediente")
+        // Faz uma requisição para buscar dados de uma API em http://localhost:8081/pelotao_viatura
+        fetch("http://localhost:8081/outra_om_viatura")
             // Converte a resposta para JSON
             .then((res) => res.json())
             // Define os dados recebidos no estado 'data' do componente
@@ -42,8 +42,8 @@ export default function OutraOmForaExpediente() {
     // Função para buscar dados da API e atualizar o estado 'data'
     const fetchData = async () => {
         try {
-            // Faz uma requisição para buscar dados da API em http://localhost:8081/outra_om_durante_expediente
-            const res = await fetch("http://localhost:8081/outra_om_fora_expediente");
+            // Faz uma requisição para buscar dados da API em http://localhost:8081/pelotao_viatura
+            const res = await fetch("http://localhost:8081/outra_om_viatura");
 
             // Converte a resposta da requisição para o formato JSON
             const fetchedData = await res.json();
@@ -63,35 +63,39 @@ export default function OutraOmForaExpediente() {
         fetchData();
     }, []);
 
-    // Registro pelo modal:
+    // Registro de dados pelo modal
     const handleRegistrarSubmit = async (event) => {
 
         // Previne o comportamento padrão do formulário ao ser submetido (evita atualziar a página)
         event.preventDefault();
 
         // Coleta os valores dos campos do formulário
-        const postoGraduacaoRegistro = document.getElementById('pg').value;
-        const nomeGuerraRegistro = document.getElementById('nome-guerra').value;
-        const idtMilitarRegistro = document.getElementById('idt-mil').value;
-        const omRegistro = document.getElementById('om').value;
-        const dataEntradaRegistro = document.getElementById('data-entrada').value;
+        const vtrRegistro = document.getElementById('vtr').value;
+        const odmSaidaRegistro = document.getElementById('odm-saida').value;
+        const odmEntradaRegistro = document.getElementById('odm-entrada').value;
+        const dataRegistro = document.getElementById('data-registro').value;
+        const horaSaidaRegistro = document.getElementById('hora-saida').value;
         const horaEntradaRegistro = document.getElementById('hora-entrada').value;
-        const origemRegistro = document.getElementById('origem').value;
+        const motoristaRegistro = document.getElementById('motorista').value;
+        const chefeVtrRegistro = document.getElementById('chefe-viatura').value;
+        const destinoRegistro = document.getElementById('destino').value;
 
         // Organiza os dados coletados em um objeto
         const dados = {
-            postoGraduacaoRegistro,
-            nomeGuerraRegistro,
-            idtMilitarRegistro,
-            omRegistro,
-            dataEntradaRegistro,
+            vtrRegistro,
+            odmSaidaRegistro,
+            odmEntradaRegistro,
+            dataRegistro,
+            horaSaidaRegistro,
             horaEntradaRegistro,
-            origemRegistro,
+            motoristaRegistro,
+            chefeVtrRegistro,
+            destinoRegistro,
         };
 
         try {
             // Envia uma requisição POST para adicionar um novo registro
-            const response = await fetch('http://localhost:8081/outra_om_fora_expediente', {
+            const response = await fetch('http://localhost:8081/outra_om_viatura', {
                 // Utiliza o método POST
                 method: 'POST',
                 headers: {
@@ -123,19 +127,20 @@ export default function OutraOmForaExpediente() {
 
     // Utilidades para o modal de EDIÇÃO / ATUALIZAÇÃO
     const [id, setId] = useState([]);
-    const [pg, setPG] = useState([]);
-    const [nomeGuerra, setNomeGuerra] = useState([]);
-    const [idtMil, setIdtMil] = useState([]);
-    const [om, setOm] = useState([]);
-    const [dataEntrada, setDataEntrada] = useState([]);
-    const [horaEntrada, setHoraEntrada] = useState([]);
+    const [vtr, setVtr] = useState([]);
+    const [odmSaida, setOdmSaida] = useState([]);
+    const [odmEntrada, setOdmEntrada] = useState([]);
+    const [dataRegistro, setDataRegistro] = useState([]);
     const [horaSaida, setHoraSaida] = useState([]);
-    const [origem, setOrigem] = useState([]);
+    const [horaEntrada, setHoraEntrada] = useState([]);
+    const [motorista, setMotorista] = useState([]);
+    const [chefeVtr, setChefeVtr] = useState([]);
+    const [destino, setDestino] = useState([]);
     // Busca de dados por Id para a edição
     const buscarDadosPorId = async (id) => {
         try {
             // Faz uma requisição GET para obter os dados de um registro específico com o ID fornecido
-            const response = await axios.get(`http://localhost:8081/outra_om_fora_expediente/selectId/${id}`);
+            const response = await axios.get(`http://localhost:8081/outra_om_viatura/selectId/${id}`);
             const data = response.data;
 
             // Cria uma instância de um modal usando Bootstrap
@@ -145,18 +150,19 @@ export default function OutraOmForaExpediente() {
             if (data) {
 
                 // Formata a data de entrada para o formato 'yyyy-MM-dd'
-                const dataEntrada = format(new Date(data.dataEntrada), 'yyyy-MM-dd');
+                const dataRegistro = format(new Date(data.dataRegistro), 'yyyy-MM-dd');
 
                 // Define os estados com os dados obtidos da requisição, usando valores padrão vazios caso não haja dados
                 setId(data.id || "");
-                setPG(data.pg || "");
-                setNomeGuerra(data.nomeGuerra || "");
-                setIdtMil(data.idtMil || "");
-                setOm(data.om || "");
-                setDataEntrada(dataEntrada || "");
-                setHoraEntrada(data.horaEntrada || "");
+                setVtr(data.vtr || "");
+                setOdmSaida(data.odmSaida || "");
+                setOdmEntrada(data.odmEntrada || "");
+                setDataRegistro(dataRegistro || "");
                 setHoraSaida(data.horaSaida || "");
-                setOrigem(data.origem || "");
+                setHoraEntrada(data.horaEntrada || "");
+                setMotorista(data.motorista || "");
+                setChefeVtr(data.chefeVtr || "");
+                setDestino(data.destino || "");
 
                 // Mostra o modal de edição após definir os estados com os dados
                 editModal.show();
@@ -173,16 +179,17 @@ export default function OutraOmForaExpediente() {
     const atualizarDadosPorId = async (id) => {
         try {
             // Envia uma requisição PUT para atualizar os dados do registro com o ID fornecido
-            const response = await axios.put(`http://localhost:8081/outra_om_fora_expediente/${id}`, {
+            const response = await axios.put(`http://localhost:8081/outra_om_viatura/${id}`, {
                 // Envia os dados a serem atualizados no corpo da requisição
-                pg,
-                nomeGuerra,
-                idtMil,
-                om,
-                dataEntrada,
-                horaEntrada,
+                vtr,
+                odmSaida,
+                odmEntrada,
+                dataRegistro,
                 horaSaida,
-                origem
+                horaEntrada,
+                motorista,
+                chefeVtr,
+                destino,
             });
 
             // Exibe um alerta com a mensagem da resposta para informar o usuário sobre o resultado da operação
@@ -207,7 +214,7 @@ export default function OutraOmForaExpediente() {
     const deleteRegistro = async (id) => {
         // Envia uma requisição DELETE para a URL específica do ID fornecido
         try {
-            const response = await fetch(`http://localhost:8081/outra_om_fora_expediente/${id}`, {
+            const response = await fetch(`http://localhost:8081/outra_om_viatura/${id}`, {
                 method: 'DELETE', // Utiliza o método DELETE para indicar a exclusão do recurso
             });
 
@@ -223,10 +230,10 @@ export default function OutraOmForaExpediente() {
     };
 
     // Função executada ao clicar no botao Deletar
-    const handleDeleteRegistro = (id, pg, nomeGuerra) => {
+    const handleDeleteRegistro = (id, vtr, motorista) => {
         // Exibe um diálogo de confirmação ao usuário, mostrando os detalhes do registro que será excluído
         const shouldDelete = window.confirm(
-            `Tem certeza de que deseja excluir este registro? PG: ${pg} Nome: ${nomeGuerra}`
+            `Tem certeza de que deseja excluir este registro? Motorista: ${vtr} Placa / EB: ${motorista}`
         );
 
         if (shouldDelete) {
@@ -245,53 +252,54 @@ export default function OutraOmForaExpediente() {
                             <Link to="/home">Página Inicial</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            Militares de outras OM fora de expediente
+                            Viaturas de outras organizações militares
                         </li>
                     </ol>
                 </nav>
             </div>
-            <p className="text-center d-print-none">Entrada e saída de militares outras organizações militares fora de expediente</p>
+            <p className="text-center d-print-none">Entrada e saída de viaturas de outras organizações militares</p>
             <div className="text-center mb-4 d-print-none">
                 <NovoRegistro2 />
             </div>
-            <div
-                className={`container d-flex flex-column justify-content-center align-items-center ${estiloImpressao.container_local}`}
-            >
-                <ImpressaoHeader titulo="Entrada e saída de militares outras organizações militares fora de expediente" />
+            <div className={`container d-flex flex-column justify-content-center align-items-center ${estiloImpressao.container_local}`}>
+                <ImpressaoHeader titulo="Entrada e saída de viaturas de outras organizações militares" />
 
-                <table className="table text-center table-bordered border-dark table-hover">
+                <table className="table text-center table-bordered border-dark-subtle table-hover">
                     <thead>
-                        <tr>
-                            <th scope="col">PG</th>
-                            <th scope="col">Nome Guerra</th>
-                            <th scope="col">Idt Mil</th>
-                            <th scope="col">OM</th>
-                            <th scope="col">Data</th>
-                            <th scope="col">Entrada</th>
-                            <th scope="col">Saída</th>
-                            <th scope="col">Origem/Destino</th>
-                            <th scope="col" className="d-print-none">
+                        <tr className="align-middle">
+                            <th scope="col" rowSpan={'2'}>Vtr - OM</th>
+                            <th scope="col" colSpan={'2'}>Odômetro</th>
+                            <th scope="col" rowSpan={'2'}>Data</th>
+                            <th scope="col" colSpan={'2'}>Horário</th>
+                            <th scope="col" rowSpan={'2'}>Motorista</th>
+                            <th scope="col" rowSpan={'2'}>Chefe de Vtr / Acompanhante</th>
+                            <th scope="col" rowSpan={'2'}>Destino</th>
+                            <th scope="col" rowSpan={'2'} className="d-print-none align-middle">
                                 Ação
                             </th>
                         </tr>
+                        <tr className="align-middle">
+                            <th scope="col">Entrada</th>
+                            <th scope="col">Saída</th>
+                            <th scope="col">Entrada</th>
+                            <th scope="col">Saída</th>
+                        </tr>
                     </thead>
+
                     <tbody>
                         {data.map((dados) => {
                             let id = dados.id;
                             return (
                                 <tr key={dados.id} className="align-middle">
-                                    <td>{dados.pg}</td>
-
-                                    <td>{dados.nomeGuerra}</td>
-
-                                    <td>{dados.idtMil}</td>
-                                    <td>{dados.om}</td>
-                                    <td>{formatDate(dados.dataEntrada)}</td>
-                                    <td>{formatTime(dados.horaEntrada)}</td>
-                                    <td className={`${dados.horaSaida === null || dados.horaSaida === '00:00:00' ? "bg-danger text-white fw-bold" : ""}`}>
-                                        {dados.horaSaida === null || dados.horaSaida === '00:00:00' ? 'OM' : formatTime(dados.horaSaida)}</td>
-                                    <td>{dados.origem}</td>
-
+                                    <td>{dados.vtr}</td>
+                                    <td>{dados.odmEntrada === null || dados.odmEntrada === '' ? '- - -' : dados.odmEntrada}</td>
+                                    <td>{dados.odmSaida === null || dados.odmSaida === '' ? '- - -' : dados.odmSaida}</td>
+                                    <td>{formatDate(dados.dataRegistro)}</td>
+                                    <td>{dados.horaEntrada === null || dados.horaEntrada === '00:00:00' ? '- - -' : formatTime(dados.horaEntrada)}</td>
+                                    <td>{dados.horaSaida === null || dados.horaSaida === '00:00:00' ? '- - -' : formatTime(dados.horaSaida)}</td>
+                                    <td>{dados.motorista}</td>
+                                    <td>{dados.chefeVtr}</td>
+                                    <td>{dados.destino}</td>
                                     <td className="d-print-none">
                                         <div className="d-flex align-items-center justify-content-center gap-3">
                                             <div>
@@ -308,7 +316,7 @@ export default function OutraOmForaExpediente() {
                                                 <button
                                                     className="bnt-acao"
                                                     onClick={() =>
-                                                        handleDeleteRegistro(id, dados.pg, dados.nomeGuerra)
+                                                        handleDeleteRegistro(id, dados.motorista, dados.vtr)
                                                     }
                                                 >
                                                     <FontAwesomeIcon icon={faTrash} color="#FF0000" />
@@ -320,8 +328,9 @@ export default function OutraOmForaExpediente() {
                             );
                         })}
                     </tbody>
+
                 </table>
-                <Imprimir impressao="retrato" />
+                <Imprimir impressao="paisagem" />
                 <ImpressaoFooter />
             </div>
 
@@ -341,86 +350,64 @@ export default function OutraOmForaExpediente() {
                                 noValidate
                             >
                                 <div className="col-md-4">
-                                    <label className="form-label" htmlFor="pg">Posto Graduação</label>
-                                    <select className="form-select" id="pg" >
-                                        <option defaultValue={"Posto/Graduação"}>Posto/Graduação</option>
-                                        <option value="Soldado">Soldado</option>
-                                        <option value="Taifeiro">Taifeiro</option>
-                                        <option value="Cabo">Cabo</option>
-                                        <option value="Sargento">Sargento</option>
-                                        <option value="Subtenente">Subtenente</option>
-                                        <option value="Aspirante a Oficial">Aspirante a Oficial</option>
-                                        <option value="Tenente">Tenente</option>
-                                        <option value="Capitão">Capitão</option>
-                                        <option value="Major">Major</option>
-                                        <option value="Tenente-Coronel">Tenente-Coronel</option>
-                                        <option value="Coronel">Coronel</option>
-                                        <option value="General de Brigada">General de Brigada</option>
-                                        <option value="General de Divisão">General de Divisão</option>
-                                        <option value="General de Exército">General de Exército</option>
-                                        <option value="Marechal">Marechal</option>
-                                    </select>
-                                </div>
-                                <div className="col-md-4">
-                                    <label htmlFor="nome-guerra" className="form-label">
-                                        Nome de guerra
+                                    <label htmlFor="vtr" className="form-label">
+                                        Placa / EB *
                                     </label>
                                     <input
                                         type="text"
                                         className="form-control"
-                                        placeholder="Insira o nome de guerra"
-                                        id="nome-guerra"
+                                        placeholder="Insira a placa / EB"
+                                        id="vtr"
+                                        maxLength="20"
                                         required
                                     />
                                 </div>
 
                                 <div className="col-md-4">
-                                    <label htmlFor="idt-mil" className="form-label">
-                                        Identidade Militar
+                                    <label htmlFor="odm-entrada" className="form-label">
+                                        Odm Entrada
                                     </label>
                                     <input
                                         type="text"
                                         className="form-control"
-                                        id="idt-mil"
-                                        placeholder="N° da identidade"
-                                        name="idt-mil"
-                                        maxLength="50"
+                                        id="odm-entrada"
+                                        placeholder="Odm Entrada"
+                                        name="odm-entrada"
+                                        maxLength="20"
                                         required
                                     />
                                 </div>
 
-                                <div className="col-md-6">
-                                    <label htmlFor="om" className="form-label">
-                                        Organização Militar
+                                <div className="col-md-4">
+                                    <label htmlFor="odm-saida" className="form-label">
+                                        Odm Saída
                                     </label>
                                     <input
                                         type="text"
                                         className="form-control"
-                                        id="om"
-                                        placeholder="OM"
-                                        name="om"
-                                        maxLength="50"
+                                        id="odm-saida"
+                                        placeholder="Odm Saída"
+                                        name="odm-saida"
+                                        maxLength="20"
                                         required
                                     />
                                 </div>
 
-                                <div className="col-md-6">
-                                    <label htmlFor="data-entrada" className="form-label">
-                                        Data de Entrada
+                                <div className="col-md-4">
+                                    <label htmlFor="data-registro" className="form-label">
+                                        Data do Registro *
                                     </label>
                                     <input
                                         type="date"
                                         data-format="00/00/0000"
                                         className="form-control"
-                                        id="data-entrada"
-                                        placeholder="Insira a data de entrada"
+                                        id="data-registro"
+                                        placeholder="Insira a data de registro"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
-                                <div className="col-md-6">
+                                <div className="col-md-4">
                                     <label htmlFor="hora-entrada" className="form-label">
                                         Horário de Entrada
                                     </label>
@@ -428,26 +415,64 @@ export default function OutraOmForaExpediente() {
                                         type="time"
                                         className="form-control"
                                         id="hora-entrada"
-                                        placeholder="Insira o horário de entrada"
+                                        placeholder="Insira o horário de saida"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
-                                <div className="col-md-6">
-                                    <label htmlFor="origem" className="form-label">
-                                        Origem / Destino
+                                <div className="col-md-4">
+                                    <label htmlFor="hora-saida" className="form-label">
+                                        Horário de Saída
+                                    </label>
+                                    <input
+                                        type="time"
+                                        className="form-control"
+                                        id="hora-saida"
+                                        placeholder="Insira o horário de saida"
+                                        required
+                                    />
+                                </div>
+
+                                <div className="col-md-4">
+                                    <label htmlFor="motorista" className="form-label">
+                                        Motorista *
                                     </label>
                                     <input
                                         type="text"
                                         className="form-control"
-                                        id="origem"
-                                        placeholder="Insira a Origem / Destino"
+                                        id="motorista"
+                                        placeholder="Nome do motorista"
+                                        maxLength="50"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                </div>
+
+                                <div className="col-md-4">
+                                    <label htmlFor="chefe-viatura" className="form-label">
+                                        Chefe de Vtr *
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="chefe-viatura"
+                                        placeholder="Nome do Ch Vtr"
+                                        maxLength="50"
+                                        required
+                                    />
+                                </div>
+
+                                <div className="col-md-4">
+                                    <label htmlFor="destino" className="form-label">
+                                        Destino *
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="destino"
+                                        placeholder="Insira o Destino"
+                                        maxLength="50"
+                                        required
+                                    />
                                 </div>
 
                                 <div className="col-md-6"></div>
@@ -476,95 +501,71 @@ export default function OutraOmForaExpediente() {
                                 id="needs-validation"
                                 noValidate
                             >
-                                <div className="col-md-3">
-                                    <label className="form-label" htmlFor="pg">Posto Graduação</label>
-                                    <select className="form-select" id="pg" value={pg.toString()} onChange={(e) => setPG(e.target.value)}>
-                                        <option value="">Selecione o Posto</option>
-                                        <option value="Soldado">Soldado</option>
-                                        <option value="Taifeiro">Taifeiro</option>
-                                        <option value="Cabo">Cabo</option>
-                                        <option value="Sargento">Sargento</option>
-                                        <option value="Subtenente">Subtenente</option>
-                                        <option value="Aspirante a Oficial">Aspirante a Oficial</option>
-                                        <option value="Tenente">Tenente</option>
-                                        <option value="Capitão">Capitão</option>
-                                        <option value="Major">Major</option>
-                                        <option value="Tenente-Coronel">Tenente-Coronel</option>
-                                        <option value="Coronel">Coronel</option>
-                                        <option value="General de Brigada">General de Brigada</option>
-                                        <option value="General de Divisão">General de Divisão</option>
-                                        <option value="General de Exército">General de Exército</option>
-                                        <option value="Marechal">Marechal</option>
-                                    </select>
-                                </div>
-
-                                <div className="col-md-3">
+                                <div className="col-md-4">
                                     <label htmlFor="nome-guerra" className="form-label">
-                                        Nome de guerra
+                                        Placa / EB
                                     </label>
                                     <input
                                         type="text"
                                         className="form-control"
-                                        placeholder="Insira o nome de guerra"
+                                        placeholder="Insira a placa / EB"
                                         id="nome-guerra"
                                         required
-                                        value={nomeGuerra}
-                                        onChange={(e) => setNomeGuerra(e.target.value)}
+                                        value={vtr}
+                                        onChange={(e) => setVtr(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
-                                <div className="col-md-3">
-                                    <label htmlFor="idtMil" className="form-label">
-                                        Identidade Militar
+                                <div className="col-md-4">
+                                    <label htmlFor="odm-entrada" className="form-label">
+                                        Odm Entrada
                                     </label>
                                     <input
                                         type="text"
                                         className="form-control"
-                                        id="idtMil"
-                                        placeholder="N° da Identidade Militar"
-                                        maxLength="14"
-                                        value={idtMil}
-                                        onChange={(e) => setIdtMil(e.target.value)}
+                                        id="odm-entrada"
+                                        placeholder="Odm Entrada"
+                                        maxLength="20"
+                                        value={odmEntrada}
+                                        onChange={(e) => setOdmEntrada(e.target.value)}
                                         required
                                     />
                                 </div>
 
-                                <div className="col-md-3">
-                                    <label htmlFor="om" className="form-label">
-                                        Organização Militar
+                                <div className="col-md-4">
+                                    <label htmlFor="odm-saida" className="form-label">
+                                        Odm Saída
                                     </label>
                                     <input
                                         type="text"
                                         className="form-control"
-                                        id="om"
-                                        placeholder="OM"
-                                        maxLength="50"
-                                        value={om}
-                                        onChange={(e) => setOm(e.target.value)}
+                                        id="odm-saida"
+                                        placeholder="Odm Saida"
+                                        maxLength="20"
+                                        value={odmSaida}
+                                        onChange={(e) => setOdmSaida(e.target.value)}
                                         required
                                     />
                                 </div>
 
-                                <div className="col-md-3">
-                                    <label htmlFor="data-entrada" className="form-label">
-                                        Data de Entrada
+                                <div className="col-md-4">
+                                    <label htmlFor="data-registro" className="form-label">
+                                        Data do Registro
                                     </label>
                                     <input
                                         type="date"
                                         className="form-control"
-                                        id="data-entrada"
-                                        value={dataEntrada}
-                                        onChange={(e) => setDataEntrada(e.target.value)}
-                                        placeholder="Insira a data de entrada"
+                                        id="data-registro"
+                                        value={dataRegistro}
+                                        onChange={(e) => setDataRegistro(e.target.value)}
+                                        placeholder="Insira a data de registro"
                                         required
                                     />
                                     <div className="valid-feedback">OK!</div>
                                     <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
-                                <div className="col-md-3">
+                                <div className="col-md-4">
                                     <label htmlFor="hora-entrada" className="form-label">
                                         Horário de Entrada
                                     </label>
@@ -577,18 +578,16 @@ export default function OutraOmForaExpediente() {
                                         onChange={(e) => setHoraEntrada(e.target.value)}
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
-                                <div className="col-md-3">
-                                    <label htmlFor="hora-saida" className="form-label">
+                                <div className="col-md-4">
+                                    <label htmlFor="hora-entrada" className="form-label">
                                         Horário de Saída
                                     </label>
                                     <input
                                         type="time"
                                         className="form-control"
-                                        id="hora-saida"
+                                        id="hora-entrada"
                                         placeholder="Insira o horário de entrada"
                                         value={horaSaida}
                                         onChange={(e) => setHoraSaida(e.target.value)}
@@ -598,21 +597,51 @@ export default function OutraOmForaExpediente() {
                                     <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
-                                <div className="col-md-3">
-                                    <label htmlFor="origem" className="form-label">
-                                        Origem / Destino
+                                <div className="col-md-4">
+                                    <label htmlFor="motorista" className="form-label">
+                                        Motorista
                                     </label>
                                     <input
                                         type="text"
                                         className="form-control"
-                                        id="origem"
-                                        placeholder="Insira a origem / destino"
-                                        value={origem}
-                                        onChange={(e) => setOrigem(e.target.value)}
+                                        id="motorista"
+                                        placeholder="Nome do motorista"
+                                        value={motorista}
+                                        onChange={(e) => setMotorista(e.target.value)}
+                                        maxLength="50"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                </div>
+
+                                <div className="col-md-4">
+                                    <label htmlFor="ch-vtr" className="form-label">
+                                        Chefe Vtr
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="ch-vtr"
+                                        placeholder="Nome do Ch Vtr"
+                                        value={chefeVtr}
+                                        onChange={(e) => setChefeVtr(e.target.value)}
+                                        maxLength="50"
+                                        required
+                                    />
+                                </div>
+
+                                <div className="col-md-4">
+                                    <label htmlFor="destino" className="form-label">
+                                        Destino
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="destino"
+                                        placeholder="Insira o destino"
+                                        value={destino}
+                                        onChange={(e) => setDestino(e.target.value)}
+                                        required
+                                    />
                                 </div>
 
                                 <div className="col-md-6"></div>

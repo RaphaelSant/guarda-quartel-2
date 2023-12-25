@@ -421,11 +421,9 @@ export default function PelotaoForaExpediente() {
                                         type="text"
                                         className="form-control"
                                         id="origem"
-                                        placeholder="Insira o Origem / Destino"
+                                        placeholder="Insira a Origem / Destino"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-6"></div>
@@ -483,7 +481,7 @@ export default function PelotaoForaExpediente() {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        placeholder="Insira o nome completo"
+                                        placeholder="Insira o nome de guerra"
                                         id="nome-guerra"
                                         required
                                         value={nomeGuerra}
@@ -570,7 +568,7 @@ export default function PelotaoForaExpediente() {
                                         type="text"
                                         className="form-control"
                                         id="origem"
-                                        placeholder="Insira o origem"
+                                        placeholder="Insira a origem / destino"
                                         value={origem}
                                         onChange={(e) => setOrigem(e.target.value)}
                                         required

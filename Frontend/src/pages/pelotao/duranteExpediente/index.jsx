@@ -421,11 +421,9 @@ export default function PelotaoDuranteExpediente() {
                                         type="text"
                                         className="form-control"
                                         id="origem"
-                                        placeholder="Insira o Origem / Destino"
+                                        placeholder="Insira a Origem / Destino"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-6"></div>
@@ -483,7 +481,7 @@ export default function PelotaoDuranteExpediente() {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        placeholder="Insira o nome completo"
+                                        placeholder="Insira o nome de guerra"
                                         id="nome-guerra"
                                         required
                                         value={nomeGuerra}
@@ -558,8 +556,6 @@ export default function PelotaoDuranteExpediente() {
                                         onChange={(e) => setHoraSaida(e.target.value)}
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-3">
@@ -570,13 +566,11 @@ export default function PelotaoDuranteExpediente() {
                                         type="text"
                                         className="form-control"
                                         id="origem"
-                                        placeholder="Insira o origem"
+                                        placeholder="Insira a origem / destino"
                                         value={origem}
                                         onChange={(e) => setOrigem(e.target.value)}
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-6"></div>

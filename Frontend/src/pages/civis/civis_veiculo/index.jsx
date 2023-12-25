@@ -374,7 +374,7 @@ export default function CivisVeiculo() {
                     type="text"
                     className="form-control"
                     id="placa"
-                    placeholder="N° de registro"
+                    placeholder="Placa do veículo"
                     name="placa"
                     maxLength="8"
                     required

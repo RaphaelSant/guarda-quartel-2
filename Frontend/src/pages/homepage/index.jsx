@@ -26,7 +26,7 @@ export default function HomePage() {
             <div className="d-flex mt-2">
                 <CardOutrasOm link="/outra_om_durante_expediente" titulo="Durante o expediente" />
                 <CardOutrasOm link="/outra_om_fora_expediente" titulo="Fora de expediente" />
-                <CardOutrasOm link="#" titulo="Viatura" />
+                <CardOutrasOm link="/outra_om_viatura" titulo="Viatura" />
             </div>
             <hr />
             <h3>Relatório</h3>

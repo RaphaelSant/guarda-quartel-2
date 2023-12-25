@@ -371,7 +371,7 @@ export default function PelotaoViatura() {
                                         type="text"
                                         className="form-control"
                                         id="odm-saida"
-                                        placeholder="N° da identidade"
+                                        placeholder="Odm Saída"
                                         name="odm-saida"
                                         maxLength="20"
                                         required
@@ -386,7 +386,7 @@ export default function PelotaoViatura() {
                                         type="text"
                                         className="form-control"
                                         id="odm-entrada"
-                                        placeholder="N° da identidade"
+                                        placeholder="Odm Entrada"
                                         name="odm-entrada"
                                         maxLength="20"
                                         required
@@ -508,7 +508,7 @@ export default function PelotaoViatura() {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        placeholder="Insira o nome completo"
+                                        placeholder="Insira a placa / EB"
                                         id="nome-guerra"
                                         required
                                         value={vtr}
@@ -524,7 +524,7 @@ export default function PelotaoViatura() {
                                         type="text"
                                         className="form-control"
                                         id="odm-saida"
-                                        placeholder="N° Odm de Saida"
+                                        placeholder="Odm Saída"
                                         maxLength="20"
                                         value={odmSaida}
                                         onChange={(e) => setOdmSaida(e.target.value)}
@@ -540,7 +540,7 @@ export default function PelotaoViatura() {
                                         type="text"
                                         className="form-control"
                                         id="odm-entrada"
-                                        placeholder="N° Odm de Entrada"
+                                        placeholder="Odm Entrada"
                                         maxLength="20"
                                         value={odmEntrada}
                                         onChange={(e) => setOdmEntrada(e.target.value)}

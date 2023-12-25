@@ -10,10 +10,11 @@ import CivisVeiculo from "../../pages/civis/civis_veiculo";
 import PelotaoDuranteExped from "../../pages/pelotao/duranteExpediente";
 import PelotaoForaExped from "../../pages/pelotao/foraExpediente";
 import PelotaoViatura from "../../pages/pelotao/viatura";
-
-import { verificarAutenticacao } from "../autenticacao";
 import OutraOmDuranteExpediente from "../../pages/outraOm/duranteExpediente";
 import OutraOmForaExpediente from "../../pages/outraOm/foraExpediente";
+import OutraOmViatura from "../../pages/outraOm/viatura";
+
+import { verificarAutenticacao } from "../autenticacao";
 
 export default function Rotas() {
   const [autenticado, setAutenticado] = useState(false);
@@ -42,6 +43,7 @@ export default function Rotas() {
             <Route exact path="/pelotao_viatura" element={<PelotaoViatura />} />
             <Route exact path="/outra_om_durante_expediente" element={<OutraOmDuranteExpediente />} />
             <Route exact path="/outra_om_fora_expediente" element={<OutraOmForaExpediente />} />
+            <Route exact path="/outra_om_viatura" element={<OutraOmViatura />} />
           </>
         ) : (
           // Redirecionar para a página de Login se o usuário não estiver autenticado
