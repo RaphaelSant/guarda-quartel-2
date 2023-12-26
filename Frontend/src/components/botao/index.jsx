@@ -2,7 +2,7 @@ import React from "react";
 import botaoEstilo from "./botao.module.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse, faPlus, faPrint } from "@fortawesome/free-solid-svg-icons";
+import { faHouse, faPenToSquare, faPlus, faPrint } from "@fortawesome/free-solid-svg-icons";
 
 export function NovoRegistro(props) {
     return (
@@ -18,6 +18,15 @@ export function NovoRegistro2() {
         <button type="button" className={`btn btn-md ${botaoEstilo.btn_registro} ${botaoEstilo.bnt_base}`} data-bs-toggle="modal" data-bs-target="#novoRegistro">
             <FontAwesomeIcon icon={faPlus} className="me-2" />
             Novo Registro
+        </button>
+    );
+}
+
+export function EditarRegistros(props) {
+    return (
+        <button type="button" className={`btn btn-md ${botaoEstilo.btn_registro} ${botaoEstilo.bnt_base}`} onClick={props.click}>
+            <FontAwesomeIcon icon={faPenToSquare} className="me-2" />
+            Editar Registros
         </button>
     );
 }

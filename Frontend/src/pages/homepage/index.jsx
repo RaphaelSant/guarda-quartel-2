@@ -31,8 +31,8 @@ export default function HomePage() {
             <hr />
             <h3>Relatório</h3>
             <div className="d-flex mt-2 mb-5">
-                <CardRelatorio link="#" titulo="Roteiro da Guarda" />
-                <CardRelatorio link="#" titulo="Escala de Ronda" />
+                <CardRelatorio link="/relatorio_roteiro_guarda" titulo="Roteiro da Guarda" />
+                <CardRelatorio link="/relatorio_escala_ronda" titulo="Escala de Ronda" />
                 <CardRelatorio link="#" titulo="Parte do Representante do Cmdo" />
                 <CardRelatorio link="#" titulo="Armazenar Serviço" />
                 <CardRelatorio link="#" titulo="Serviço Anterior" />

@@ -9,7 +9,7 @@ import "bootstrap/dist/js/bootstrap.bundle";
 
 import ImpressaoHeader from "../../../components/impressao/impressaoHeader";
 import ImpressaoFooter from "../../../components/impressao/impressaoFooter";
-import estiloImpressao from "../../../components/impressao/css/PrintPortrait.module.css";
+import estiloImpressao from "../../../components/impressao/css/PrintLandscape.module.css";
 import "../../../css/estiloTabela.css";
 
 import Navbar from "../../../components/navbar";
@@ -321,7 +321,7 @@ export default function OutraOmForaExpediente() {
                         })}
                     </tbody>
                 </table>
-                <Imprimir impressao="retrato" />
+                <Imprimir impressao="paisagem" />
                 <ImpressaoFooter />
             </div>
 
