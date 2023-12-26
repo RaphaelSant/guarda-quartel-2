@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faPenToSquare, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { format } from "date-fns";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle";
@@ -16,7 +15,6 @@ import Navbar from "../../../components/navbar";
 import {
     EditarRegistros,
     Imprimir,
-    NovoRegistro2,
 } from "../../../components/botao";
 import clearForm from "../../../components/util/clearForm";
 
@@ -62,69 +60,7 @@ export default function RelatorioRoteiroGuarda() {
         // Chama a função fetchData para buscar dados da API e atualizar o estado 'data'
         fetchData();
     }, []);
-
-    // Registro de dados pelo modal
-    const handleRegistrarSubmit = async (event) => {
-
-        // Previne o comportamento padrão do formulário ao ser submetido (evita atualziar a página)
-        event.preventDefault();
-
-        // Coleta os valores dos campos do formulário
-        const vtrRegistro = document.getElementById('vtr').value;
-        const odmSaidaRegistro = document.getElementById('odm-saida').value;
-        const odmEntradaRegistro = document.getElementById('odm-entrada').value;
-        const dataRegistro = document.getElementById('data-registro').value;
-        const horaSaidaRegistro = document.getElementById('hora-saida').value;
-        const horaEntradaRegistro = document.getElementById('hora-entrada').value;
-        const motoristaRegistro = document.getElementById('motorista').value;
-        const chefeVtrRegistro = document.getElementById('chefe-viatura').value;
-        const destinoRegistro = document.getElementById('destino').value;
-
-        // Organiza os dados coletados em um objeto
-        const dados = {
-            vtrRegistro,
-            odmSaidaRegistro,
-            odmEntradaRegistro,
-            dataRegistro,
-            horaSaidaRegistro,
-            horaEntradaRegistro,
-            motoristaRegistro,
-            chefeVtrRegistro,
-            destinoRegistro,
-        };
-
-        try {
-            // Envia uma requisição POST para adicionar um novo registro
-            const response = await fetch('http://localhost:8081/outra_om_viatura', {
-                // Utiliza o método POST
-                method: 'POST',
-                headers: {
-                    // Define o tipo de conteúdo como JSON
-                    'Content-Type': 'application/json',
-                },
-                // Converte o objeto 'dados' para JSON e o envia no corpo da requisição
-                body: JSON.stringify(dados),
-            });
-
-            // Converte a resposta da requisição para JSON
-            const responseData = await response.json();
-
-            // Limpa o formulário após a inserção
-            clearForm();
-
-            // Exibe um alerta com a mensagem recebida do servidor após a inserção
-            alert(responseData.message);
-
-            // Atualiza os dados na tela após a inserção 
-            // (supõe-se que fetchData() é uma função que busca os dados atualizados)
-            fetchData();
-
-        } catch (error) {
-            // Em caso de erro na requisição, exibe um alerta
-            alert('Erro:', error);
-        }
-    };
-
+    
     // Utilidades para o modal de EDIÇÃO / ATUALIZAÇÃO
     const [id, setId] = useState([]);
     const [sgtNomeGuerra, setSgtNomeGuerra] = useState([]);

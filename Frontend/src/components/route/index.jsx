@@ -17,6 +17,7 @@ import OutraOmViatura from "../../pages/outraOm/viatura";
 import { verificarAutenticacao } from "../autenticacao";
 import RelatorioEscalaRonda from "../../pages/relatorio/escalaRonda";
 import RelatorioRoteiroGuarda from "../../pages/relatorio/roteiroGuarda";
+import RelatorioParteSgtPerm from "../../pages/relatorio/parteSgtPermanencia";
 
 export default function Rotas() {
   const [autenticado, setAutenticado] = useState(false);
@@ -48,6 +49,7 @@ export default function Rotas() {
             <Route exact path="/outra_om_viatura" element={<OutraOmViatura />} />
             <Route exact path="/relatorio_roteiro_guarda" element={<RelatorioRoteiroGuarda />} />
             <Route exact path="/relatorio_escala_ronda" element={<RelatorioEscalaRonda />} />
+            <Route exact path="/relatorio_parte_sgt_permanencia" element={<RelatorioParteSgtPerm />} />
           </>
         ) : (
           // Redirecionar para a página de Login se o usuário não estiver autenticado

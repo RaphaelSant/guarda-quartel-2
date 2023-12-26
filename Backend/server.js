@@ -12,6 +12,7 @@ const outraOmDuranteExpedienteController = require("./controllers/outraOmDurante
 const outraOmForaExpedienteController = require("./controllers/outraOmForaExpedController.js");
 const outraOmViaturaController = require("./controllers/outraOmViaturaController.js");
 const relatorioRoteiroGuardaController = require("./controllers/relatorioRoteiroGuardaController.js");
+const relatorioParteSgtController = require("./controllers/relatorioParteSgtPermController.js");
 
 const verificarToken = require("./middlewares/authMiddleware.js");
 
@@ -39,6 +40,7 @@ app.use("/", outraOmForaExpedienteController);
 app.use("/", outraOmViaturaController);
 
 app.use("/", relatorioRoteiroGuardaController);
+app.use("/", relatorioParteSgtController);
 
 // Rota protegida
 app.get("/recursoProtegido", verificarToken, (req, res) => {

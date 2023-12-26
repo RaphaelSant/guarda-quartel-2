@@ -264,7 +264,7 @@ export default function PelotaoViatura() {
             <div className={`container d-flex flex-column justify-content-center align-items-center ${estiloImpressao.container_local}`}>
                 <ImpressaoHeader titulo="Entrada e saída de viaturas do pelotão" />
 
-                <table className="table text-center table-bordered border-dark-subtle table-hover">
+                <table className="table text-center table-bordered border-dark table-hover">
                     <thead>
                         <tr className="align-middle">
                             <th scope="col" rowSpan={'2'}>Vtr - OM</th>

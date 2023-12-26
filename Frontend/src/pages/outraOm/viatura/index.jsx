@@ -264,7 +264,7 @@ export default function OutraOmViatura() {
             <div className={`container d-flex flex-column justify-content-center align-items-center ${estiloImpressao.container_local}`}>
                 <ImpressaoHeader titulo="Entrada e saída de viaturas de outras organizações militares" />
 
-                <table className="table text-center table-bordered border-dark-subtle table-hover">
+                <table className="table text-center table-bordered border-dark table-hover">
                     <thead>
                         <tr className="align-middle">
                             <th scope="col" rowSpan={'2'}>Vtr - OM</th>
