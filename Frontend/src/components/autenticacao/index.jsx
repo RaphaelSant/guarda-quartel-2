@@ -1,4 +1,5 @@
 import axios from "axios";
+import dbConfig from "../util/dbConfig";
 
 export const verificarAutenticacao = async () => {
     try {
@@ -6,7 +7,7 @@ export const verificarAutenticacao = async () => {
 
         if (token) {
             const response = await axios.get(
-                "http://localhost:8081/recursoProtegido",
+                `${dbConfig()}/recursoProtegido`,
                 {
                     headers: {
                         Authorization: token,

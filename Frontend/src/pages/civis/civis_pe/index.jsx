@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPenToSquare, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle";
@@ -20,6 +20,7 @@ import {
 } from "../../../components/botao";
 import clearForm from "../../../components/util/clearForm";
 import { formatDate, formatTime } from "../../../components/util/formatDateTime";
+import dbConfig from "../../../components/util/dbConfig";
 
 export default function CivisPe() {
   const [registroCpf, setRegistroCpf] = useState(['']);
@@ -31,8 +32,8 @@ export default function CivisPe() {
   useEffect(() => {
     // Executa um efeito após a renderização inicial do componente
 
-    // Faz uma requisição para buscar dados de uma API em http://localhost:8081/civis_pe
-    fetch("http://localhost:8081/civis_pe")
+    // Faz uma requisição para buscar dados de uma API em `${dbConfig}/civis_pe`
+    fetch(`${dbConfig()}/civis_pe`)
       // Converte a resposta para JSON
       .then((res) => res.json())
       // Define os dados recebidos no estado 'data' do componente
@@ -44,8 +45,8 @@ export default function CivisPe() {
   // Função para buscar dados da API e atualizar o estado 'data'
   const fetchData = async () => {
     try {
-      // Faz uma requisição para buscar dados da API em http://localhost:8081/civis_pe
-      const res = await fetch("http://localhost:8081/civis_pe");
+      // Faz uma requisição para buscar dados da API em `${dbConfig}/civis_pe`
+      const res = await fetch(`${dbConfig()}/civis_pe`);
 
       // Converte a resposta da requisição para o formato JSON
       const fetchedData = await res.json();
@@ -78,7 +79,7 @@ export default function CivisPe() {
   const buscarDadosPorId = async (id) => {
     try {
       // Faz uma requisição GET para obter os dados de um registro específico com o ID fornecido
-      const response = await axios.get(`http://localhost:8081/civis_pe/selectId/${id}`);
+      const response = await axios.get(`${dbConfig()}/civis_pe/selectId/${id}`);
       const data = response.data;
 
       // Cria uma instância de um modal usando Bootstrap
@@ -115,7 +116,7 @@ export default function CivisPe() {
   const atualizarDadosPorId = async (id) => {
     try {
       // Envia uma requisição PUT para atualizar os dados do registro com o ID fornecido
-      const response = await axios.put(`http://localhost:8081/civis_pe/${id}`, {
+      const response = await axios.put(`${dbConfig()}/civis_pe/${id}`, {
         // Envia os dados a serem atualizados no corpo da requisição
         nome,
         cpf,
@@ -167,7 +168,7 @@ export default function CivisPe() {
 
     try {
       // Envia uma requisição POST para adicionar um novo registro
-      const response = await fetch('http://localhost:8081/civis_pe', {
+      const response = await fetch(`${dbConfig()}/civis_pe`, {
         // Utiliza o método POST
         method: 'POST',
         headers: {
@@ -202,7 +203,7 @@ export default function CivisPe() {
   const deleteRegistro = async (id) => {
     // Envia uma requisição DELETE para a URL específica do ID fornecido
     try {
-      const response = await fetch(`http://localhost:8081/civis_pe/${id}`, {
+      const response = await fetch(`${dbConfig()}/civis_pe/${id}`, {
         method: 'DELETE', // Utiliza o método DELETE para indicar a exclusão do recurso
       });
 

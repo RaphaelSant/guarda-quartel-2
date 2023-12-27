@@ -7,7 +7,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle";
 import { capturaAno, capturaDia, capturaMes } from "../../../components/util/capturaData.jsx";
 
-import ImpressaoHeader from "../../../components/impressao/impressaoHeader";
 import ImpressaoFooter from "../../../components/impressao/impressaoFooter";
 import estiloImpressao from "../../../components/impressao/css/PrintPortrait.module.css";
 import "../../../css/estiloTabela.css";
@@ -18,6 +17,7 @@ import {
     Imprimir,
 } from "../../../components/botao";
 import clearForm from "../../../components/util/clearForm";
+import dbConfig from "../../../components/util/dbConfig.jsx";
 
 export default function RelatorioParteSgtPerm() {
     let ontem = new Date().setHours(-1);
@@ -34,7 +34,7 @@ export default function RelatorioParteSgtPerm() {
         // Executa um efeito após a renderização inicial do componente
 
         // Faz uma requisição para buscar dados de uma API em http://localhost:8081/relatorio_parte_sgt
-        fetch("http://localhost:8081/relatorio_parte_sgt")
+        fetch(`${dbConfig()}/relatorio_parte_sgt`)
             // Converte a resposta para JSON
             .then((res) => res.json())
             // Define os dados recebidos no estado 'data' do componente
@@ -48,7 +48,7 @@ export default function RelatorioParteSgtPerm() {
     const fetchData = async () => {
         try {
             // Faz uma requisição para buscar dados da API em http://localhost:8081/relatorio_parte_sgt
-            const res = await fetch("http://localhost:8081/relatorio_parte_sgt");
+            const res = await fetch(`${dbConfig()}/relatorio_parte_sgt`);
 
             // Converte a resposta da requisição para o formato JSON
             const fetchedData = await res.json();
@@ -66,7 +66,7 @@ export default function RelatorioParteSgtPerm() {
     const fetchDataGuarnicao = async () => {
         try {
             // Faz uma requisição para buscar dados da API em http://localhost:8081/relatorio_roteiro_guarda
-            const res = await fetch("http://localhost:8081/relatorio_roteiro_guarda");
+            const res = await fetch(`${dbConfig()}/relatorio_roteiro_guarda`);
 
             // Converte a resposta da requisição para o formato JSON
             const fetchedData = await res.json();
@@ -118,7 +118,7 @@ export default function RelatorioParteSgtPerm() {
     const buscarDadosPorId = async (id) => {
         try {
             // Faz uma requisição GET para obter os dados de um registro específico com o ID fornecido
-            const response = await axios.get(`http://localhost:8081/relatorio_parte_sgt/selectId/${id}`);
+            const response = await axios.get(`${dbConfig()}/relatorio_parte_sgt/selectId/${id}`);
             const data = response.data;
             // Cria uma instância de um modal usando Bootstrap
             const editModal = new bootstrap.Modal(document.getElementById("editarRegistro"));
@@ -166,7 +166,7 @@ export default function RelatorioParteSgtPerm() {
     const atualizarDadosPorId = async (id) => {
         try {
             // Envia uma requisição PUT para atualizar os dados do registro com o ID fornecido
-            const response = await axios.put(`http://localhost:8081/relatorio_parte_sgt/${id}`, {
+            const response = await axios.put(`${dbConfig()}/relatorio_parte_sgt/${id}`, {
                 // Envia os dados a serem atualizados no corpo da requisição
                 paradaDiaria,
                 recebimentoServico,

@@ -19,6 +19,7 @@ import {
 } from "../../../components/botao";
 import clearForm from "../../../components/util/clearForm";
 import { formatDate, formatTime } from "../../../components/util/formatDateTime";
+import dbConfig from "../../../components/util/dbConfig";
 
 export default function OutraOmViatura() {
     // Estado para receber os dados gravados no BD
@@ -30,7 +31,7 @@ export default function OutraOmViatura() {
         // Executa um efeito após a renderização inicial do componente
 
         // Faz uma requisição para buscar dados de uma API em http://localhost:8081/pelotao_viatura
-        fetch("http://localhost:8081/outra_om_viatura")
+        fetch(`${dbConfig()}/outra_om_viatura`)
             // Converte a resposta para JSON
             .then((res) => res.json())
             // Define os dados recebidos no estado 'data' do componente
@@ -43,7 +44,7 @@ export default function OutraOmViatura() {
     const fetchData = async () => {
         try {
             // Faz uma requisição para buscar dados da API em http://localhost:8081/pelotao_viatura
-            const res = await fetch("http://localhost:8081/outra_om_viatura");
+            const res = await fetch(`${dbConfig()}/outra_om_viatura`);
 
             // Converte a resposta da requisição para o formato JSON
             const fetchedData = await res.json();
@@ -95,7 +96,7 @@ export default function OutraOmViatura() {
 
         try {
             // Envia uma requisição POST para adicionar um novo registro
-            const response = await fetch('http://localhost:8081/outra_om_viatura', {
+            const response = await fetch(`${dbConfig()}/outra_om_viatura`, {
                 // Utiliza o método POST
                 method: 'POST',
                 headers: {
@@ -140,7 +141,7 @@ export default function OutraOmViatura() {
     const buscarDadosPorId = async (id) => {
         try {
             // Faz uma requisição GET para obter os dados de um registro específico com o ID fornecido
-            const response = await axios.get(`http://localhost:8081/outra_om_viatura/selectId/${id}`);
+            const response = await axios.get(`${dbConfig()}/outra_om_viatura/selectId/${id}`);
             const data = response.data;
 
             // Cria uma instância de um modal usando Bootstrap
@@ -179,7 +180,7 @@ export default function OutraOmViatura() {
     const atualizarDadosPorId = async (id) => {
         try {
             // Envia uma requisição PUT para atualizar os dados do registro com o ID fornecido
-            const response = await axios.put(`http://localhost:8081/outra_om_viatura/${id}`, {
+            const response = await axios.put(`${dbConfig()}/outra_om_viatura/${id}`, {
                 // Envia os dados a serem atualizados no corpo da requisição
                 vtr,
                 odmSaida,
@@ -214,7 +215,7 @@ export default function OutraOmViatura() {
     const deleteRegistro = async (id) => {
         // Envia uma requisição DELETE para a URL específica do ID fornecido
         try {
-            const response = await fetch(`http://localhost:8081/outra_om_viatura/${id}`, {
+            const response = await fetch(`${dbConfig()}/outra_om_viatura/${id}`, {
                 method: 'DELETE', // Utiliza o método DELETE para indicar a exclusão do recurso
             });
 

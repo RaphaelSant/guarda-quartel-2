@@ -27,11 +27,11 @@ router.get("/civis_pe/selectId/:id", (req, res) => {
 
 // Rota para realizar novos registro de dados.
 router.post("/civis_pe", (req, res) => {
-    const { cpf, data, dataEntrada, destino, horaEntrada, horaSaida, nome } = req.body;
+    const { cpf, dataEntrada, destino, horaEntrada, horaSaida, nome } = req.body;
     const sql = "INSERT INTO civis_pe (cpf, dataEntrada, destino, horaEntrada, horaSaida, nome) VALUES (?, ?, ?, ?, ?, ?)";
 
     // Validação dos dados
-    if (!cpf || !data || !dataEntrada || !horaEntrada || !destino || !nome) {
+    if (!cpf || !dataEntrada || !horaEntrada || !destino || !nome) {
         return res.status(400).json({ message: "Todos os campos são obrigatórios." });
     }
 

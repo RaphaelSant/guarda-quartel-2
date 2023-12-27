@@ -17,6 +17,7 @@ import {
     Imprimir,
 } from "../../../components/botao";
 import clearForm from "../../../components/util/clearForm";
+import dbConfig from "../../../components/util/dbConfig";
 
 export default function RelatorioRoteiroGuarda() {
     // Estado para receber os dados gravados no BD
@@ -28,7 +29,7 @@ export default function RelatorioRoteiroGuarda() {
         // Executa um efeito após a renderização inicial do componente
 
         // Faz uma requisição para buscar dados de uma API em http://localhost:8081/relatorio_roteiro_guarda
-        fetch("http://localhost:8081/relatorio_roteiro_guarda")
+        fetch(`${dbConfig()}/relatorio_roteiro_guarda`)
             // Converte a resposta para JSON
             .then((res) => res.json())
             // Define os dados recebidos no estado 'data' do componente
@@ -41,7 +42,7 @@ export default function RelatorioRoteiroGuarda() {
     const fetchData = async () => {
         try {
             // Faz uma requisição para buscar dados da API em http://localhost:8081/relatorio_roteiro_guarda
-            const res = await fetch("http://localhost:8081/relatorio_roteiro_guarda");
+            const res = await fetch(`${dbConfig()}/relatorio_roteiro_guarda`);
 
             // Converte a resposta da requisição para o formato JSON
             const fetchedData = await res.json();
@@ -82,7 +83,7 @@ export default function RelatorioRoteiroGuarda() {
     const buscarDadosPorId = async (id) => {
         try {
             // Faz uma requisição GET para obter os dados de um registro específico com o ID fornecido
-            const response = await axios.get(`http://localhost:8081/relatorio_roteiro_guarda/selectId/${id}`);
+            const response = await axios.get(`${dbConfig()}/relatorio_roteiro_guarda/selectId/${id}`);
             const data = response.data;
             // Cria uma instância de um modal usando Bootstrap
             const editModal = new bootstrap.Modal(document.getElementById("editarRegistro"));
@@ -124,7 +125,7 @@ export default function RelatorioRoteiroGuarda() {
     const atualizarDadosPorId = async (id) => {
         try {
             // Envia uma requisição PUT para atualizar os dados do registro com o ID fornecido
-            const response = await axios.put(`http://localhost:8081/relatorio_roteiro_guarda/${id}`, {
+            const response = await axios.put(`${dbConfig()}/relatorio_roteiro_guarda/${id}`, {
                 // Envia os dados a serem atualizados no corpo da requisição
                 sgtNomeGuerra, 
                 sgtTpArmamento, 

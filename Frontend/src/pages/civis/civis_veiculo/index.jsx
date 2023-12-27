@@ -19,6 +19,7 @@ import {
 } from "../../../components/botao";
 import clearForm from "../../../components/util/clearForm";
 import { formatDate, formatTime } from "../../../components/util/formatDateTime";
+import dbConfig from "../../../components/util/dbConfig";
 
 export default function CivisVeiculo() {
   // Estado para receber os dados gravados no BD
@@ -29,7 +30,7 @@ export default function CivisVeiculo() {
     // Executa um efeito após a renderização inicial do componente
 
     // Faz uma requisição para buscar dados de uma API em http://localhost:8081/civis_veiculo
-    fetch("http://localhost:8081/civis_veiculo")
+    fetch(`${dbConfig()}/civis_veiculo`)
       // Converte a resposta para JSON
       .then((res) => res.json())
       // Define os dados recebidos no estado 'data' do componente
@@ -42,7 +43,7 @@ export default function CivisVeiculo() {
   const fetchData = async () => {
     try {
       // Faz uma requisição para buscar dados da API em http://localhost:8081/civis_veiculo
-      const res = await fetch("http://localhost:8081/civis_veiculo");
+      const res = await fetch(`${dbConfig()}/civis_veiculo`);
 
       // Converte a resposta da requisição para o formato JSON
       const fetchedData = await res.json();
@@ -66,7 +67,7 @@ export default function CivisVeiculo() {
   const buscarDadosPorId = async (id) => {
     try {
       // Faz uma requisição GET para obter os dados de um registro específico com o ID fornecido
-      const response = await axios.get(`http://localhost:8081/civis_veiculo/selectId/${id}`);
+      const response = await axios.get(`${dbConfig()}/civis_veiculo/selectId/${id}`);
       const data = response.data;
 
       // Cria uma instância de um modal usando Bootstrap
@@ -114,7 +115,7 @@ export default function CivisVeiculo() {
   const atualizarDadosPorId = async (id) => {
     try {
       // Envia uma requisição PUT para atualizar os dados do registro com o ID fornecido
-      const response = await axios.put(`http://localhost:8081/civis_veiculo/${id}`, {
+      const response = await axios.put(`${dbConfig()}/civis_veiculo/${id}`, {
         // Envia os dados a serem atualizados no corpo da requisição
         nome,
         cnh,
@@ -169,7 +170,7 @@ export default function CivisVeiculo() {
 
     try {
       // Envia uma requisição POST para adicionar um novo registro
-      const response = await fetch('http://localhost:8081/civis_veiculo', {
+      const response = await fetch(`${dbConfig()}/civis_veiculo`, {
         // Utiliza o método POST
         method: 'POST',
         headers: {
@@ -203,7 +204,7 @@ export default function CivisVeiculo() {
   const deleteRegistro = async (id) => {
     // Envia uma requisição DELETE para a URL específica do ID fornecido
     try {
-      const response = await fetch(`http://localhost:8081/civis_veiculo/${id}`, {
+      const response = await fetch(`${dbConfig()}/civis_veiculo/${id}`, {
         method: 'DELETE', // Utiliza o método DELETE para indicar a exclusão do recurso
       });
 

@@ -5,6 +5,7 @@ import estiloLogin from "./login.module.css";
 import logo from "../../assets/img/Logo.png";
 
 import { verificarAutenticacao } from '../../components/autenticacao';
+import dbConfig from "../../components/util/dbConfig";
 
 export default function Login() {
   const [usuario, setUsuario] = useState("");
@@ -14,7 +15,7 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8081/login', {
+      const response = await axios.post(`${dbConfig()}/login`, {
         usuario: usuario,
         senha: senha
       });
