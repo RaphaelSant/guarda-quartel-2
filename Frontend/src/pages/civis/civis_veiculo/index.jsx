@@ -9,7 +9,7 @@ import "bootstrap/dist/js/bootstrap.bundle";
 
 import ImpressaoHeader from "../../../components/impressao/impressaoHeader";
 import ImpressaoFooter from "../../../components/impressao/impressaoFooter";
-import estiloImpressao from "../../../components/impressao/css/PrintPortrait.module.css";
+import estiloImpressao from "../../../components/impressao/css/PrintLandscape.module.css";
 import "../../../css/estiloTabela.css";
 
 import Navbar from "../../../components/navbar";
@@ -242,19 +242,19 @@ export default function CivisVeiculo() {
               <Link to="/home">Página Inicial</Link>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              Registro de Civil de Veículo
+              Registro de veículos civis
             </li>
           </ol>
         </nav>
       </div>
-      <p className="text-center d-print-none">Entrada e saída de civis</p>
+      <p className="text-center d-print-none">Entrada e saída de veículos civis</p>
       <div className="text-center mb-4 d-print-none">
         <NovoRegistro2 />
       </div>
       <div
         className={`container d-flex flex-column justify-content-center align-items-center ${estiloImpressao.container_local}`}
       >
-        <ImpressaoHeader titulo="Entrada e saída de civis" />
+        <ImpressaoHeader titulo="Entrada e saída de veículos civis" />
 
         <table className="table text-center table-bordered border-dark table-hover">
           <thead>
@@ -316,7 +316,7 @@ export default function CivisVeiculo() {
             })}
           </tbody>
         </table>
-        <Imprimir impressao="retrato" />
+        <Imprimir impressao="paisagem" />
         <ImpressaoFooter />
       </div>
 

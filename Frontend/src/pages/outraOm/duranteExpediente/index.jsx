@@ -246,19 +246,19 @@ export default function OutraOmDuranteExpediente() {
                             <Link to="/home">Página Inicial</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            Militares de outras OM durante o expediente
+                            Militares de outras OM durante o horário de expediente
                         </li>
                     </ol>
                 </nav>
             </div>
-            <p className="text-center d-print-none">Entrada e saída de militares outras organizações militares durante o expediente</p>
+            <p className="text-center d-print-none">Entrada e saída de militares outras organizações militares durante o horário de expediente</p>
             <div className="text-center mb-4 d-print-none">
                 <NovoRegistro2 />
             </div>
             <div
                 className={`container d-flex flex-column justify-content-center align-items-center ${estiloImpressao.container_local}`}
             >
-                <ImpressaoHeader titulo="Entrada e saída de militares outras organizações militares durante o expediente" />
+                <ImpressaoHeader titulo="Entrada e saída de militares outras organizações militares durante o horário de expediente" />
 
                 <table className="table text-center table-bordered border-dark table-hover">
                     <thead>

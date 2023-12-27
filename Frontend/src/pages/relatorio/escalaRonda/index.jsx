@@ -131,17 +131,17 @@ export default function RelatorioEscalaRonda() {
                             <Link to="/home">Página Inicial</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            Escala de ronda
+                            Escala de ronda do comandante da guarda
                         </li>
                     </ol>
                 </nav>
             </div>
-            <p className="text-center d-print-none">Escala de ronda</p>
+            <p className="text-center d-print-none">Escala de ronda do comandante da guarda</p>
             <div className="text-center mb-4 d-print-none">
                 <EditarRegistros click={() => buscarDadosPorId(1)} />
             </div>
             <div className={`container d-flex flex-column justify-content-center align-items-center ${estiloImpressao.container_local}`}>
-                <ImpressaoHeader titulo="Roteiro da guarda" />
+                <ImpressaoHeader titulo="Escala de ronda do comandante da guarda" />
 
                 <table className="table text-center table-bordered border-dark table-hover">
                     <thead>
