@@ -8,8 +8,8 @@ export default function ImpressaoHeader(props) {
 
     return (
         <>
-            <div class="position-relative w-100 d-none d-print-block">
-                <div class="position-absolute top-0 start-0 border border-dark pt-5 ps-5 pe-5 ">
+            <div className="position-relative w-100 d-none d-print-block">
+                <div className="position-absolute top-0 start-0 border border-dark pt-5 ps-5 pe-5 ">
                     <div className="border-top border-dark w-100">
                         <p>SCmt</p>
                     </div>
