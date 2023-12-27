@@ -76,6 +76,7 @@ export default function PelotaoForaExpediente() {
         const idtMilitarRegistro = document.getElementById('idt-mil').value;
         const dataEntradaRegistro = document.getElementById('data-entrada').value;
         const horaEntradaRegistro = document.getElementById('hora-entrada').value;
+        const horaSaidaRegistro = document.getElementById('hora-saida').value;
         const origemRegistro = document.getElementById('origem').value;
 
         // Organiza os dados coletados em um objeto
@@ -85,6 +86,7 @@ export default function PelotaoForaExpediente() {
             idtMilitarRegistro,
             dataEntradaRegistro,
             horaEntradaRegistro,
+            horaSaidaRegistro,
             origemRegistro,
         };
 
@@ -281,9 +283,10 @@ export default function PelotaoForaExpediente() {
 
                                     <td>{dados.idtMil}</td>
                                     <td>{formatDate(dados.dataEntrada)}</td>
-                                    <td>{formatTime(dados.horaEntrada)}</td>
+                                    <td>{`${dados.horaEntrada === null || dados.horaEntrada === '00:00:00' ? "bg-danger text-white fw-bold" : ""}`}
+                                        {dados.horaEntrada === null || dados.horaEntrada === '00:00:00' ? '- - -' : formatTime(dados.horaEntrada)}</td>
                                     <td className={`${dados.horaSaida === null || dados.horaSaida === '00:00:00' ? "bg-danger text-white fw-bold" : ""}`}>
-                                        {dados.horaSaida === null || dados.horaSaida === '00:00:00' ? 'OM' : formatTime(dados.horaSaida)}</td>
+                                        {dados.horaSaida === null || dados.horaSaida === '00:00:00' ? '- - -' : formatTime(dados.horaSaida)}</td>
                                     <td>{dados.origem}</td>
 
                                     <td className="d-print-none">
@@ -412,6 +415,19 @@ export default function PelotaoForaExpediente() {
                                     />
                                     <div className="valid-feedback">OK!</div>
                                     <div className="invalid-feedback">Campo obrigatório.</div>
+                                </div>
+
+                                <div className="col-md-6">
+                                    <label htmlFor="hora-saida" className="form-label">
+                                        Horário de Saída
+                                    </label>
+                                    <input
+                                        type="time"
+                                        className="form-control"
+                                        id="hora-saida"
+                                        placeholder="Insira o horário de saída"
+                                        required
+                                    />
                                 </div>
 
                                 <div className="col-md-6">
