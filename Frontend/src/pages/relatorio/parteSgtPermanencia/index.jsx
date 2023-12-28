@@ -210,7 +210,7 @@ export default function RelatorioParteSgtPerm() {
             // throw error;
         }
     };
-    
+
     return (
         <>
             <Navbar />
@@ -221,12 +221,12 @@ export default function RelatorioParteSgtPerm() {
                             <Link to="/home">Página Inicial</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            Roteiro da guarda
+                            Parte do Sgt Permanência
                         </li>
                     </ol>
                 </nav>
             </div>
-            <p className="text-center d-print-none">Roteiro da guarda</p>
+            <p className="text-center d-print-none">Parte do Sgt Permanência</p>
             <div className="text-center mb-4 d-print-none">
                 <EditarRegistros click={() => buscarDadosPorId(1)} />
 
