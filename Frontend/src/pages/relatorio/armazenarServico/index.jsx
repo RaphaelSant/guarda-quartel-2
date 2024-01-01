@@ -15,23 +15,53 @@ export default function ArmazenarServico() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    const executeDelete = async (url, errorMessage) => {
+        try {
+            const response = await fetch(url, {
+                method: 'DELETE',
+            });
+
+            if (!response.ok) {
+                throw new Error(errorMessage);
+            }
+
+            console.log(`Dados deletados com sucesso: ${url}`);
+        } catch (error) {
+            console.error(`Erro ao deletar dados: ${url}`, error.message);
+            throw new Error(errorMessage);
+        }
+    };
+
+    const executePost = async (url, errorMessage) => {
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+            });
+
+            if (!response.ok) {
+                throw new Error(errorMessage);
+            }
+
+            console.log(`Dados postados com sucesso: ${url}`);
+        } catch (error) {
+            console.error(`Erro ao postar dados: ${url}`, error.message);
+            throw new Error(errorMessage);
+        }
+    };
+
     const handleClick = async () => {
         setIsLoading(true);
         setError(null);
 
         try {
-            const response = await fetch(`${dbConfig()}/armazenar_servico`, {
-                method: 'POST',
-            });
+            await executeDelete(`${dbConfig()}/armazenar_servico_destino_delete`, 'Falha ao APAGAR dados das tabelas de destino');
+            await executePost(`${dbConfig()}/armazenar_servico`, 'Falha ao copiar dados');
+            await executeDelete(`${dbConfig()}/armazenar_servico_origem_delete`, 'Falha ao APAGAR dados das tabelas de origem');
 
-            if (!response.ok) {
-                throw new Error('Falha ao copiar dados');
-            }
-
-            console.log('Dados copiados com sucesso!');
+            console.log('Processo concluído com sucesso!');
+            alert('Processo concluído com sucesso!');
         } catch (error) {
-            console.error('Erro:', error.message);
-            setError('Erro ao copiar dados');
+            setError(error.message);
         } finally {
             setIsLoading(false);
         }
@@ -67,7 +97,7 @@ export default function ArmazenarServico() {
                             <button className="btn btn-danger" onClick={handleClick} disabled={isLoading}>
                                 {isLoading ? 'Copiando...' : 'Copiar Dados'}
                             </button>
-                            
+
                             <button
                                 type="button"
                                 className="btn btn-secondary"
