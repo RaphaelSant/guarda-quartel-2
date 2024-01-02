@@ -91,11 +91,13 @@ export default function ArmazenarServico() {
                             ></button>
                         </div>
                         <div className="modal-body">
-                            Os dados ficarão disponíveis apenas para consulta e impressão por um período de 24 horas (Até a passagem do serviço atual) no Menu -Serviço Anterior-.
+                            Os dados ficarão disponíveis apenas para consulta e impressão por um período de 24 horas (Até a passagem do serviço atual) no Menu <strong>Serviço Anterior</strong>.
                         </div>
                         <div className="modal-footer">
                             <button className="btn btn-danger" onClick={handleClick} disabled={isLoading}>
-                                {isLoading ? 'Copiando...' : 'Copiar Dados'}
+                                {isLoading ? <div className="spinner-border text-light" role="status">
+                                    <span className="visually-hidden">Loading...</span>
+                                </div> : 'Armazenar Serviço'}
                             </button>
 
                             <button
