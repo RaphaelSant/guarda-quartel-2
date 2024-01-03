@@ -28,22 +28,6 @@ export default function RelatorioParteSgtPerm() {
     const [data, setData] = useState([]);
     const [dataMil, setDataMil] = useState([]);
 
-    // Efeito que busca os dados no banco e salva no estado 'data'
-    // Atualiza os dados da página após um UPDATE no banco
-    useEffect(() => {
-        // Executa um efeito após a renderização inicial do componente
-
-        // Faz uma requisição para buscar dados de uma API em http://localhost:8081/relatorio_parte_sgt
-        fetch(`${dbConfig()}/relatorio_parte_sgt`)
-            // Converte a resposta para JSON
-            .then((res) => res.json())
-            // Define os dados recebidos no estado 'data' do componente
-            .then((data) => setData(data))
-            // Captura e lida com erros, caso ocorram na requisição
-            .catch((err) => console.log(err));
-    }), [];
-
-
     // Função para buscar dados da API e atualizar o estado 'data' - Parte Sgt Permanencia
     const fetchData = async () => {
         try {
@@ -198,6 +182,9 @@ export default function RelatorioParteSgtPerm() {
 
             // Limpa o formulário após a atualização dos dados
             clearForm();
+
+            await fetchData();
+            await fetchDataGuarnicao();
 
             // Retorna os dados da resposta da requisição
             return response.data;

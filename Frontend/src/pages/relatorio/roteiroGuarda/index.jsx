@@ -23,21 +23,6 @@ export default function RelatorioRoteiroGuarda() {
     // Estado para receber os dados gravados no BD
     const [data, setData] = useState([]);
 
-    // Efeito que busca os dados no banco e salva no estado 'data'
-    // Atualiza os dados da página após um UPDATE no banco
-    useEffect(() => {
-        // Executa um efeito após a renderização inicial do componente
-
-        // Faz uma requisição para buscar dados de uma API em http://localhost:8081/relatorio_roteiro_guarda
-        fetch(`${dbConfig()}/relatorio_roteiro_guarda`)
-            // Converte a resposta para JSON
-            .then((res) => res.json())
-            // Define os dados recebidos no estado 'data' do componente
-            .then((data) => setData(data))
-            // Captura e lida com erros, caso ocorram na requisição
-            .catch((err) => console.log(err));
-    }), [];
-
     // Função para buscar dados da API e atualizar o estado 'data'
     const fetchData = async () => {
         try {
@@ -149,6 +134,8 @@ export default function RelatorioRoteiroGuarda() {
 
             // Limpa o formulário após a atualização dos dados
             clearForm();
+
+            await fetchData();
 
             // Retorna os dados da resposta da requisição
             return response.data;

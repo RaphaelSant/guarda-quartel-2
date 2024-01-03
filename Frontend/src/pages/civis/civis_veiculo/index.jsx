@@ -25,20 +25,6 @@ export default function CivisVeiculo() {
   // Estado para receber os dados gravados no BD
   const [data, setData] = useState([]);
 
-  // Efeito que busca os dados no banco e salva no estado 'data'
-  useEffect(() => {
-    // Executa um efeito após a renderização inicial do componente
-
-    // Faz uma requisição para buscar dados de uma API em http://localhost:8081/civis_veiculo
-    fetch(`${dbConfig()}/civis_veiculo`)
-      // Converte a resposta para JSON
-      .then((res) => res.json())
-      // Define os dados recebidos no estado 'data' do componente
-      .then((data) => setData(data))
-      // Captura e lida com erros, caso ocorram na requisição
-      .catch((err) => console.log(err));
-  }), [];
-
   // Função para buscar dados da API e atualizar o estado 'data'
   const fetchData = async () => {
     try {
@@ -129,8 +115,7 @@ export default function CivisVeiculo() {
       // Exibe um alerta com a mensagem da resposta para informar o usuário sobre o resultado da operação
       alert(response.data.message);
 
-      // Limpa o formulário após a atualização dos dados
-      clearForm();
+      await fetchData();
 
       // Retorna os dados da resposta da requisição
       return response.data;
@@ -210,6 +195,8 @@ export default function CivisVeiculo() {
 
       // Converte a resposta da requisição para JSON
       const data = await response.json();
+
+      await fetchData();
 
       // Exibe um alerta da mensagem retornada após a exclusão (mensagem de sucesso ou erro)
       alert(data.message);

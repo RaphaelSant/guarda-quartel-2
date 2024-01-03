@@ -25,21 +25,6 @@ export default function PelotaoDuranteExpediente() {
     // Estado para receber os dados gravados no BD
     const [data, setData] = useState([]);
 
-    // Efeito que busca os dados no banco e salva no estado 'data'
-    // Atualiza os dados da página após um UPDATE no banco
-    useEffect(() => {
-        // Executa um efeito após a renderização inicial do componente
-
-        // Faz uma requisição para buscar dados de uma API em http://localhost:8081/pelotao_durante_expediente
-        fetch(`${dbConfig()}/pelotao_durante_expediente`)
-            // Converte a resposta para JSON
-            .then((res) => res.json())
-            // Define os dados recebidos no estado 'data' do componente
-            .then((data) => setData(data))
-            // Captura e lida com erros, caso ocorram na requisição
-            .catch((err) => console.log(err));
-    }), [];
-
     // Função para buscar dados da API e atualizar o estado 'data'
     const fetchData = async () => {
         try {
@@ -112,7 +97,7 @@ export default function PelotaoDuranteExpediente() {
 
             // Atualiza os dados na tela após a inserção 
             // (supõe-se que fetchData() é uma função que busca os dados atualizados)
-            fetchData();
+            await fetchData();
 
         } catch (error) {
             // Em caso de erro na requisição, exibe um alerta
@@ -187,6 +172,8 @@ export default function PelotaoDuranteExpediente() {
             // Limpa o formulário após a atualização dos dados
             clearForm();
 
+            await fetchData();
+
             // Retorna os dados da resposta da requisição
             return response.data;
         } catch (error) {
@@ -209,6 +196,8 @@ export default function PelotaoDuranteExpediente() {
 
             // Converte a resposta da requisição para JSON
             const data = await response.json();
+
+            await fetchData();
 
             // Exibe um alerta da mensagem retornada após a exclusão (mensagem de sucesso ou erro)
             alert(data.message);

@@ -195,6 +195,8 @@ export default function CivisPe() {
       // Converte a resposta da requisição para JSON
       const data = await response.json();
 
+      await fetchData();
+      
       // Exibe um alerta da mensagem retornada após a exclusão (mensagem de sucesso ou erro)
       alert(data.message);
     } catch (error) {
