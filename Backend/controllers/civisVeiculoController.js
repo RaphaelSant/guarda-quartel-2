@@ -12,6 +12,15 @@ router.get("/civis_veiculo", (req, res) => {
     });
 });
 
+// Rota para ler (Read) os dados a serem exibidos para o usuário em serviço anterior
+router.get("/servico_anterior_civis_veiculo", (req, res) => {
+    const sql = "SELECT * FROM bk_civis_veiculo order by dataEntrada, horaEntrada";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
 // Rota para selecionar os dados por ID
 router.get("/civis_veiculo/selectId/:id", (req, res) => {
     const id = req.params.id;

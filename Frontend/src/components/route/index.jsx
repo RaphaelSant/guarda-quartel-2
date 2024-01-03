@@ -19,6 +19,9 @@ import RelatorioEscalaRonda from "../../pages/relatorio/escalaRonda";
 import RelatorioRoteiroGuarda from "../../pages/relatorio/roteiroGuarda";
 import RelatorioParteSgtPerm from "../../pages/relatorio/parteSgtPermanencia";
 import ArmazenarServico from "../../pages/relatorio/armazenarServico";
+import RelatorioServicoAnterior from "../../pages/relatorio/servicoAnterior";
+import ServicoAnteriorCivisRegistro from "../../pages/relatorio/servicoAnterior/servicoAnteriorPages/ServicoAnteriorCivisRegistro.jsx";
+import ServicoAnteriorCivisVeiculo from "../../pages/relatorio/servicoAnterior/servicoAnteriorPages/ServicoAnteriorCivisVeiculo.jsx";
 
 export default function Rotas() {
   const [autenticado, setAutenticado] = useState(false);
@@ -52,6 +55,10 @@ export default function Rotas() {
             <Route exact path="/relatorio_escala_ronda" element={<RelatorioEscalaRonda />} />
             <Route exact path="/relatorio_parte_sgt_permanencia" element={<RelatorioParteSgtPerm />} />
             <Route exact path="/relatorio_armazenar_servico" element={<ArmazenarServico />} />
+            <Route exact path="/relatorio_servico_anterior" element={<RelatorioServicoAnterior />} />
+            <Route exact path="/relatorio_servico_anterior/civis_registro" element={<ServicoAnteriorCivisRegistro />} />
+            <Route exact path="/relatorio_servico_anterior/civis_veiculo" element={<ServicoAnteriorCivisVeiculo />} />
+
           </>
         ) : (
           // Redirecionar para a página de Login se o usuário não estiver autenticado

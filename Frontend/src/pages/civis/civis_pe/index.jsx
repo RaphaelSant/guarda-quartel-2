@@ -28,24 +28,10 @@ export default function CivisPe() {
   // Estado para receber os dados gravados no BD
   const [data, setData] = useState([]);
 
-  // Efeito que busca os dados no banco e salva no estado 'data'
-  useEffect(() => {
-    // Executa um efeito após a renderização inicial do componente
-
-    // Faz uma requisição para buscar dados de uma API em `${dbConfig}/civis_pe`
-    fetch(`${dbConfig()}/civis_pe`)
-      // Converte a resposta para JSON
-      .then((res) => res.json())
-      // Define os dados recebidos no estado 'data' do componente
-      .then((data) => setData(data))
-      // Captura e lida com erros, caso ocorram na requisição
-      .catch((err) => console.log(err));
-  }), [];
-
   // Função para buscar dados da API e atualizar o estado 'data'
   const fetchData = async () => {
     try {
-      // Faz uma requisição para buscar dados da API em `${dbConfig}/civis_pe`
+      // Faz uma requisição para buscar dados da API
       const res = await fetch(`${dbConfig()}/civis_pe`);
 
       // Converte a resposta da requisição para o formato JSON
@@ -129,8 +115,7 @@ export default function CivisPe() {
       // Exibe um alerta com a mensagem da resposta para informar o usuário sobre o resultado da operação
       alert(response.data.message);
 
-      // Limpa o formulário após a atualização dos dados
-      clearForm();
+      await fetchData();
 
       // Retorna os dados da resposta da requisição
       return response.data;
