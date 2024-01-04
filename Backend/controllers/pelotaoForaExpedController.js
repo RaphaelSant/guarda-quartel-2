@@ -12,6 +12,15 @@ router.get("/pelotao_fora_expediente", (req, res) => {
     });
 });
 
+// Rota para ler (Read) os dados a serem exibidos para o usuário em serviço anterior
+router.get("/servico_anterior_pelotao_fora_expediente", (req, res) => {
+    const sql = "SELECT * FROM bk_pelotao_fora_expediente order by dataEntrada, horaEntrada";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
 // Rota para realizar novos registro de dados. (Create)
 router.post("/pelotao_fora_expediente", (req, res) => {
     const { postoGraduacaoRegistro, nomeGuerraRegistro, idtMilitarRegistro, dataEntradaRegistro, horaEntradaRegistro, horaSaidaRegistro, origemRegistro } = req.body;

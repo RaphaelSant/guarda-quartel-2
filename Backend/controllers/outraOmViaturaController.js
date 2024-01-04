@@ -12,6 +12,15 @@ router.get("/outra_om_viatura", (req, res) => {
     });
 });
 
+// Rota para ler (Read) os dados a serem exibidos para o usuário
+router.get("/servico_anterior_outra_om_viatura", (req, res) => {
+    const sql = "SELECT * FROM bk_oom_viatura order by dataRegistro, horaEntrada";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
 // Rota para realizar novos registro de dados. (Create)
 router.post("/outra_om_viatura", (req, res) => {
     const { vtrRegistro, odmSaidaRegistro, odmEntradaRegistro, dataRegistro, horaSaidaRegistro, horaEntradaRegistro, motoristaRegistro, chefeVtrRegistro, destinoRegistro } = req.body;

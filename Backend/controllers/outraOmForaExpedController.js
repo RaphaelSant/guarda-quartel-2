@@ -12,6 +12,15 @@ router.get("/outra_om_fora_expediente", (req, res) => {
     });
 });
 
+// Rota para ler (Read) os dados a serem exibidos para o usuário
+router.get("/servico_anterior_outra_om_fora_expediente", (req, res) => {
+    const sql = "SELECT * FROM bk_oom_fora_expediente order by dataEntrada, horaEntrada";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
 // Rota para realizar novos registro de dados. (Create)
 router.post("/outra_om_fora_expediente", (req, res) => {
     const { postoGraduacaoRegistro, nomeGuerraRegistro, idtMilitarRegistro, omRegistro, dataEntradaRegistro, horaEntradaRegistro, horaSaidaRegistro, origemRegistro } = req.body;

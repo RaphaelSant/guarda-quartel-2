@@ -139,6 +139,8 @@ export default function RelatorioParteSgtPerm() {
                 editModal.show();
             }
 
+            console.log(viaturas);
+
         } catch (error) {
             // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
             alert(error);

@@ -7,9 +7,6 @@ import "bootstrap/dist/js/bootstrap.bundle";
 import "../../../css/estiloTabela.css";
 
 import Navbar from "../../../components/navbar";
-import {
-    EditarRegistros,
-} from "../../../components/botao";
 
 export default function RelatorioServicoAnterior() {
 
@@ -34,10 +31,15 @@ export default function RelatorioServicoAnterior() {
                 <div className="list-group">
                     <Link className="list-group-item list-group-item-action" to="/relatorio_servico_anterior/civis_registro">Civis registro</Link>
                     <Link className="list-group-item list-group-item-action" to="/relatorio_servico_anterior/civis_veiculo">Civis veículo</Link>
-                    <a href="#" className="list-group-item list-group-item-action">A second link item</a>
-                    <a href="#" className="list-group-item list-group-item-action">A third link item</a>
-                    <a href="#" className="list-group-item list-group-item-action">A fourth link item</a>
-                    <a className="list-group-item list-group-item-action disabled" aria-disabled="true">A disabled link item</a>
+                    <Link className="list-group-item list-group-item-action" to="/relatorio_servico_anterior/pelotao_durante_expediente">Pelotão Durante o Expediente</Link>
+                    <Link className="list-group-item list-group-item-action" to="/relatorio_servico_anterior/pelotao_fora_expediente">Pelotão Fora de Expediente</Link>
+                    <Link className="list-group-item list-group-item-action" to="/relatorio_servico_anterior/pelotao_viatura">Pelotão Viatura</Link>
+                    <Link className="list-group-item list-group-item-action" to="/relatorio_servico_anterior/outra_om_durante_expediente">Outras OM Durante o Expediente</Link>
+                    <Link className="list-group-item list-group-item-action" to="/relatorio_servico_anterior/outra_om_fora_expediente">Outras OM Fora do horário de Expediente</Link>
+                    <Link className="list-group-item list-group-item-action" to="/relatorio_servico_anterior/outra_om_viatura">Outras OM Viatura</Link>
+                    <Link className="list-group-item list-group-item-action" to="/relatorio_servico_anterior/roteiro_guarda">Roteiro da Guarda</Link>
+                    <Link className="list-group-item list-group-item-action" to="/relatorio_servico_anterior/escala_ronda">Escala de Ronda</Link>
+                    <Link className="list-group-item list-group-item-action" to="/relatorio_servico_anterior/parte_sgt_permanencia">Parte do Sgt Permanência</Link>
                 </div>
             </div>
 

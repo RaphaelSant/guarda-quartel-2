@@ -22,6 +22,15 @@ import ArmazenarServico from "../../pages/relatorio/armazenarServico";
 import RelatorioServicoAnterior from "../../pages/relatorio/servicoAnterior";
 import ServicoAnteriorCivisRegistro from "../../pages/relatorio/servicoAnterior/servicoAnteriorPages/ServicoAnteriorCivisRegistro.jsx";
 import ServicoAnteriorCivisVeiculo from "../../pages/relatorio/servicoAnterior/servicoAnteriorPages/ServicoAnteriorCivisVeiculo.jsx";
+import ServicoAnteriorPelotaoDuranteExpediente from "../../pages/relatorio/servicoAnterior/servicoAnteriorPages/ServicoAnteriorPelotaoDuranteExpediente.jsx";
+import ServicoAnteriorPelotaoForaExpediente from "../../pages/relatorio/servicoAnterior/servicoAnteriorPages/ServicoAnteriorPelotaoForaExpediente.jsx";
+import ServicoAnteriorPelotaoViatura from "../../pages/relatorio/servicoAnterior/servicoAnteriorPages/ServicoAnteriorPelotaoViatura.jsx";
+import ServicoAnteriorOutraOmDuranteExpediente from "../../pages/relatorio/servicoAnterior/servicoAnteriorPages/ServicoAnteriorOutraOmDuranteExpediente.jsx";
+import ServicoAnteriorOutraOmForaExpediente from "../../pages/relatorio/servicoAnterior/servicoAnteriorPages/ServicoAnteriorOutraOmForaExpediente.jsx";
+import ServicoAnteriorOutraOmViatura from "../../pages/relatorio/servicoAnterior/servicoAnteriorPages/ServicoAnteriorOutraOmViatura.jsx";
+import ServicoAnteriorRelatorioRoteiroGuarda from "../../pages/relatorio/servicoAnterior/servicoAnteriorPages/ServicoAnteriorRelatorioRoteiroGuarda.jsx";
+import ServicoAnteriorRelatorioEscalaRonda from "../../pages/relatorio/servicoAnterior/servicoAnteriorPages/ServicoAnteriorRelatorioEscalaRonda.jsx";
+import ServicoAnteriorRelatorioParteSgtPerm from "../../pages/relatorio/servicoAnterior/servicoAnteriorPages/ServicoAnteriorRelatorioParteSgtPerm.jsx";
 
 export default function Rotas() {
   const [autenticado, setAutenticado] = useState(false);
@@ -58,6 +67,15 @@ export default function Rotas() {
             <Route exact path="/relatorio_servico_anterior" element={<RelatorioServicoAnterior />} />
             <Route exact path="/relatorio_servico_anterior/civis_registro" element={<ServicoAnteriorCivisRegistro />} />
             <Route exact path="/relatorio_servico_anterior/civis_veiculo" element={<ServicoAnteriorCivisVeiculo />} />
+            <Route exact path="/relatorio_servico_anterior/pelotao_durante_expediente" element={<ServicoAnteriorPelotaoDuranteExpediente />} />
+            <Route exact path="/relatorio_servico_anterior/pelotao_fora_expediente" element={<ServicoAnteriorPelotaoForaExpediente />} />
+            <Route exact path="/relatorio_servico_anterior/pelotao_viatura" element={<ServicoAnteriorPelotaoViatura />} />
+            <Route exact path="/relatorio_servico_anterior/outra_om_durante_expediente" element={<ServicoAnteriorOutraOmDuranteExpediente />} />
+            <Route exact path="/relatorio_servico_anterior/outra_om_fora_expediente" element={<ServicoAnteriorOutraOmForaExpediente />} />
+            <Route exact path="/relatorio_servico_anterior/outra_om_viatura" element={<ServicoAnteriorOutraOmViatura />} />
+            <Route exact path="/relatorio_servico_anterior/roteiro_guarda" element={<ServicoAnteriorRelatorioRoteiroGuarda />} />
+            <Route exact path="/relatorio_servico_anterior/escala_ronda" element={<ServicoAnteriorRelatorioEscalaRonda />} />
+            <Route exact path="/relatorio_servico_anterior/parte_sgt_permanencia" element={<ServicoAnteriorRelatorioParteSgtPerm />} />
 
           </>
         ) : (
