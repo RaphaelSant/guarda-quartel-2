@@ -61,6 +61,7 @@ export default function PelotaoDuranteExpediente() {
         const idtMilitarRegistro = document.getElementById('idt-mil').value;
         const dataEntradaRegistro = document.getElementById('data-entrada').value;
         const horaEntradaRegistro = document.getElementById('hora-entrada').value;
+        const horaSaidaRegistro = document.getElementById('hora-saida').value;
         const origemRegistro = document.getElementById('origem').value;
 
         // Organiza os dados coletados em um objeto
@@ -70,6 +71,7 @@ export default function PelotaoDuranteExpediente() {
             idtMilitarRegistro,
             dataEntradaRegistro,
             horaEntradaRegistro,
+            horaSaidaRegistro,
             origemRegistro,
         };
 
@@ -270,9 +272,11 @@ export default function PelotaoDuranteExpediente() {
 
                                     <td>{dados.idtMil}</td>
                                     <td>{formatDate(dados.dataEntrada)}</td>
-                                    <td>{formatTime(dados.horaEntrada)}</td>
-                                    <td className={`${dados.horaSaida === null || dados.horaSaida === '00:00:00' ? "bg-danger text-white fw-bold" : ""}`}>
-                                        {dados.horaSaida === null || dados.horaSaida === '00:00:00' ? 'OM' : formatTime(dados.horaSaida)}</td>
+                                    <td>
+                                        {dados.horaEntrada === null || dados.horaEntrada === '00:00:00' ? '- - -' : formatTime(dados.horaEntrada)}
+                                    </td>
+                                    <td>
+                                        {dados.horaSaida === null || dados.horaSaida === '00:00:00' ? '- - -' : formatTime(dados.horaSaida)}</td>
                                     <td>{dados.origem}</td>
 
                                     <td className="d-print-none">
@@ -324,7 +328,7 @@ export default function PelotaoDuranteExpediente() {
                                 noValidate
                             >
                                 <div className="col-md-6">
-                                    <label className="form-label" htmlFor="pg">Posto Graduação</label>
+                                    <label className="form-label" htmlFor="pg">Posto Graduação *</label>
                                     <select className="form-select" id="pg" >
                                         <option defaultValue={"Posto/Graduação"}>Posto/Graduação</option>
                                         <option value="Soldado">Soldado</option>
@@ -346,7 +350,7 @@ export default function PelotaoDuranteExpediente() {
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="nome-guerra" className="form-label">
-                                        Nome de guerra
+                                        Nome de guerra *
                                     </label>
                                     <input
                                         type="text"
@@ -359,7 +363,7 @@ export default function PelotaoDuranteExpediente() {
 
                                 <div className="col-md-6">
                                     <label htmlFor="idt-mil" className="form-label">
-                                        Identidade Militar
+                                        Identidade Militar *
                                     </label>
                                     <input
                                         type="text"
@@ -374,7 +378,7 @@ export default function PelotaoDuranteExpediente() {
 
                                 <div className="col-md-6">
                                     <label htmlFor="data-entrada" className="form-label">
-                                        Data de Entrada
+                                        Data de Entrada *
                                     </label>
                                     <input
                                         type="date"
@@ -404,8 +408,20 @@ export default function PelotaoDuranteExpediente() {
                                 </div>
 
                                 <div className="col-md-6">
+                                    <label htmlFor="hora-saida" className="form-label">
+                                        Horário de Saída
+                                    </label>
+                                    <input
+                                        type="time"
+                                        className="form-control"
+                                        id="hora-saida"
+                                        placeholder="Insira o horário de saída"
+                                    />
+                                </div>
+
+                                <div className="col-md-6">
                                     <label htmlFor="origem" className="form-label">
-                                        Origem / Destino
+                                        Origem / Destino *
                                     </label>
                                     <input
                                         type="text"

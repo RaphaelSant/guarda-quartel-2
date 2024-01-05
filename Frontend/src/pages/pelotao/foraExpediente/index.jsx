@@ -326,7 +326,7 @@ export default function PelotaoForaExpediente() {
                                 noValidate
                             >
                                 <div className="col-md-6">
-                                    <label className="form-label" htmlFor="pg">Posto Graduação</label>
+                                    <label className="form-label" htmlFor="pg">Posto Graduação *</label>
                                     <select className="form-select" id="pg" >
                                         <option defaultValue={"Posto/Graduação"}>Posto/Graduação</option>
                                         <option value="Soldado">Soldado</option>
@@ -348,7 +348,7 @@ export default function PelotaoForaExpediente() {
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="nome-guerra" className="form-label">
-                                        Nome de guerra
+                                        Nome de guerra *
                                     </label>
                                     <input
                                         type="text"
@@ -361,7 +361,7 @@ export default function PelotaoForaExpediente() {
 
                                 <div className="col-md-6">
                                     <label htmlFor="idt-mil" className="form-label">
-                                        Identidade Militar
+                                        Identidade Militar *
                                     </label>
                                     <input
                                         type="text"
@@ -376,7 +376,7 @@ export default function PelotaoForaExpediente() {
 
                                 <div className="col-md-6">
                                     <label htmlFor="data-entrada" className="form-label">
-                                        Data de Entrada
+                                        Data de Entrada *
                                     </label>
                                     <input
                                         type="date"
@@ -420,7 +420,7 @@ export default function PelotaoForaExpediente() {
 
                                 <div className="col-md-6">
                                     <label htmlFor="origem" className="form-label">
-                                        Origem / Destino
+                                        Origem / Destino *
                                     </label>
                                     <input
                                         type="text"

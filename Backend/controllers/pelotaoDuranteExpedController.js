@@ -27,7 +27,7 @@ router.post("/pelotao_durante_expediente", (req, res) => {
     const sql = "INSERT INTO pelotao_durante_expediente (pg, nomeGuerra, idtMil, dataEntrada, horaEntrada, horaSaida, origem) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     // Validação dos dados
-    if (!postoGraduacaoRegistro || !nomeGuerraRegistro || !idtMilitarRegistro || !dataEntradaRegistro || !horaEntradaRegistro || !origemRegistro) {
+    if (!postoGraduacaoRegistro || !nomeGuerraRegistro || !idtMilitarRegistro || !dataEntradaRegistro || !origemRegistro) {
         return res.status(400).json({ message: "Todos os campos são obrigatórios." });
     }
 
