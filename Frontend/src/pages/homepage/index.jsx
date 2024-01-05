@@ -2,8 +2,28 @@ import React from "react";
 import '../../css/geral.css';
 import { CardCivis, CardMilitares, CardOutrasOm, CardRelatorio } from "../../components/card";
 import Navbar from "../../components/navbar";
+import { jwtDecode } from "jwt-decode";
+
 
 export default function HomePage() {
+    const token = localStorage.getItem('token');
+    let isAdmin = false;
+
+    if (token) {
+        // Decodificar o token para acessar as informações
+        const decodedToken = jwtDecode(token);
+
+        // Verificar se o token indica que o usuário é administrador
+        isAdmin = decodedToken && decodedToken.isAdmin === 1; // 'role' é apenas um exemplo, você deve usar a chave correta no token
+    }
+
+    console.log(token);
+
+    const decodedToken = jwtDecode(token);
+
+    console.log(decodedToken.isAdmin);
+    console.log(isAdmin);
+
     return <>
         <Navbar />
         <div className="container mt-2">
@@ -34,9 +54,14 @@ export default function HomePage() {
                 <CardRelatorio link="/relatorio_roteiro_guarda" titulo="Roteiro da Guarda" />
                 <CardRelatorio link="/relatorio_escala_ronda" titulo="Escala de Ronda" />
                 <CardRelatorio link="/relatorio_parte_sgt_permanencia" titulo="Parte do Representante do Cmdo" />
-                <CardRelatorio link="/relatorio_armazenar_servico" titulo="Armazenar Serviço" />
+                {isAdmin && (
+                    <>
+                        <CardRelatorio link="/relatorio_armazenar_servico" titulo="Armazenar Serviço" />
+                    </>
+                )}
                 <CardRelatorio link="/relatorio_servico_anterior" titulo="Serviço Anterior" />
             </div>
+
         </div>
     </>
 }
