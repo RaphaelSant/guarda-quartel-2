@@ -27,7 +27,7 @@ router.post("/outra_om_fora_expediente", (req, res) => {
     const sql = "INSERT INTO oom_fora_expediente (pg, nomeGuerra, idtMil, om, dataEntrada, horaEntrada, horaSaida, origem) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     // Validação dos dados
-    if (!postoGraduacaoRegistro || !nomeGuerraRegistro || !omRegistro || !idtMilitarRegistro || !dataEntradaRegistro || !horaEntradaRegistro || !origemRegistro) {
+    if (!postoGraduacaoRegistro || !nomeGuerraRegistro || !omRegistro || !idtMilitarRegistro || !dataEntradaRegistro || !origemRegistro) {
         return res.status(400).json({ message: "Todos os campos são obrigatórios." });
     }
 

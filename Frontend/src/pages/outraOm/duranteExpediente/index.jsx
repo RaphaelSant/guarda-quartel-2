@@ -62,6 +62,7 @@ export default function OutraOmDuranteExpediente() {
         const omRegistro = document.getElementById('om').value;
         const dataEntradaRegistro = document.getElementById('data-entrada').value;
         const horaEntradaRegistro = document.getElementById('hora-entrada').value;
+        const horaSaidaRegistro = document.getElementById('hora-saida').value;
         const origemRegistro = document.getElementById('origem').value;
 
         // Organiza os dados coletados em um objeto
@@ -72,6 +73,7 @@ export default function OutraOmDuranteExpediente() {
             omRegistro,
             dataEntradaRegistro,
             horaEntradaRegistro,
+            horaSaidaRegistro,
             origemRegistro,
         };
 
@@ -277,9 +279,12 @@ export default function OutraOmDuranteExpediente() {
                                     <td>{dados.idtMil}</td>
                                     <td>{dados.om}</td>
                                     <td>{formatDate(dados.dataEntrada)}</td>
-                                    <td>{formatTime(dados.horaEntrada)}</td>
-                                    <td className={`${dados.horaSaida === null || dados.horaSaida === '00:00:00' ? "bg-danger text-white fw-bold" : ""}`}>
-                                        {dados.horaSaida === null || dados.horaSaida === '00:00:00' ? 'OM' : formatTime(dados.horaSaida)}</td>
+                                    <td>
+                                        {dados.horaEntrada === null || dados.horaEntrada === '00:00:00' ? '- - -' : formatTime(dados.horaEntrada)}
+                                    </td>
+                                    <td>
+                                        {dados.horaSaida === null || dados.horaSaida === '00:00:00' ? '- - -' : formatTime(dados.horaSaida)}
+                                    </td>
                                     <td>{dados.origem}</td>
 
                                     <td className="d-print-none">
@@ -330,8 +335,8 @@ export default function OutraOmDuranteExpediente() {
 
                                 noValidate
                             >
-                                <div className="col-md-4">
-                                    <label className="form-label" htmlFor="pg">Posto Graduação</label>
+                                <div className="col-md-3">
+                                    <label className="form-label" htmlFor="pg">Posto Graduação *</label>
                                     <select className="form-select" id="pg" >
                                         <option defaultValue={"Posto/Graduação"}>Posto/Graduação</option>
                                         <option value="Soldado">Soldado</option>
@@ -351,9 +356,9 @@ export default function OutraOmDuranteExpediente() {
                                         <option value="Marechal">Marechal</option>
                                     </select>
                                 </div>
-                                <div className="col-md-4">
+                                <div className="col-md-3">
                                     <label htmlFor="nome-guerra" className="form-label">
-                                        Nome de guerra
+                                        Nome de guerra *
                                     </label>
                                     <input
                                         type="text"
@@ -364,9 +369,9 @@ export default function OutraOmDuranteExpediente() {
                                     />
                                 </div>
 
-                                <div className="col-md-4">
+                                <div className="col-md-3">
                                     <label htmlFor="idt-mil" className="form-label">
-                                        Identidade Militar
+                                        Identidade Militar *
                                     </label>
                                     <input
                                         type="text"
@@ -379,9 +384,9 @@ export default function OutraOmDuranteExpediente() {
                                     />
                                 </div>
 
-                                <div className="col-md-6">
+                                <div className="col-md-3">
                                     <label htmlFor="om" className="form-label">
-                                        Organização Militar
+                                        Organização Militar *
                                     </label>
                                     <input
                                         type="text"
@@ -394,9 +399,9 @@ export default function OutraOmDuranteExpediente() {
                                     />
                                 </div>
 
-                                <div className="col-md-6">
+                                <div className="col-md-3">
                                     <label htmlFor="data-entrada" className="form-label">
-                                        Data de Entrada
+                                        Data de Entrada *
                                     </label>
                                     <input
                                         type="date"
@@ -410,7 +415,7 @@ export default function OutraOmDuranteExpediente() {
                                     <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
-                                <div className="col-md-6">
+                                <div className="col-md-3">
                                     <label htmlFor="hora-entrada" className="form-label">
                                         Horário de Entrada
                                     </label>
@@ -421,13 +426,24 @@ export default function OutraOmDuranteExpediente() {
                                         placeholder="Insira o horário de entrada"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
-                                <div className="col-md-6">
+                                <div className="col-md-3">
+                                    <label htmlFor="hora-saida" className="form-label">
+                                        Horário de Saída
+                                    </label>
+                                    <input
+                                        type="time"
+                                        className="form-control"
+                                        id="hora-saida"
+                                        placeholder="Insira o horário de saída"
+                                        required
+                                    />
+                                </div>
+
+                                <div className="col-md-3">
                                     <label htmlFor="origem" className="form-label">
-                                        Origem / Destino
+                                        Origem / Destino *
                                     </label>
                                     <input
                                         type="text"
