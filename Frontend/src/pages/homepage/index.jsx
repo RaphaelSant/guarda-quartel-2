@@ -17,12 +17,12 @@ export default function HomePage() {
         isAdmin = decodedToken && decodedToken.isAdmin === 1; // 'role' é apenas um exemplo, você deve usar a chave correta no token
     }
 
-    console.log(token);
-
+    
     const decodedToken = jwtDecode(token);
-
-    console.log(decodedToken.isAdmin);
-    console.log(isAdmin);
+    
+    //console.log(token);
+    //console.log(decodedToken.isAdmin);
+    //console.log(isAdmin);
 
     return <>
         <Navbar />
