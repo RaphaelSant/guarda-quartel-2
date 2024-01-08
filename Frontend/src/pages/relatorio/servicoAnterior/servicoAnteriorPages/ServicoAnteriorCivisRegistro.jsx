@@ -73,7 +73,7 @@ export default function ServicoAnteriorCivisRegistro() {
                     <thead>
                         <tr>
                             <th scope="col">Nome</th>
-                            <th scope="col">CPF</th>
+                            <th scope="col">Identidade</th>
                             <th scope="col">Data</th>
                             <th scope="col">Entrada</th>
                             <th scope="col">Saída</th>
