@@ -246,7 +246,7 @@ export default function CivisPe() {
           <thead>
             <tr>
               <th scope="col">Nome</th>
-              <th scope="col">CPF</th>
+              <th scope="col">Identidade</th>
               <th scope="col">Data</th>
               <th scope="col">Entrada</th>
               <th scope="col">Saída</th>
@@ -336,15 +336,15 @@ export default function CivisPe() {
 
                 <div className="col-md-6">
                   <label htmlFor="cpf" className="form-label">
-                    CPF
+                    Identidade
                   </label>
                   <input
                     type="text"
                     className="form-control"
                     id="cpf"
                     value={registroCpf}
-                    onChange={(e) => setRegistroCpf(cpfMask(e.target.value))}
-                    placeholder="000.000.000-00"
+                    onChange={(e) => setRegistroCpf(e.target.value)}
+                    placeholder="Insira a identidade"
                     name="cpf"
                     maxLength="14"
                     required
