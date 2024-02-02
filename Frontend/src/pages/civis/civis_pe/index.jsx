@@ -120,9 +120,11 @@ export default function CivisPe() {
       // Retorna os dados da resposta da requisição
       return response.data;
     } catch (error) {
+      const msg = error.response.data.message;
       // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-      alert('Erro ao atualizar dados:', error);
-      console.error('Erro ao atualizar dados:', error);
+      //alert('Erro ao atualizar dados:', msg);
+      alert(`Erro ao atualizar dados: ${msg}`);
+      console.log('Erro ao atualizar dados:', msg);
 
       // Lança o erro novamente para ser tratado por quem chamou essa função
       throw error;
@@ -168,8 +170,10 @@ export default function CivisPe() {
       const responseData = await response.json();
 
       // Limpa o formulário após a inserção
-      clearForm();
-      setRegistroCpf('');
+      if(responseData.status != 400) {
+        clearForm();
+        setRegistroCpf('');
+      }
 
       // Exibe um alerta com a mensagem recebida do servidor após a inserção
       alert(responseData.message);
@@ -196,7 +200,7 @@ export default function CivisPe() {
       const data = await response.json();
 
       await fetchData();
-      
+
       // Exibe um alerta da mensagem retornada após a exclusão (mensagem de sucesso ou erro)
       alert(data.message);
     } catch (error) {
@@ -305,6 +309,7 @@ export default function CivisPe() {
       </div>
 
       {/* MODAL Novo Registro*/}
+
       <div className="modal fade" id="novoRegistro" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="novoRegistroLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered modal-lg">
           <div className="modal-content">
@@ -313,12 +318,7 @@ export default function CivisPe() {
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body" id="modal-body">
-              <form
-                className="row g-3 needs-validation"
-                id="needs-validation"
-
-                noValidate
-              >
+              <form className="row g-3 was-validated">
                 <div className="col-md-6">
                   <label htmlFor="nome-completo" className="form-label">
                     Nome Completo
@@ -420,12 +420,7 @@ export default function CivisPe() {
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body" id="modal-body">
-              <form
-                className="row g-3 needs-validation"
-                id="needs-validation"
-
-                noValidate
-              >
+              <form className="row g-3 was-validated">
                 <div className="col-md-6">
                   <label htmlFor="nome-completo" className="form-label">
                     Nome Completo
