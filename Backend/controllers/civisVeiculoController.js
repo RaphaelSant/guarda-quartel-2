@@ -41,7 +41,7 @@ router.post("/civis_veiculo", (req, res) => {
 
     // Validação dos dados
     if (!nome || !cnh || !placa || !dataEntrada || !horaEntrada || !destino) {
-        return res.status(400).json({ message: "Todos os campos são obrigatórios." });
+        return res.status(400).json({ message: "Todos os campos são obrigatórios.", status: 400 });
     }
 
     db.query(sql, [nome, cnh, placa, dataEntrada, horaEntrada, horaSaida, destino], (err, result) => {
@@ -56,6 +56,11 @@ router.put("/civis_veiculo/:id", (req, res) => {
     const id = req.params.id;
     const { nome, cnh, placa, dataEntrada, horaEntrada, horaSaida, destino } = req.body;
     const sql = "UPDATE civis_veiculo SET nome=?, cnh=?, placa=?, dataEntrada=?, horaEntrada=?, horaSaida=?, destino=? WHERE id=?";
+
+    // Validação dos dados
+    if (!nome || !cnh || !placa || !dataEntrada || !horaEntrada || !destino || !horaSaida) {
+        return res.status(400).json({ message: "Todos os campos são obrigatórios.", status: 400 });
+    }
 
     db.query(sql, [nome, cnh, placa, dataEntrada, horaEntrada, horaSaida, destino, id], (err, result) => {
         if (err) return res.status(500).send(err);

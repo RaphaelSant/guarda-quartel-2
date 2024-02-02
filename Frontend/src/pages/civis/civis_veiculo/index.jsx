@@ -88,15 +88,15 @@ export default function CivisVeiculo() {
   };
 
 
-    // Utilidades para o modal de EDIÇÃO / ATUALIZAÇÃO
-    const [id, setId] = useState([]);
-    const [nome, setNome] = useState([]);
-    const [cnh, setCnh] = useState([]);
-    const [placa, setPlaca] = useState([]);
-    const [dataEntrada, setDataEntrada] = useState([]);
-    const [horaEntrada, setHoraEntrada] = useState([]);
-    const [horaSaida, setHoraSaida] = useState([]);
-    const [destino, setDestino] = useState([]);
+  // Utilidades para o modal de EDIÇÃO / ATUALIZAÇÃO
+  const [id, setId] = useState([]);
+  const [nome, setNome] = useState([]);
+  const [cnh, setCnh] = useState([]);
+  const [placa, setPlaca] = useState([]);
+  const [dataEntrada, setDataEntrada] = useState([]);
+  const [horaEntrada, setHoraEntrada] = useState([]);
+  const [horaSaida, setHoraSaida] = useState([]);
+  const [destino, setDestino] = useState([]);
   // Ao clicar no botão atualizar dados do modal de edição essa função será executada
   const atualizarDadosPorId = async (id) => {
     try {
@@ -108,7 +108,8 @@ export default function CivisVeiculo() {
         placa,
         dataEntrada,
         horaEntrada,
-        horaSaida,
+        // Verifica se horaSaida está presente e não é uma string vazia, caso contrário, envia null
+        horaSaida: horaSaida && horaSaida.trim() !== "" ? horaSaida : null,
         destino,
       });
 
@@ -120,9 +121,10 @@ export default function CivisVeiculo() {
       // Retorna os dados da resposta da requisição
       return response.data;
     } catch (error) {
+      const msg = error.response.data.message;
       // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-      alert('Erro ao atualizar dados:', error);
-      console.error('Erro ao atualizar dados:', error);
+      //alert('Erro ao atualizar dados:', msg);
+      alert(`Erro ao atualizar dados: ${msg}`);
 
       // Lança o erro novamente para ser tratado por quem chamou essa função
       throw error;
@@ -169,15 +171,16 @@ export default function CivisVeiculo() {
       // Converte a resposta da requisição para JSON
       const responseData = await response.json();
 
-      // Limpa o formulário após a inserção
-      clearForm();
+      if (responseData.status != 400) {
+        // Limpa o formulário após a inserção
+        clearForm();
+        // Atualiza os dados na tela após a inserção 
+        // (supõe-se que fetchData() é uma função que busca os dados atualizados)
+        fetchData();
+      }
 
       // Exibe um alerta com a mensagem recebida do servidor após a inserção
       alert(responseData.message);
-
-      // Atualiza os dados na tela após a inserção 
-      // (supõe-se que fetchData() é uma função que busca os dados atualizados)
-      fetchData();
 
     } catch (error) {
       // Em caso de erro na requisição, exibe um alerta
@@ -270,8 +273,8 @@ export default function CivisVeiculo() {
                   <td>{civis.placa}</td>
                   <td>{formatDate(civis.dataEntrada)}</td>
                   <td>{formatTime(civis.horaEntrada)}</td>
-                  <td className={`${civis.horaSaida === null || civis.horaSaida === '00:00:00' ? "bg-danger text-white fw-bold" : ""}`}>
-                    {civis.horaSaida === null || civis.horaSaida === '00:00:00' ? 'OM' : formatTime(civis.horaSaida)}</td>
+                  <td className={`${civis.horaSaida === null ? "bg-danger text-white fw-bold" : ""}`}>
+                    {civis.horaSaida === null ? 'OM' : formatTime(civis.horaSaida)}</td>
                   <td>{civis.destino}</td>
 
                   <td className="d-print-none">
@@ -316,12 +319,7 @@ export default function CivisVeiculo() {
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body" id="modal-body">
-              <form
-                className="row g-3 needs-validation"
-                id="needs-validation"
-
-                noValidate
-              >
+              <form className="row g-3 was-validated">
                 <div className="col-md-6">
                   <label htmlFor="nome-completo" className="form-label">
                     Nome Completo
@@ -353,7 +351,7 @@ export default function CivisVeiculo() {
                   <div className="valid-feedback">OK!</div>
                   <div className="invalid-feedback">Campo obrigatório.</div>
                 </div>
-                
+
                 <div className="col-md-4">
                   <label htmlFor="placa" className="form-label">
                     Placa
@@ -438,12 +436,7 @@ export default function CivisVeiculo() {
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body" id="modal-body">
-              <form
-                className="row g-3 needs-validation"
-                id="needs-validation"
-
-                noValidate
-              >
+              <form className="row g-3 was-validated">
                 <div className="col-md-12">
                   <label htmlFor="nome-completo" className="form-label">
                     Nome Completo
@@ -569,7 +562,7 @@ export default function CivisVeiculo() {
               </form>
             </div>
             <div className="modal-footer">
-              <button type="button" onClick={clearForm} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <button type="submit" onClick={(e) => atualizarDadosPorId(id)} className="btn btn-md btn-success">Atualizar Registro</button>
             </div>
           </div>

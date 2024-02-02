@@ -57,7 +57,7 @@ router.put("/civis_pe/:id", (req, res) => {
     const { cpf, dataEntrada, destino, horaEntrada, horaSaida, nome } = req.body;
     const sql = "UPDATE civis_pe SET cpf=?, dataEntrada=?, destino=?, horaEntrada=?, horaSaida=?, nome=? WHERE id=?";
 
-    if (!cpf || !dataEntrada || !horaEntrada || !destino || !nome ) {
+    if (!cpf || !dataEntrada || !horaEntrada || !destino || !nome || !horaSaida) {
         return res.status(400).json({ message: "Todos os campos são obrigatórios." });
     }
 

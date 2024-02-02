@@ -174,14 +174,15 @@ export default function CivisPe() {
       if (responseData.status != 400) {
         clearForm();
         setRegistroCpf('');
+        // Atualiza os dados na tela após a inserção 
+        // (supõe-se que fetchData() é uma função que busca os dados atualizados)
+        fetchData();
       }
 
       // Exibe um alerta com a mensagem recebida do servidor após a inserção
       alert(responseData.message);
 
-      // Atualiza os dados na tela após a inserção 
-      // (supõe-se que fetchData() é uma função que busca os dados atualizados)
-      fetchData();
+
 
     } catch (error) {
       // Em caso de erro na requisição, exibe um alerta
@@ -505,7 +506,7 @@ export default function CivisPe() {
                     required
                   />
                   <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo vazio.</div>
+                  <div className="invalid-feedback">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-12">
