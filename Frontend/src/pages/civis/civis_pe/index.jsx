@@ -109,7 +109,8 @@ export default function CivisPe() {
         dataEntrada,
         destino,
         horaEntrada,
-        horaSaida,
+        // Verifica se horaSaida está presente e não é uma string vazia, caso contrário, envia null
+        horaSaida: horaSaida && horaSaida.trim() !== "" ? horaSaida : null,
       });
 
       // Exibe um alerta com a mensagem da resposta para informar o usuário sobre o resultado da operação
@@ -170,7 +171,7 @@ export default function CivisPe() {
       const responseData = await response.json();
 
       // Limpa o formulário após a inserção
-      if(responseData.status != 400) {
+      if (responseData.status != 400) {
         clearForm();
         setRegistroCpf('');
       }
@@ -271,8 +272,8 @@ export default function CivisPe() {
 
                   <td>{formatDate(civis.dataEntrada)}</td>
                   <td>{formatTime(civis.horaEntrada)}</td>
-                  <td className={`${civis.horaSaida === null || civis.horaSaida === '00:00:00' ? "bg-danger text-white fw-bold" : ""}`}>
-                    {civis.horaSaida === null || civis.horaSaida === '00:00:00' ? 'OM' : formatTime(civis.horaSaida)}</td>
+                  <td className={`${civis.horaSaida === null ? "bg-danger text-white fw-bold" : ""}`}>
+                    {civis.horaSaida === null ? 'OM' : formatTime(civis.horaSaida)}</td>
                   <td>{civis.destino}</td>
 
                   <td className="d-print-none">
@@ -504,7 +505,7 @@ export default function CivisPe() {
                     required
                   />
                   <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="invalid-feedback">Campo vazio.</div>
                 </div>
 
                 <div className="col-md-12">
