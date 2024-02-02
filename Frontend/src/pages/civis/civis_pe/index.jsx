@@ -523,12 +523,10 @@ export default function CivisPe() {
                   <div className="valid-feedback">OK!</div>
                   <div className="invalid-feedback">Campo obrigatório.</div>
                 </div>
-
-                <div className="col-md-6"></div>
               </form>
             </div>
             <div className="modal-footer">
-              <button type="button" onClick={clearForm} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <button type="submit" onClick={(e) => atualizarDadosPorId(id)} className="btn btn-md btn-success">Atualizar Registro</button>
             </div>
           </div>
