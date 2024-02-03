@@ -69,13 +69,13 @@ export default function PelotaoViatura() {
         // Organiza os dados coletados em um objeto
         const dados = {
             vtrRegistro,
-            odmSaidaRegistro,
-            odmEntradaRegistro,
+            odmSaidaRegistro: odmSaidaRegistro && odmSaidaRegistro.trim() !== "" ? odmSaidaRegistro : null,
+            odmEntradaRegistro: odmEntradaRegistro && odmEntradaRegistro.trim() !== "" ? odmEntradaRegistro : null,
             dataRegistro,
-            horaSaidaRegistro,
-            horaEntradaRegistro,
+            horaSaidaRegistro: horaSaidaRegistro && horaSaidaRegistro.trim() !== "" ? horaSaidaRegistro : null,
+            horaEntradaRegistro: horaEntradaRegistro && horaEntradaRegistro.trim() !== "" ? horaEntradaRegistro : null,
             motoristaRegistro,
-            chefeVtrRegistro,
+            chefeVtrRegistro: chefeVtrRegistro && chefeVtrRegistro.trim() !== "" ? chefeVtrRegistro : null,
             destinoRegistro,
         };
 
@@ -95,16 +95,16 @@ export default function PelotaoViatura() {
             // Converte a resposta da requisição para JSON
             const responseData = await response.json();
 
-            // Limpa o formulário após a inserção
-            clearForm();
+            if(responseData.status != 400) {
+                // Limpa o formulário após a inserção
+                clearForm();
+                // Atualiza os dados na tela após a inserção 
+                // (supõe-se que fetchData() é uma função que busca os dados atualizados)
+                await fetchData();
+            }
 
             // Exibe um alerta com a mensagem recebida do servidor após a inserção
             alert(responseData.message);
-
-            // Atualiza os dados na tela após a inserção 
-            // (supõe-se que fetchData() é uma função que busca os dados atualizados)
-            await fetchData();
-
         } catch (error) {
             // Em caso de erro na requisição, exibe um alerta
             alert('Erro:', error);
@@ -168,23 +168,21 @@ export default function PelotaoViatura() {
             const response = await axios.put(`${dbConfig()}/pelotao_viatura/${id}`, {
                 // Envia os dados a serem atualizados no corpo da requisição
                 vtr,
-                odmSaida,
-                odmEntrada,
+                odmSaida: odmSaida && odmSaida.trim() !== "" ? odmSaida : null,
+                odmEntrada: odmEntrada && odmEntrada.trim() !== "" ? odmEntrada : null,
                 dataRegistro,
-                horaSaida,
-                horaEntrada,
+                horaSaida: horaSaida && horaSaida.trim() !== "" ? horaSaida : null,
+                horaEntrada: horaEntrada && horaEntrada.trim() !== "" ? horaEntrada : null,
                 motorista,
-                chefeVtr,
+                chefeVtr: chefeVtr && chefeVtr.trim() !== "" ? chefeVtr : null,
                 destino,
             });
 
+            if(response.data.status != 400) {
+                fetchData();
+            }
             // Exibe um alerta com a mensagem da resposta para informar o usuário sobre o resultado da operação
             alert(response.data.message);
-
-            // Limpa o formulário após a atualização dos dados
-            clearForm();
-
-            await fetchData();
 
             // Retorna os dados da resposta da requisição
             return response.data;
@@ -192,9 +190,6 @@ export default function PelotaoViatura() {
             const mensagem = error.response.data.message;
             // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
             alert(mensagem);
-
-            // Lança o erro novamente para ser tratado por quem chamou essa função
-            // throw error;
         }
     };
 
@@ -282,13 +277,13 @@ export default function PelotaoViatura() {
                             return (
                                 <tr key={dados.id} className="align-middle">
                                     <td>{dados.vtr}</td>
-                                    <td>{dados.odmSaida === null || dados.odmSaida === '' ? '- - -' : dados.odmSaida}</td>
-                                    <td>{dados.odmEntrada === null || dados.odmEntrada === '' ? '- - -' : dados.odmEntrada}</td>
+                                    <td>{dados.odmSaida === null ? '- - -' : dados.odmSaida}</td>
+                                    <td>{dados.odmEntrada === null ? '- - -' : dados.odmEntrada}</td>
                                     <td>{formatDate(dados.dataRegistro)}</td>
-                                    <td>{dados.horaSaida === null || dados.horaSaida === '00:00:00' ? '- - -' : formatTime(dados.horaSaida)}</td>
-                                    <td>{dados.horaEntrada === null || dados.horaEntrada === '00:00:00' ? '- - -' : formatTime(dados.horaEntrada)}</td>
+                                    <td>{dados.horaSaida === null ? '- - -' : formatTime(dados.horaSaida)}</td>
+                                    <td>{dados.horaEntrada === null ? '- - -' : formatTime(dados.horaEntrada)}</td>
                                     <td>{dados.motorista}</td>
-                                    <td>{dados.chefeVtr}</td>
+                                    <td>{dados.chefeVtr === null ? '- - -' : dados.chefeVtr}</td>
                                     <td>{dados.destino}</td>
                                     <td className="d-print-none">
                                         <div className="d-flex align-items-center justify-content-center gap-3">
@@ -333,15 +328,10 @@ export default function PelotaoViatura() {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body" id="modal-body">
-                            <form
-                                className="row g-3 needs-validation"
-                                id="needs-validation"
-
-                                noValidate
-                            >
+                            <form className="row g-3 was-validated">
                                 <div className="col-md-4">
                                     <label htmlFor="vtr" className="form-label">
-                                        Placa / EB *
+                                        Placa / EB
                                     </label>
                                     <input
                                         type="text"
@@ -351,6 +341,8 @@ export default function PelotaoViatura() {
                                         maxLength="20"
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -366,6 +358,8 @@ export default function PelotaoViatura() {
                                         maxLength="20"
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -381,11 +375,13 @@ export default function PelotaoViatura() {
                                         maxLength="20"
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-4">
                                     <label htmlFor="data-registro" className="form-label">
-                                        Data do Registro *
+                                        Data do Registro
                                     </label>
                                     <input
                                         type="date"
@@ -395,6 +391,8 @@ export default function PelotaoViatura() {
                                         placeholder="Insira a data de registro"
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -408,6 +406,8 @@ export default function PelotaoViatura() {
                                         placeholder="Insira o horário de saida"
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -421,11 +421,13 @@ export default function PelotaoViatura() {
                                         placeholder="Insira o horário de saida"
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-4">
                                     <label htmlFor="motorista" className="form-label">
-                                        Motorista *
+                                        Motorista
                                     </label>
                                     <input
                                         type="text"
@@ -435,11 +437,13 @@ export default function PelotaoViatura() {
                                         maxLength="50"
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-4">
                                     <label htmlFor="chefe-viatura" className="form-label">
-                                        Chefe de Vtr *
+                                        Chefe de Vtr
                                     </label>
                                     <input
                                         type="text"
@@ -449,11 +453,13 @@ export default function PelotaoViatura() {
                                         maxLength="50"
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-4">
                                     <label htmlFor="destino" className="form-label">
-                                        Destino *
+                                        Destino
                                     </label>
                                     <input
                                         type="text"
@@ -463,6 +469,8 @@ export default function PelotaoViatura() {
                                         maxLength="50"
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-6"></div>
@@ -486,11 +494,7 @@ export default function PelotaoViatura() {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body" id="modal-body">
-                            <form
-                                className="row g-3 needs-validation"
-                                id="needs-validation"
-                                noValidate
-                            >
+                            <form className="row g-3 was-validated">
                                 <div className="col-md-4">
                                     <label htmlFor="nome-guerra" className="form-label">
                                         Placa / EB
@@ -504,6 +508,8 @@ export default function PelotaoViatura() {
                                         value={vtr}
                                         onChange={(e) => setVtr(e.target.value)}
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -520,6 +526,8 @@ export default function PelotaoViatura() {
                                         onChange={(e) => setOdmSaida(e.target.value)}
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -536,6 +544,8 @@ export default function PelotaoViatura() {
                                         onChange={(e) => setOdmEntrada(e.target.value)}
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -569,7 +579,7 @@ export default function PelotaoViatura() {
                                         required
                                     />
                                     <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -585,6 +595,8 @@ export default function PelotaoViatura() {
                                         onChange={(e) => setHoraEntrada(e.target.value)}
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -601,6 +613,8 @@ export default function PelotaoViatura() {
                                         maxLength="50"
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -617,6 +631,8 @@ export default function PelotaoViatura() {
                                         maxLength="50"
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -632,13 +648,15 @@ export default function PelotaoViatura() {
                                         onChange={(e) => setDestino(e.target.value)}
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-6"></div>
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" onClick={clearForm} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" onClick={(e) => atualizarDadosPorId(id)} className="btn btn-md btn-success">Atualizar Registro</button>
                         </div>
                     </div>
