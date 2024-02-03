@@ -28,7 +28,7 @@ router.post("/pelotao_fora_expediente", (req, res) => {
 
     // Validação dos dados
     if (!postoGraduacaoRegistro || !nomeGuerraRegistro || !idtMilitarRegistro || !dataEntradaRegistro || !origemRegistro) {
-        return res.status(400).json({ message: "Todos os campos são obrigatórios." });
+        return res.status(400).json({ message: "Todos os campos são obrigatórios.", status: 400 });
     }
 
     db.query(sql, [postoGraduacaoRegistro, nomeGuerraRegistro, idtMilitarRegistro, dataEntradaRegistro, horaEntradaRegistro, horaSaidaRegistro, origemRegistro], (err, result) => {
@@ -57,8 +57,8 @@ router.put("/pelotao_fora_expediente/:id", (req, res) => {
     const { pg, nomeGuerra, idtMil, dataEntrada, horaEntrada, horaSaida, origem } = req.body;
 
     // Validação dos dados
-    if (!pg || !nomeGuerra || !idtMil || !dataEntrada || !horaEntrada || !horaSaida || !origem) {
-        return res.status(400).json({ message: "Todos os campos são obrigatórios." });
+    if (!pg || !nomeGuerra || !idtMil || !dataEntrada || !origem) {
+        return res.status(400).json({ message: "Todos os campos são obrigatórios.", status: 400});
     }
 
     const sql = "UPDATE pelotao_fora_expediente SET pg=?, nomeGuerra=?, idtMil=?, dataEntrada=?, horaEntrada=?, horaSaida=?, origem=? WHERE id=?";
