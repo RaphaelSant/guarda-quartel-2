@@ -322,7 +322,7 @@ export default function PelotaoForaExpediente() {
                         </div>
                         <div className="modal-body" id="modal-body">
                             <form className="row g-3 was-validated">
-                                <div className="col-md-6">
+                                <div className="col-md-4">
                                     <label className="form-label" htmlFor="pg">Posto Graduação</label>
                                     <select className="form-select" id="pg" required>
                                         <option defaultValue=""></option>
@@ -345,7 +345,7 @@ export default function PelotaoForaExpediente() {
                                     <div className="valid-feedback">OK!</div>
                                     <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
-                                <div className="col-md-6">
+                                <div className="col-md-4">
                                     <label htmlFor="nome-guerra" className="form-label">
                                         Nome de guerra
                                     </label>
@@ -360,7 +360,7 @@ export default function PelotaoForaExpediente() {
                                     <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
-                                <div className="col-md-6">
+                                <div className="col-md-4">
                                     <label htmlFor="idt-mil" className="form-label">
                                         Identidade Militar
                                     </label>
@@ -377,7 +377,7 @@ export default function PelotaoForaExpediente() {
                                     <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
-                                <div className="col-md-6">
+                                <div className="col-md-3">
                                     <label htmlFor="data-entrada" className="form-label">
                                         Data de Entrada
                                     </label>
@@ -393,7 +393,7 @@ export default function PelotaoForaExpediente() {
                                     <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
-                                <div className="col-md-6">
+                                <div className="col-md-3">
                                     <label htmlFor="hora-entrada" className="form-label">
                                         Horário de Entrada
                                     </label>
@@ -408,7 +408,7 @@ export default function PelotaoForaExpediente() {
                                     <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
 
-                                <div className="col-md-6">
+                                <div className="col-md-3">
                                     <label htmlFor="hora-saida" className="form-label">
                                         Horário de Saída
                                     </label>
@@ -423,7 +423,7 @@ export default function PelotaoForaExpediente() {
                                     <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
 
-                                <div className="col-md-12">
+                                <div className="col-md-3">
                                     <label htmlFor="origem" className="form-label">
                                         Origem / Destino
                                     </label>
