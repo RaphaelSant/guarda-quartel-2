@@ -72,8 +72,8 @@ export default function OutraOmDuranteExpediente() {
             idtMilitarRegistro,
             omRegistro,
             dataEntradaRegistro,
-            horaEntradaRegistro,
-            horaSaidaRegistro,
+            horaEntradaRegistro: horaEntradaRegistro && horaEntradaRegistro.trim() !== "" ? horaSaida : null,
+            horaSaidaRegistro: horaSaidaRegistro && horaSaidaRegistro.trim() !== "" ? horaSaida : null,
             origemRegistro,
         };
 
@@ -93,15 +93,16 @@ export default function OutraOmDuranteExpediente() {
             // Converte a resposta da requisição para JSON
             const responseData = await response.json();
 
-            // Limpa o formulário após a inserção
-            clearForm();
+            if (responseData.status != 400) {
+                // Limpa o formulário após a inserção
+                clearForm();
+                // Atualiza os dados na tela após a inserção 
+                // (supõe-se que fetchData() é uma função que busca os dados atualizados)
+                fetchData();
+            }
 
             // Exibe um alerta com a mensagem recebida do servidor após a inserção
             alert(responseData.message);
-
-            // Atualiza os dados na tela após a inserção 
-            // (supõe-se que fetchData() é uma função que busca os dados atualizados)
-            await fetchData();
 
         } catch (error) {
             // Em caso de erro na requisição, exibe um alerta
@@ -168,18 +169,17 @@ export default function OutraOmDuranteExpediente() {
                 idtMil,
                 om,
                 dataEntrada,
-                horaEntrada,
-                horaSaida,
+                horaEntrada: horaEntrada && horaEntrada.trim() !== "" ? horaEntrada : null,
+                horaSaida: horaSaida && horaSaida.trim() !== "" ? horaSaida : null,
                 origem
             });
 
+            if (response.data.status != 400) {
+                fetchData();
+            }
+
             // Exibe um alerta com a mensagem da resposta para informar o usuário sobre o resultado da operação
             alert(response.data.message);
-
-            // Limpa o formulário após a atualização dos dados
-            clearForm();
-
-            await fetchData();
 
             // Retorna os dados da resposta da requisição
             return response.data;
@@ -280,10 +280,10 @@ export default function OutraOmDuranteExpediente() {
                                     <td>{dados.om}</td>
                                     <td>{formatDate(dados.dataEntrada)}</td>
                                     <td>
-                                        {dados.horaEntrada === null || dados.horaEntrada === '00:00:00' ? '- - -' : formatTime(dados.horaEntrada)}
+                                        {dados.horaEntrada === null ? '- - -' : formatTime(dados.horaEntrada)}
                                     </td>
                                     <td>
-                                        {dados.horaSaida === null || dados.horaSaida === '00:00:00' ? '- - -' : formatTime(dados.horaSaida)}
+                                        {dados.horaSaida === null ? '- - -' : formatTime(dados.horaSaida)}
                                     </td>
                                     <td>{dados.origem}</td>
 
@@ -329,16 +329,11 @@ export default function OutraOmDuranteExpediente() {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body" id="modal-body">
-                            <form
-                                className="row g-3 needs-validation"
-                                id="needs-validation"
-
-                                noValidate
-                            >
+                            <form className="row g-3 was-validated">
                                 <div className="col-md-3">
-                                    <label className="form-label" htmlFor="pg">Posto Graduação *</label>
-                                    <select className="form-select" id="pg" >
-                                        <option defaultValue={"Posto/Graduação"}>Posto/Graduação</option>
+                                    <label className="form-label" htmlFor="pg">Posto Graduação</label>
+                                    <select className="form-select" id="pg" required>
+                                        <option defaultValue=""></option>
                                         <option value="Soldado">Soldado</option>
                                         <option value="Taifeiro">Taifeiro</option>
                                         <option value="Cabo">Cabo</option>
@@ -355,10 +350,12 @@ export default function OutraOmDuranteExpediente() {
                                         <option value="General de Exército">General de Exército</option>
                                         <option value="Marechal">Marechal</option>
                                     </select>
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-3">
                                     <label htmlFor="nome-guerra" className="form-label">
-                                        Nome de guerra *
+                                        Nome de guerra
                                     </label>
                                     <input
                                         type="text"
@@ -367,11 +364,13 @@ export default function OutraOmDuranteExpediente() {
                                         id="nome-guerra"
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-3">
                                     <label htmlFor="idt-mil" className="form-label">
-                                        Identidade Militar *
+                                        Identidade Militar
                                     </label>
                                     <input
                                         type="text"
@@ -382,11 +381,13 @@ export default function OutraOmDuranteExpediente() {
                                         maxLength="50"
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-3">
                                     <label htmlFor="om" className="form-label">
-                                        Organização Militar *
+                                        Organização Militar
                                     </label>
                                     <input
                                         type="text"
@@ -397,11 +398,13 @@ export default function OutraOmDuranteExpediente() {
                                         maxLength="50"
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-3">
                                     <label htmlFor="data-entrada" className="form-label">
-                                        Data de Entrada *
+                                        Data de Entrada
                                     </label>
                                     <input
                                         type="date"
@@ -426,6 +429,8 @@ export default function OutraOmDuranteExpediente() {
                                         placeholder="Insira o horário de entrada"
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-3">
@@ -439,11 +444,13 @@ export default function OutraOmDuranteExpediente() {
                                         placeholder="Insira o horário de saída"
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-3">
                                     <label htmlFor="origem" className="form-label">
-                                        Origem / Destino *
+                                        Origem / Destino
                                     </label>
                                     <input
                                         type="text"
@@ -477,15 +484,11 @@ export default function OutraOmDuranteExpediente() {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body" id="modal-body">
-                            <form
-                                className="row g-3 needs-validation"
-                                id="needs-validation"
-                                noValidate
-                            >
+                            <form className="row g-3 was-validated">
                                 <div className="col-md-3">
                                     <label className="form-label" htmlFor="pg">Posto Graduação</label>
                                     <select className="form-select" id="pg" value={pg.toString()} onChange={(e) => setPG(e.target.value)}>
-                                        <option value="">Selecione o Posto</option>
+                                        <option value=""></option>
                                         <option value="Soldado">Soldado</option>
                                         <option value="Taifeiro">Taifeiro</option>
                                         <option value="Cabo">Cabo</option>
@@ -502,6 +505,8 @@ export default function OutraOmDuranteExpediente() {
                                         <option value="General de Exército">General de Exército</option>
                                         <option value="Marechal">Marechal</option>
                                     </select>
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-3">
@@ -535,6 +540,8 @@ export default function OutraOmDuranteExpediente() {
                                         onChange={(e) => setIdtMil(e.target.value)}
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-3">
@@ -551,6 +558,8 @@ export default function OutraOmDuranteExpediente() {
                                         onChange={(e) => setOm(e.target.value)}
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-3">
@@ -584,7 +593,7 @@ export default function OutraOmDuranteExpediente() {
                                         required
                                     />
                                     <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-3">
@@ -601,7 +610,7 @@ export default function OutraOmDuranteExpediente() {
                                         required
                                     />
                                     <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-3">
@@ -625,7 +634,7 @@ export default function OutraOmDuranteExpediente() {
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" onClick={clearForm} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" onClick={(e) => atualizarDadosPorId(id)} className="btn btn-md btn-success">Atualizar Registro</button>
                         </div>
                     </div>
