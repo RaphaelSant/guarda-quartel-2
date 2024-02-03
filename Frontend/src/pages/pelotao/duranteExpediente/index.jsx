@@ -70,8 +70,8 @@ export default function PelotaoDuranteExpediente() {
             nomeGuerraRegistro,
             idtMilitarRegistro,
             dataEntradaRegistro,
-            horaEntradaRegistro,
-            horaSaidaRegistro,
+            horaEntradaRegistro: horaEntradaRegistro && horaEntradaRegistro.trim() !== "" ? horaSaida : null,
+            horaSaidaRegistro: horaSaidaRegistro && horaSaidaRegistro.trim() !== "" ? horaSaida : null,
             origemRegistro,
         };
 
@@ -91,15 +91,17 @@ export default function PelotaoDuranteExpediente() {
             // Converte a resposta da requisição para JSON
             const responseData = await response.json();
 
-            // Limpa o formulário após a inserção
-            clearForm();
+            if (responseData.status != 400) {
+                // Limpa o formulário após a inserção
+                clearForm();
+                // Atualiza os dados na tela após a inserção 
+                // (supõe-se que fetchData() é uma função que busca os dados atualizados)
+                fetchData();
+            }
 
             // Exibe um alerta com a mensagem recebida do servidor após a inserção
             alert(responseData.message);
 
-            // Atualiza os dados na tela após a inserção 
-            // (supõe-se que fetchData() é uma função que busca os dados atualizados)
-            await fetchData();
 
         } catch (error) {
             // Em caso de erro na requisição, exibe um alerta
@@ -163,18 +165,17 @@ export default function PelotaoDuranteExpediente() {
                 nomeGuerra,
                 idtMil,
                 dataEntrada,
-                horaEntrada,
-                horaSaida,
+                horaEntrada: horaEntrada && horaEntrada.trim() !== "" ? horaEntrada : null,
+                horaSaida: horaSaida && horaSaida.trim() !== "" ? horaSaida : null,
                 origem
             });
 
             // Exibe um alerta com a mensagem da resposta para informar o usuário sobre o resultado da operação
             alert(response.data.message);
 
-            // Limpa o formulário após a atualização dos dados
-            clearForm();
-
-            await fetchData();
+            if (response.data.status != 400) {
+                fetchData();
+            }
 
             // Retorna os dados da resposta da requisição
             return response.data;
@@ -273,10 +274,11 @@ export default function PelotaoDuranteExpediente() {
                                     <td>{dados.idtMil}</td>
                                     <td>{formatDate(dados.dataEntrada)}</td>
                                     <td>
-                                        {dados.horaEntrada === null || dados.horaEntrada === '00:00:00' ? '- - -' : formatTime(dados.horaEntrada)}
+                                        {dados.horaEntrada === null ? '- - -' : formatTime(dados.horaEntrada)}
                                     </td>
                                     <td>
-                                        {dados.horaSaida === null || dados.horaSaida === '00:00:00' ? '- - -' : formatTime(dados.horaSaida)}</td>
+                                        {dados.horaSaida === null ? '- - -' : formatTime(dados.horaSaida)}
+                                    </td>
                                     <td>{dados.origem}</td>
 
                                     <td className="d-print-none">
@@ -289,7 +291,6 @@ export default function PelotaoDuranteExpediente() {
                                                         color="#FFD700"
                                                     />
                                                 </button>
-
                                             </div>
                                             <div>
                                                 <button
@@ -321,16 +322,11 @@ export default function PelotaoDuranteExpediente() {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body" id="modal-body">
-                            <form
-                                className="row g-3 needs-validation"
-                                id="needs-validation"
-
-                                noValidate
-                            >
+                            <form className="row g-3 was-validated">
                                 <div className="col-md-6">
-                                    <label className="form-label" htmlFor="pg">Posto Graduação *</label>
-                                    <select className="form-select" id="pg" >
-                                        <option defaultValue={"Posto/Graduação"}>Posto/Graduação</option>
+                                    <label className="form-label" htmlFor="pg">Posto Graduação</label>
+                                    <select className="form-select" id="pg" required>
+                                        <option defaultValue=""></option>
                                         <option value="Soldado">Soldado</option>
                                         <option value="Taifeiro">Taifeiro</option>
                                         <option value="Cabo">Cabo</option>
@@ -347,10 +343,12 @@ export default function PelotaoDuranteExpediente() {
                                         <option value="General de Exército">General de Exército</option>
                                         <option value="Marechal">Marechal</option>
                                     </select>
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="nome-guerra" className="form-label">
-                                        Nome de guerra *
+                                        Nome de guerra
                                     </label>
                                     <input
                                         type="text"
@@ -359,11 +357,13 @@ export default function PelotaoDuranteExpediente() {
                                         id="nome-guerra"
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-6">
                                     <label htmlFor="idt-mil" className="form-label">
-                                        Identidade Militar *
+                                        Identidade Militar
                                     </label>
                                     <input
                                         type="text"
@@ -374,11 +374,13 @@ export default function PelotaoDuranteExpediente() {
                                         maxLength="50"
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-6">
                                     <label htmlFor="data-entrada" className="form-label">
-                                        Data de Entrada *
+                                        Data de Entrada
                                     </label>
                                     <input
                                         type="date"
@@ -404,7 +406,7 @@ export default function PelotaoDuranteExpediente() {
                                         required
                                     />
                                     <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-6">
@@ -416,12 +418,15 @@ export default function PelotaoDuranteExpediente() {
                                         className="form-control"
                                         id="hora-saida"
                                         placeholder="Insira o horário de saída"
+                                        required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
 
-                                <div className="col-md-6">
+                                <div className="col-md-12">
                                     <label htmlFor="origem" className="form-label">
-                                        Origem / Destino *
+                                        Origem / Destino
                                     </label>
                                     <input
                                         type="text"
@@ -430,9 +435,9 @@ export default function PelotaoDuranteExpediente() {
                                         placeholder="Insira a Origem / Destino"
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
-
-                                <div className="col-md-6"></div>
                             </form>
                         </div>
                         <div className="modal-footer">
@@ -453,15 +458,11 @@ export default function PelotaoDuranteExpediente() {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body" id="modal-body">
-                            <form
-                                className="row g-3 needs-validation"
-                                id="needs-validation"
-                                noValidate
-                            >
+                            <form className="row g-3 was-validated">
                                 <div className="col-md-4">
                                     <label className="form-label" htmlFor="pg">Posto Graduação</label>
                                     <select className="form-select" id="pg" value={pg.toString()} onChange={(e) => setPG(e.target.value)}>
-                                        <option value="">Selecione o Posto</option>
+                                        <option value=""></option>
                                         <option value="Soldado">Soldado</option>
                                         <option value="Taifeiro">Taifeiro</option>
                                         <option value="Cabo">Cabo</option>
@@ -478,6 +479,8 @@ export default function PelotaoDuranteExpediente() {
                                         <option value="General de Exército">General de Exército</option>
                                         <option value="Marechal">Marechal</option>
                                     </select>
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -546,7 +549,7 @@ export default function PelotaoDuranteExpediente() {
                                         required
                                     />
                                     <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-3">
@@ -562,6 +565,8 @@ export default function PelotaoDuranteExpediente() {
                                         onChange={(e) => setHoraSaida(e.target.value)}
                                         required
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-3">
@@ -583,7 +588,7 @@ export default function PelotaoDuranteExpediente() {
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" onClick={clearForm} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" onClick={(e) => atualizarDadosPorId(id)} className="btn btn-md btn-success">Atualizar Registro</button>
                         </div>
                     </div>
