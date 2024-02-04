@@ -120,10 +120,10 @@ export default function RelatorioRoteiroGuarda() {
                 cbTpArmamento, 
                 cbNrArmamento, 
                 cbQtdMun, 
-                sdNomeGuerra, 
-                sdTpArmamento, 
-                sdNrArmamento, 
-                sdQtdMun, 
+                sdNomeGuerra: sdNomeGuerra && sdNomeGuerra.trim() !== "" ? sdNomeGuerra : null,
+                sdTpArmamento: sdTpArmamento && sdTpArmamento.trim() !== "" ? sdTpArmamento : null, 
+                sdNrArmamento: sdNrArmamento && sdNrArmamento.trim() !== "" ? sdNrArmamento : null,
+                sdQtdMun: sdQtdMun && sdQtdMun.trim() !== "" ? sdQtdMun : null,
                 sdPrimeiroHorNome, 
                 sdSegundoHorNome, 
                 sdTerceiroHorNome
@@ -143,9 +143,6 @@ export default function RelatorioRoteiroGuarda() {
             const mensagem = error.response.data.message;
             // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
             alert(mensagem);
-
-            // Lança o erro novamente para ser tratado por quem chamou essa função
-            // throw error;
         }
     };
 
@@ -212,10 +209,10 @@ export default function RelatorioRoteiroGuarda() {
                             return (
                                 <tr key={militar.id} className="align-middle">
                                     <td className="fw-bold">Soldado</td>
-                                    <td>{militar.sdNomeGuerra}</td>
-                                    <td>{militar.sdTpArmamento}</td>
-                                    <td>{militar.sdNrArmamento}</td>
-                                    <td>{militar.sdQtdMun}</td>
+                                    <td>{militar.sdNomeGuerra === null ? '- - -' : militar.sdNomeGuerra}</td>
+                                    <td>{militar.sdTpArmamento === null ? '- - -' : militar.sdTpArmamento}</td>
+                                    <td>{militar.sdNrArmamento === null ? '- - -' : militar.sdNrArmamento}</td>
+                                    <td>{militar.sdQtdMun === null ? '- - -' : militar.sdQtdMun}</td>
                                     <td className="fw-bold">Mot Dia</td>
                                 </tr>
                             );
@@ -329,11 +326,7 @@ export default function RelatorioRoteiroGuarda() {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body" id="modal-body">
-                            <form
-                                className="row g-3 needs-validation"
-                                id="needs-validation"
-                                noValidate
-                            >
+                            <form className="row g-3 was-validated">
                                 <h4>Sargento Permanência</h4>
                                 <div className="col-md-3">
                                     <label htmlFor="sgt-nome-guerra" className="form-label">
@@ -349,6 +342,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={sgtNomeGuerra}
                                         onChange={(e) => setSgtNomeGuerra(e.target.value)}
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-3">
                                     <label htmlFor="sgt-tipo-armamento" className="form-label">
@@ -364,6 +359,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={sgtTpArmamento}
                                         onChange={(e) => setSgtTpArmamento(e.target.value)}
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-3">
                                     <label htmlFor="sgt-numero-armamento" className="form-label">
@@ -379,6 +376,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={sgtNrArmamento}
                                         onChange={(e) => setSgtNrArmamento(e.target.value)}
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-3">
                                     <label htmlFor="sgt-qtd-mun" className="form-label">
@@ -394,6 +393,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={sgtQtdMun}
                                         onChange={(e) => setSgtQtdMun(e.target.value)}
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
                                 <hr />
                                 <h4>Cabo da Guarda</h4>
@@ -411,6 +412,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={cbNomeGuerra}
                                         onChange={(e) => setCbNomeGuerra(e.target.value)}
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-3">
                                     <label htmlFor="cb-tipo-armamento" className="form-label">
@@ -426,6 +429,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={cbTpArmamento}
                                         onChange={(e) => setCbTpArmamento(e.target.value)}
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-3">
                                     <label htmlFor="cb-numero-armamento" className="form-label">
@@ -441,6 +446,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={cbNrArmamento}
                                         onChange={(e) => setCbNrArmamento(e.target.value)}
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-3">
                                     <label htmlFor="cb-qtd-mun" className="form-label">
@@ -456,6 +463,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={cbQtdMun}
                                         onChange={(e) => setCbQtdMun(e.target.value)}
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
 
                                 <hr />
@@ -474,6 +483,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={sdNomeGuerra}
                                         onChange={(e) => setSdNomeGuerra(e.target.value)}
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
                                 <div className="col-md-3">
                                     <label htmlFor="sd-tipo-armamento" className="form-label">
@@ -489,6 +500,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={sdTpArmamento}
                                         onChange={(e) => setSdTpArmamento(e.target.value)}
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
                                 <div className="col-md-3">
                                     <label htmlFor="sd-numero-armamento" className="form-label">
@@ -504,6 +517,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={sdNrArmamento}
                                         onChange={(e) => setSdNrArmamento(e.target.value)}
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
                                 <div className="col-md-3">
                                     <label htmlFor="sd-qtd-mun" className="form-label">
@@ -519,6 +534,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={sdQtdMun}
                                         onChange={(e) => setSdQtdMun(e.target.value)}
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo opcional.</div>
                                 </div>
 
                                 <hr />
@@ -537,6 +554,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={sdPrimeiroHorNome}
                                         onChange={(e) => setSdPrimeiroHorNome(e.target.value)}
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-4">
                                     <label htmlFor="sd-segundo-horario" className="form-label">
@@ -552,6 +571,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={sdSegundoHorNome}
                                         onChange={(e) => setSdSegundoHorNome(e.target.value)}
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-4">
                                     <label htmlFor="sd-terceiro-horario" className="form-label">
@@ -567,11 +588,13 @@ export default function RelatorioRoteiroGuarda() {
                                         value={sdTerceiroHorNome}
                                         onChange={(e) => setSdTerceiroHorNome(e.target.value)}
                                     />
+                                    <div className="valid-feedback">OK!</div>
+                                    <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" onClick={clearForm} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" onClick={(e) => atualizarDadosPorId(1)} className="btn btn-md btn-success">Atualizar Registro</button>
                         </div>
                     </div>

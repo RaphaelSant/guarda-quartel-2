@@ -40,7 +40,7 @@ router.put("/relatorio_roteiro_guarda/:id", (req, res) => {
     const { sgtNomeGuerra, sgtTpArmamento, sgtNrArmamento, sgtQtdMun, cbNomeGuerra, cbTpArmamento, cbNrArmamento, cbQtdMun, sdNomeGuerra, sdTpArmamento, sdNrArmamento, sdQtdMun, sdPrimeiroHorNome, sdSegundoHorNome, sdTerceiroHorNome } = req.body;
 
     // Validação dos dados
-    if (!sgtNomeGuerra || !sgtTpArmamento || !sgtNrArmamento || !sgtQtdMun || !cbNomeGuerra || !cbTpArmamento || !cbNrArmamento || !cbQtdMun || !sdNomeGuerra || !sdTpArmamento || !sdNrArmamento || !sdQtdMun || !sdPrimeiroHorNome || !sdSegundoHorNome || !sdTerceiroHorNome) {
+    if (!sgtNomeGuerra || !sgtTpArmamento || !sgtNrArmamento || !sgtQtdMun || !cbNomeGuerra || !cbTpArmamento || !cbNrArmamento || !cbQtdMun || !sdPrimeiroHorNome || !sdSegundoHorNome || !sdTerceiroHorNome) {
         return res.status(400).json({ message: "Todos os campos são obrigatórios." });
     }
 
