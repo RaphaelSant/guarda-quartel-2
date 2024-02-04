@@ -27,8 +27,8 @@ router.post("/outra_om_viatura", (req, res) => {
     const sql = "INSERT INTO oom_viatura (vtr, odmSaida, odmEntrada, dataRegistro, horaSaida, horaEntrada, motorista, chefeVtr, destino) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     // Validação dos dados
-    if (!vtrRegistro || !dataRegistro || !motoristaRegistro || !chefeVtrRegistro || !destinoRegistro) {
-        return res.status(400).json({ message: "Todos os campos são obrigatórios." });
+    if (!vtrRegistro || !dataRegistro || !motoristaRegistro || !destinoRegistro) {
+        return res.status(400).json({ message: "Todos os campos são obrigatórios.", status: 400 });
     }
 
     db.query(sql, [vtrRegistro, odmSaidaRegistro, odmEntradaRegistro, dataRegistro, horaSaidaRegistro, horaEntradaRegistro, motoristaRegistro, chefeVtrRegistro, destinoRegistro], (err, result) => {
@@ -57,8 +57,8 @@ router.put("/outra_om_viatura/:id", (req, res) => {
     const { vtr, odmSaida, odmEntrada, dataRegistro, horaSaida, horaEntrada, motorista, chefeVtr, destino } = req.body;
 
     // Validação dos dados
-    if (!vtr || !dataRegistro || !motorista || !chefeVtr || !destino) {
-        return res.status(400).json({ message: "Todos os campos são obrigatórios." });
+    if (!vtr || !dataRegistro || !motorista || !destino) {
+        return res.status(400).json({ message: "Todos os campos são obrigatórios.", status: 400 });
     }
 
     const sql = "UPDATE oom_viatura SET vtr=?, odmSaida=?, odmEntrada=?, dataRegistro=?, horaSaida=?, horaEntrada=?, motorista=?, chefeVtr=?, destino=? WHERE id=?";
