@@ -20,10 +20,6 @@ import clearForm from "../../../components/util/clearForm";
 import dbConfig from "../../../components/util/dbConfig.jsx";
 
 export default function RelatorioParteSgtPerm() {
-    let ontem = new Date().setHours(-1);
-    ontem = new Date(ontem); // o comando setHours devolve a data em milisegundos
-    const dataOntem = ontem.toLocaleDateString('pt-BR');
-
     // Estado para receber os dados gravados no BD
     const [data, setData] = useState([]);
     const [dataMil, setDataMil] = useState([]);
@@ -36,6 +32,8 @@ export default function RelatorioParteSgtPerm() {
 
             // Converte a resposta da requisição para o formato JSON
             const fetchedData = await res.json();
+
+            console.log('teste');
 
             // Atualiza o estado 'data' do componente com os dados obtidos da API
             setData(fetchedData);
@@ -63,14 +61,14 @@ export default function RelatorioParteSgtPerm() {
             console.log(err);
         }
     };
-
+    
     // Este useEffect será executado após a montagem inicial do componente
     useEffect(() => {
         // Chama a função fetchData para buscar dados da API e atualizar o estado 'data'
         fetchData();
         fetchDataGuarnicao();
     }, []);
-
+    
     // Utilidades para o modal de EDIÇÃO / ATUALIZAÇÃO
     const [id, setId] = useState([]);
     // Variaveis locais para alteração no banco de dados.
@@ -200,6 +198,14 @@ export default function RelatorioParteSgtPerm() {
         }
     };
 
+    const dataAtual = new Date();
+    const dataAnterior = new Date();
+    
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    dataAnterior.setDate(dataAnterior.getDate() - 1); // Obtém a data do dia anterior
+    
+    const dataPorExtenso = new Intl.DateTimeFormat('pt-BR', options).format(dataAtual);
+    const dataAnteriorPorExtenso = new Intl.DateTimeFormat('pt-BR', options).format(dataAnterior);
     return (
         <>
             <Navbar />
@@ -230,7 +236,7 @@ export default function RelatorioParteSgtPerm() {
                                 Comando Militar da Amazônia – 12ª Região Militar <br />
                                 17ª Brigada de Infantaria de Selva <br />
                                 17º Pelotão de Comunicações de Selva <br />
-                                <span className="fw-light" style={{ fontSize: 15 + 'px' }}>Parte do Sgt Permanência, referente ao serviço do dia {capturaDia() - 1} para o dia {capturaDia()} de {capturaMes()} de {capturaAno()}</span>
+                                <span className="fw-light" style={{ fontSize: 15 + 'px' }}>Parte do Sgt Permanência, referente ao serviço do dia {dataAnteriorPorExtenso} para o dia {dataPorExtenso}</span>
                             </th>
                             <th scope="col" className="col-3">Enc Material</th>
                         </tr>
@@ -677,7 +683,7 @@ export default function RelatorioParteSgtPerm() {
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" onClick={clearForm} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" onClick={(e) => atualizarDadosPorId(1)} className="btn btn-md btn-success">Atualizar Registro</button>
                         </div>
                     </div>

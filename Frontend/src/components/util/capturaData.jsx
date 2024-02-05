@@ -31,9 +31,3 @@ export function capturaDia() {
     const dia = String(data.getDate()).padStart(2, '0'); // Adiciona zeros à esquerda, se necessário
     return dia;
 }
-
-//console.log(capturaData());
-
-//console.log(capturaDia());
-//console.log(capturaMes());
-//console.log(capturaAno());
