@@ -20,12 +20,12 @@ export default function RelatorioServicoAnterior() {
                             <Link to="/home">Página Inicial</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            Escala de ronda do comandante da guarda
+                            Consulta ao serviço anterior
                         </li>
                     </ol>
                 </nav>
             </div>
-            <p className="text-center d-print-none">Escala de ronda do comandante da guarda</p>
+            <p className="text-center d-print-none">Consulta ao serviço anterior</p>
 
             <div className="container">
                 <div className="list-group">

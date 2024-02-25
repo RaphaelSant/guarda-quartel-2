@@ -9,6 +9,7 @@ import Navbar from "../../../components/navbar";
 import clearForm from "../../../components/util/clearForm";
 import dbConfig from "../../../components/util/dbConfig";
 import { Cancelar } from "../../../components/botao";
+import { Link } from "react-router-dom";
 
 export default function ArmazenarServico() {
 
@@ -115,11 +116,19 @@ export default function ArmazenarServico() {
 
             <Navbar />
             <div className="container">
-                <h5 className="mt-4 mb-0 text-center d-print-none">
-                    Relatório &gt;{" "}
-                    <strong style={{ color: "#008BD2" }}>Armazenar Serviço</strong>
-                </h5>
-                <p className="text-center d-print-none">Amazenamento de Serviço</p>
+                <div className="d-flex align-items-center justify-content-center mt-4 p-0 d-print-none">
+                    <nav aria-label="breadcrumb">
+                        <ol className="breadcrumb">
+                            <li className="breadcrumb-item">
+                                <Link to="/home">Página Inicial</Link>
+                            </li>
+                            <li className="breadcrumb-item active" aria-current="page">
+                                Amazenamento de Serviço
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+                <h4 className="text-center d-print-none">Amazenamento de Serviço</h4>
                 <div className="w-50 m-auto">
                     <p className="text-justify">
                         O Menu "Armazenar Serviço" é uma ferramenta extremamente delicada.

@@ -279,6 +279,8 @@ CREATE TABLE `relatorio_parte_sgt` (
   PRIMARY KEY (`id`)
 );
 
+INSERT INTO `relatorio_parte_sgt` VALUES (1,'Parada Diária Valor','Recebimento Serviço Valor','Pessoal Serviço Valor',123,456,789,'Rancho Valor','Lixeiras Valor','Arma e Munição Valor','Dependências Valor','Claviculário Valor','Bomba de Água Valor','Revista Recolher Valor','Radios Valor','Câmeras Valor','Material de Carga Valor','Ocorrências Valor','Correspondências Valor','Viaturas Valor','Passagem de Serviço Valor',111,222,333);
+
 CREATE TABLE `relatorio_roteiro_guarda` (
   `id` int NOT NULL AUTO_INCREMENT,
   `sgtNomeGuerra` varchar(100) DEFAULT NULL,
@@ -301,69 +303,15 @@ CREATE TABLE `relatorio_roteiro_guarda` (
   PRIMARY KEY (`id`)
 );
 
+INSERT INTO `relatorio_roteiro_guarda` VALUES (1,'NomeGuerra_SGT','TipoArmamento_SGT','NrArmamento_SGT','14','NomeGuerra_CB','TipoArmamento_CB','NrArmamento_CB','14',NULL,NULL,NULL,NULL,'QuartoHorNome_SD','PrimeiroHorNome_SD','SegundoHorNome_SD','TerceiroHorNome_SD','Observacoes da ronda...');
+
 CREATE TABLE `usuarios` (
   `id` int NOT NULL AUTO_INCREMENT,
   `usuario` varchar(50) NOT NULL,
   `senha` varchar(100) NOT NULL,
   `nome_completo` varchar(100) NOT NULL,
-  `isAdmin` boolean NOT NULL,
+  `administrador` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 );
 
-INSERT INTO `usuarios` (`usuario`, `senha`, `nome_completo`, `isAdmin`)
-VALUES ('plantao', 'plantao', 'Plantão', false);
-
-INSERT INTO `usuarios` (`usuario`, `senha`, `nome_completo`, `isAdmin`)
-VALUES ('admin', 'admin@2023', 'Administrador', true);
-
-
-
-INSERT INTO `relatorio_parte_sgt` (
-    `paradaDiaria`,
-    `recebimentoServico`,
-    `pessoalServico`,
-    `consPonta`,
-    `consFPonta`,
-    `consTotal`,
-    `rancho`,
-    `lixeiras`,
-    `armtMunicao`,
-    `dependencias`,
-    `claviculario`,
-    `bombaAgua`,
-    `revistaRecolher`,
-    `radios`,
-    `cameras`,
-    `materialCarga`,
-    `ocorrencias`,
-    `correspondencias`,
-    `viaturas`,
-    `passagemServico`,
-    `consPontaAnterior`,
-    `consFPontaAnterior`,
-    `consTotalAnterior`
-) VALUES (
-    'Parada Diária Valor',
-    'Recebimento Serviço Valor',
-    'Pessoal Serviço Valor',
-    123,
-    456,
-    789,
-    'Rancho Valor',
-    'Lixeiras Valor',
-    'Arma e Munição Valor',
-    'Dependências Valor',
-    'Claviculário Valor',
-    'Bomba de Água Valor',
-    'Revista Recolher Valor',
-    'Radios Valor',
-    'Câmeras Valor',
-    'Material de Carga Valor',
-    'Ocorrências Valor',
-    'Correspondências Valor',
-    'Viaturas Valor',
-    'Passagem de Serviço Valor',
-    111,
-    222,
-    333
-);
+INSERT INTO `usuarios` VALUES (1,'plantao','plantao','Plantão',0),(2,'admin','admin@2023','Administrador',1);
