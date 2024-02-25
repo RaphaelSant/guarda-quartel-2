@@ -31,6 +31,7 @@ import ServicoAnteriorOutraOmViatura from "../../pages/relatorio/servicoAnterior
 import ServicoAnteriorRelatorioRoteiroGuarda from "../../pages/relatorio/servicoAnterior/servicoAnteriorPages/ServicoAnteriorRelatorioRoteiroGuarda.jsx";
 import ServicoAnteriorRelatorioEscalaRonda from "../../pages/relatorio/servicoAnterior/servicoAnteriorPages/ServicoAnteriorRelatorioEscalaRonda.jsx";
 import ServicoAnteriorRelatorioParteSgtPerm from "../../pages/relatorio/servicoAnterior/servicoAnteriorPages/ServicoAnteriorRelatorioParteSgtPerm.jsx";
+import Manual from "../../pages/manual/index.jsx";
 
 export default function Rotas() {
   const [autenticado, setAutenticado] = useState(false);
@@ -76,6 +77,7 @@ export default function Rotas() {
             <Route exact path="/relatorio_servico_anterior/roteiro_guarda" element={<ServicoAnteriorRelatorioRoteiroGuarda />} />
             <Route exact path="/relatorio_servico_anterior/escala_ronda" element={<ServicoAnteriorRelatorioEscalaRonda />} />
             <Route exact path="/relatorio_servico_anterior/parte_sgt_permanencia" element={<ServicoAnteriorRelatorioParteSgtPerm />} />
+            <Route exact path="/manual" element={<Manual />} />
 
           </>
         ) : (

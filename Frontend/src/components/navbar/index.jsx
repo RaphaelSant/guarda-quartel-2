@@ -32,9 +32,9 @@ export default function Navbar() {
               </li> 
             */}
             <li className="nav-item d-flex">
-              <a target="_blank" className="nav-link" href="#" rel="noreferrer">
-                <FontAwesomeIcon icon={faBook} /> Manual
-              </a>
+              <Link to="/manual" className="nav-link">
+                  <FontAwesomeIcon icon={faBook} /> Manual
+              </Link>
             </li>
             <li className="nav-item d-flex">
               <button className="nav-link" onClick={logout}>
