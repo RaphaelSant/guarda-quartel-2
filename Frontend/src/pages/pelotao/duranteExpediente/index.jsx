@@ -70,8 +70,8 @@ export default function PelotaoDuranteExpediente() {
             nomeGuerraRegistro,
             idtMilitarRegistro,
             dataEntradaRegistro,
-            horaEntradaRegistro: horaEntradaRegistro && horaEntradaRegistro.trim() !== "" ? horaSaida : null,
-            horaSaidaRegistro: horaSaidaRegistro && horaSaidaRegistro.trim() !== "" ? horaSaida : null,
+            horaEntradaRegistro: horaEntradaRegistro && horaEntradaRegistro.trim() !== "" ? horaEntradaRegistro : null,
+            horaSaidaRegistro: horaSaidaRegistro && horaSaidaRegistro.trim() !== "" ? horaSaidaRegistro : null,
             origemRegistro,
         };
 
