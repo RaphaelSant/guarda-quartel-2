@@ -10,8 +10,9 @@
    [Baixar Git](https://git-scm.com/)
 
 4. 🧑‍💻 **Clonar os repositórios do GitHub**  
+ Recomenda-se criar uma pasta na raiz do C:/ e realizar o clone dentro desta.  
    [Clonar Repositório](https://github.com/RaphaelSant/guarda-quartel-2.git)
-   Recomenda-se criar uma pasta na raiz do C:/ e realizar o clone dentro desta.
+  
    ```bash
    git clone https://github.com/RaphaelSant/guarda-quartel-2.git
    ```
