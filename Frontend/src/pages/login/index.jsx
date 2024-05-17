@@ -47,6 +47,7 @@ export default function Login() {
     <>
       <div>
         <div className={estiloLogin.login_container}>
+        <h6 className="position-absolute top-0 end-0 mt-4 me-4">Versão: 01.01.00</h6>
           <h1 className="text-center mb-0">Sistema de Registro Eletrônico</h1>
           <p className="text-center mt-0 fs-5">
             17º Pelotão de Comunicações de Selva
@@ -102,6 +103,7 @@ export default function Login() {
                   {mensagem}
                 </p>
               )}
+
 
             </form>
           </div>

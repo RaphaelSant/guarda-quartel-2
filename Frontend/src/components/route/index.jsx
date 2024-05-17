@@ -35,56 +35,203 @@ import Manual from "../../pages/manual/index.jsx";
 
 export default function Rotas() {
   const [autenticado, setAutenticado] = useState(false);
+  const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
     const verificarEAutenticar = async () => {
-      const autenticado = await verificarAutenticacao();
-      setAutenticado(autenticado);
+      try {
+        const autenticado = await verificarAutenticacao();
+        setAutenticado(autenticado);
+      } catch (error) {
+        console.error("Erro ao verificar autenticação:", error);
+      } finally {
+        setCarregando(false);
+      }
     };
 
     verificarEAutenticar();
   }, []);
+
+  if (carregando) {
+    return <p>Carregando...</p>;
+  }
 
   return (
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<Login />} />
 
-        {autenticado ? (
-          <>
-            <Route exact path="/home" element={<HomePage />} />
-            <Route exact path="/civis_pe" element={<CivisPe />} />
-            <Route exact path="/civis_veiculo" element={<CivisVeiculo />} />
-            <Route exact path="/pelotao_durante_expediente" element={<PelotaoDuranteExped />} />
-            <Route exact path="/pelotao_fora_expediente" element={<PelotaoForaExped />} />
-            <Route exact path="/pelotao_viatura" element={<PelotaoViatura />} />
-            <Route exact path="/outra_om_durante_expediente" element={<OutraOmDuranteExpediente />} />
-            <Route exact path="/outra_om_fora_expediente" element={<OutraOmForaExpediente />} />
-            <Route exact path="/outra_om_viatura" element={<OutraOmViatura />} />
-            <Route exact path="/relatorio_roteiro_guarda" element={<RelatorioRoteiroGuarda />} />
-            <Route exact path="/relatorio_escala_ronda" element={<RelatorioEscalaRonda />} />
-            <Route exact path="/relatorio_parte_sgt_permanencia" element={<RelatorioParteSgtPerm />} />
-            <Route exact path="/relatorio_armazenar_servico" element={<ArmazenarServico />} />
-            <Route exact path="/relatorio_servico_anterior" element={<RelatorioServicoAnterior />} />
-            <Route exact path="/relatorio_servico_anterior/civis_registro" element={<ServicoAnteriorCivisRegistro />} />
-            <Route exact path="/relatorio_servico_anterior/civis_veiculo" element={<ServicoAnteriorCivisVeiculo />} />
-            <Route exact path="/relatorio_servico_anterior/pelotao_durante_expediente" element={<ServicoAnteriorPelotaoDuranteExpediente />} />
-            <Route exact path="/relatorio_servico_anterior/pelotao_fora_expediente" element={<ServicoAnteriorPelotaoForaExpediente />} />
-            <Route exact path="/relatorio_servico_anterior/pelotao_viatura" element={<ServicoAnteriorPelotaoViatura />} />
-            <Route exact path="/relatorio_servico_anterior/outra_om_durante_expediente" element={<ServicoAnteriorOutraOmDuranteExpediente />} />
-            <Route exact path="/relatorio_servico_anterior/outra_om_fora_expediente" element={<ServicoAnteriorOutraOmForaExpediente />} />
-            <Route exact path="/relatorio_servico_anterior/outra_om_viatura" element={<ServicoAnteriorOutraOmViatura />} />
-            <Route exact path="/relatorio_servico_anterior/roteiro_guarda" element={<ServicoAnteriorRelatorioRoteiroGuarda />} />
-            <Route exact path="/relatorio_servico_anterior/escala_ronda" element={<ServicoAnteriorRelatorioEscalaRonda />} />
-            <Route exact path="/relatorio_servico_anterior/parte_sgt_permanencia" element={<ServicoAnteriorRelatorioParteSgtPerm />} />
-            <Route exact path="/manual" element={<Manual />} />
-
-          </>
-        ) : (
-          // Redirecionar para a página de Login se o usuário não estiver autenticado
-          <Route path="*" element={<ErroPage />} />
-        )
-        }
+        {/* Acesso Restrito */}
+        <Route
+          exact
+          path="/home"
+          element={autenticado ? <HomePage /> : <ErroPage />}
+        />
+        <Route
+          exact
+          path="/civis_pe"
+          element={autenticado ? <CivisPe /> : <ErroPage />}
+        />
+        <Route
+          exact
+          path="/civis_veiculo"
+          element={autenticado ? <CivisVeiculo /> : <ErroPage />}
+        />
+        <Route
+          exact
+          path="/pelotao_durante_expediente"
+          element={autenticado ? <PelotaoDuranteExped /> : <ErroPage />}
+        />
+        <Route
+          exact
+          path="/pelotao_fora_expediente"
+          element={autenticado ? <PelotaoForaExped /> : <ErroPage />}
+        />
+        <Route
+          exact
+          path="/pelotao_viatura"
+          element={autenticado ? <PelotaoViatura /> : <ErroPage />}
+        />
+        <Route
+          exact
+          path="/outra_om_durante_expediente"
+          element={autenticado ? <OutraOmDuranteExpediente /> : <ErroPage />}
+        />
+        <Route
+          exact
+          path="/outra_om_fora_expediente"
+          element={autenticado ? <OutraOmForaExpediente /> : <ErroPage />}
+        />
+        <Route
+          exact
+          path="/outra_om_viatura"
+          element={autenticado ? <OutraOmViatura /> : <ErroPage />}
+        />
+        <Route
+          exact
+          path="/relatorio_roteiro_guarda"
+          element={autenticado ? <RelatorioRoteiroGuarda /> : <ErroPage />}
+        />
+        <Route
+          exact
+          path="/relatorio_escala_ronda"
+          element={autenticado ? <RelatorioEscalaRonda /> : <ErroPage />}
+        />
+        <Route
+          exact
+          path="/relatorio_parte_sgt_permanencia"
+          element={autenticado ? <RelatorioParteSgtPerm /> : <ErroPage />}
+        />
+        <Route
+          exact
+          path="/relatorio_armazenar_servico"
+          element={autenticado ? <ArmazenarServico /> : <ErroPage />}
+        />
+        <Route
+          exact
+          path="/relatorio_servico_anterior"
+          element={autenticado ? <RelatorioServicoAnterior /> : <ErroPage />}
+        />
+        <Route
+          exact
+          path="/relatorio_servico_anterior/civis_registro"
+          element={
+            autenticado ? <ServicoAnteriorCivisRegistro /> : <ErroPage />
+          }
+        />
+        <Route
+          exact
+          path="/relatorio_servico_anterior/civis_veiculo"
+          element={autenticado ? <ServicoAnteriorCivisVeiculo /> : <ErroPage />}
+        />
+        <Route
+          exact
+          path="/relatorio_servico_anterior/pelotao_durante_expediente"
+          element={
+            autenticado ? (
+              <ServicoAnteriorPelotaoDuranteExpediente />
+            ) : (
+              <ErroPage />
+            )
+          }
+        />
+        <Route
+          exact
+          path="/relatorio_servico_anterior/pelotao_fora_expediente"
+          element={
+            autenticado ? (
+              <ServicoAnteriorPelotaoForaExpediente />
+            ) : (
+              <ErroPage />
+            )
+          }
+        />
+        <Route
+          exact
+          path="/relatorio_servico_anterior/pelotao_viatura"
+          element={
+            autenticado ? <ServicoAnteriorPelotaoViatura /> : <ErroPage />
+          }
+        />
+        <Route
+          exact
+          path="/relatorio_servico_anterior/outra_om_durante_expediente"
+          element={
+            autenticado ? (
+              <ServicoAnteriorOutraOmDuranteExpediente />
+            ) : (
+              <ErroPage />
+            )
+          }
+        />
+        <Route
+          exact
+          path="/relatorio_servico_anterior/outra_om_fora_expediente"
+          element={
+            autenticado ? (
+              <ServicoAnteriorOutraOmForaExpediente />
+            ) : (
+              <ErroPage />
+            )
+          }
+        />
+        <Route
+          exact
+          path="/relatorio_servico_anterior/outra_om_viatura"
+          element={
+            autenticado ? <ServicoAnteriorOutraOmViatura /> : <ErroPage />
+          }
+        />
+        <Route
+          exact
+          path="/relatorio_servico_anterior/roteiro_guarda"
+          element={
+            autenticado ? (
+              <ServicoAnteriorRelatorioRoteiroGuarda />
+            ) : (
+              <ErroPage />
+            )
+          }
+        />
+        <Route
+          exact
+          path="/relatorio_servico_anterior/escala_ronda"
+          element={
+            autenticado ? <ServicoAnteriorRelatorioEscalaRonda /> : <ErroPage />
+          }
+        />
+        <Route
+          exact
+          path="/relatorio_servico_anterior/parte_sgt_permanencia"
+          element={
+            autenticado ? (
+              <ServicoAnteriorRelatorioParteSgtPerm />
+            ) : (
+              <ErroPage />
+            )
+          }
+        />
+        <Route exact path="/manual" element={<Manual />} />
       </Routes>
     </BrowserRouter>
   );
