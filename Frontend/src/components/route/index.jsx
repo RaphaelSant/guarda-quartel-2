@@ -53,7 +53,11 @@ export default function Rotas() {
   }, []);
 
   if (carregando) {
-    return <p>Carregando...</p>;
+    return (
+      <div class="spinner-grow text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    );
   }
 
   return (
