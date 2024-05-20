@@ -56,7 +56,7 @@ export default function HomePage() {
                 <CardRelatorio link="/relatorio_parte_sgt_permanencia" titulo="Parte do Representante do Cmdo" />
                 {isAdmin && (
                     <>
-                        <CardRelatorio link="/relatorio_armazenar_servico" titulo="Armazenar Serviço" />
+                        <CardRelatorio link="/relatorio_armazenar_servico" titulo="Finalizar Serviço" />
                     </>
                 )}
                 <CardRelatorio link="/relatorio_servico_anterior" titulo="Consultar serviços anteriores" />

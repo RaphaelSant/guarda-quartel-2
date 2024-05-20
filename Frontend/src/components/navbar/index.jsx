@@ -37,6 +37,12 @@ export default function Navbar() {
               </Link>
             </li>
             <li className="nav-item d-flex">
+              <button className="nav-link" >
+                {" "}
+                <FontAwesomeIcon icon={faGear} /> Configuração do Serviço
+              </button>
+            </li>
+            <li className="nav-item d-flex">
               <button className="nav-link" onClick={logout}>
                 {" "}
                 <FontAwesomeIcon icon={faPowerOff} /> Logout
