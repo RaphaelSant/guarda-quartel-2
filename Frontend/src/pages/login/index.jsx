@@ -20,6 +20,11 @@ export default function Login() {
         senha: senha
       });
 
+      const responseConfig = await axios.get(`${dbConfig()}/configuracao_servico`);
+      const configuracoes = responseConfig.data; // Supondo que o retorno seja um array de objetos com as configurações
+      const configurado = configuracoes.map(config => config.configurado); // Extrai a coluna 'configurado' de cada objeto
+      //alert(configurado); // Saída dos valores da coluna 'configurado'
+
       if (response.data.token) {
         localStorage.setItem('token', response.data.token);
 
@@ -27,7 +32,11 @@ export default function Login() {
         const autenticado = await verificarAutenticacao();
 
         if (autenticado) {
-          window.location.href = "/home";
+          if (configurado == 1 && configurado) {
+            window.location.href = "/home";
+          } else {
+            window.location.href = "/configServico";
+          }
           setMensagem('Usuário autenticado!');
         } else {
           setMensagem('Usuário não autenticado');
@@ -47,7 +56,7 @@ export default function Login() {
     <>
       <div>
         <div className={estiloLogin.login_container}>
-        <h6 className="position-absolute top-0 end-0 mt-4 me-4">Versão: 01.01.00</h6>
+          <h6 className="position-absolute top-0 end-0 mt-4 me-4">Versão: 01.01.00</h6>
           <h1 className="text-center mb-0">Sistema de Registro Eletrônico</h1>
           <p className="text-center mt-0 fs-5">
             17º Pelotão de Comunicações de Selva

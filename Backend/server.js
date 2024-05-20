@@ -3,6 +3,7 @@ const mysql = require("mysql");
 const cors = require("cors");
 
 const loginController = require("./controllers/loginController.js");
+const configuracaoController = require("./controllers/configuracaoServicoController.js");
 const civisPeController = require("./controllers/civisPeController.js");
 const civisVeiculoController = require("./controllers/civisVeiculoController.js");
 const pelotaoDuranteExpController = require("./controllers/pelotaoDuranteExpedController.js");
@@ -28,6 +29,7 @@ app.get("/", (re, res) => {
 
 // Controllers
 app.use("/", loginController);
+app.use("/", configuracaoController);
 
 app.use("/", civisPeController);
 app.use("/", civisVeiculoController);
