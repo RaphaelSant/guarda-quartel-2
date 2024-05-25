@@ -6,6 +6,7 @@ import logo from "../../assets/img/Logo.png";
 
 import { verificarAutenticacao } from '../../components/autenticacao';
 import dbConfig from "../../components/util/dbConfig";
+import { layer } from "@fortawesome/fontawesome-svg-core";
 
 export default function Login() {
   const [usuario, setUsuario] = useState("");
@@ -20,27 +21,34 @@ export default function Login() {
         senha: senha
       });
 
-      const responseConfig = await axios.get(`${dbConfig()}/configuracao_servico`);
-      const configuracoes = responseConfig.data; // Supondo que o retorno seja um array de objetos com as configurações
-      const configurado = configuracoes.map(config => config.configurado); // Extrai a coluna 'configurado' de cada objeto
-      //alert(configurado); // Saída dos valores da coluna 'configurado'
-
       if (response.data.token) {
         localStorage.setItem('token', response.data.token);
 
+        const responseConfig = await axios.get(`${dbConfig()}/configuracao_servico`);
+        const configuracoes = responseConfig.data; // Supondo que o retorno seja um array de objetos com as configurações
+
+        let configServicoConfigurado = 0;
+
+        if (configuracoes.length > 0) {
+          const ultimaConfiguracao = configuracoes[configuracoes.length - 1]; // Pega o último elemento do array
+          const configurado = ultimaConfiguracao.configurado; // Extrai a propriedade 'configurado' do último objeto
+          configServicoConfigurado = configurado;
+        } else {
+          console.warn("Nenhuma configuração encontrada.");
+        }
+
         // Verifique a autenticação após o login
         const autenticado = await verificarAutenticacao();
-
         if (autenticado) {
-          if (configurado == 1 && configurado) {
+          if (configServicoConfigurado == 1) {
             window.location.href = "/home";
           } else {
             window.location.href = "/configServico";
           }
-          setMensagem('Usuário autenticado!');
         } else {
           setMensagem('Usuário não autenticado');
         }
+
       } else {
         // Se a resposta não contiver um token, considere como falha de autenticação
         setMensagem('Usuário ou senha incorretos');

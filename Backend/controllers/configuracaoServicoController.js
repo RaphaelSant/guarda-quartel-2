@@ -23,18 +23,22 @@ router.get("/servico_anterior_configuracao_servico", (req, res) => {
 
 // Rota para realizar novos registro de dados. (Create)
 router.post("/configuracao_servico", (req, res) => {
-    const { configurado, servico_ref, sgtNomeGuerra, cbNomeGuerra, motoristaNomeGuerra, sdPrimeiroHorNome, sdSegundoHorNome, sdTerceiroHorNome } = req.body;
-    const sql = "INSERT INTO config_servico (configurado, servico_ref, sgtNomeGuerra, cbNomeGuerra, motoristaNomeGuerra, sdPrimeiroHorNome, sdSegundoHorNome, sdTerceiroHorNome) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    const { configurado, dataServico, sgtNomeGuerra, cbNomeGuerra, motoristaNomeGuerra, sdPrimeiroHorario, sdSegundoHorario, sdTerceiroHorario } = req.body;
 
     // Validação dos dados
-    if (!servico_ref) {
-        return res.status(400).json({ message: "O campo Data é obrigatório.", status: 400 });
+    if (!configurado || !dataServico || !sgtNomeGuerra || !cbNomeGuerra || !motoristaNomeGuerra || !sdPrimeiroHorario || !sdSegundoHorario || !sdTerceiroHorario) {
+        return res.status(400).json({ message: "Todos os campos são obrigatórios.", status: 400 });
     }
 
-    db.query(sql, [configurado, servico_ref, sgtNomeGuerra, cbNomeGuerra, motoristaNomeGuerra, sdPrimeiroHorNome, sdSegundoHorNome, sdTerceiroHorNome], (err, result) => {
-        if (err) return res.status(500).send(err);
+    const sql = "INSERT INTO config_servico (configurado, servico_ref, sgtNomeGuerra, cbNomeGuerra, motoristaNomeGuerra, sdPrimeiroHorNome, sdSegundoHorNome, sdTerceiroHorNome) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        return res.status(200).json({ message: "Dados inseridos com sucesso!" });
+    db.query(sql, [configurado, dataServico, sgtNomeGuerra, cbNomeGuerra, motoristaNomeGuerra, sdPrimeiroHorario, sdSegundoHorario, sdTerceiroHorario], (err, result) => {
+        if (err) {
+            console.error('Database error:', err); // Log the error for debugging
+            return res.status(500).json({ message: "Erro ao inserir os dados.", status: 500 });
+        }
+
+        return res.status(201).json({ message: "Dados inseridos com sucesso!" });
     });
 });
 
@@ -58,7 +62,7 @@ router.put("/configuracao_servico/:id", (req, res) => {
 
     // Validação dos dados
     if (!servico_ref) {
-        return res.status(400).json({ message: "O campo Data é obrigatório", status: 400});
+        return res.status(400).json({ message: "O campo Data é obrigatório", status: 400 });
     }
 
     const sql = "UPDATE config_servico SET configurado=?, servico_ref=?, sgtNomeGuerra=?, cbNomeGuerra=?, motoristaNomeGuerra=?, sdPrimeiroHorNome=?, sdSegundoHorNome=?, sdTerceiroHorNome=? WHERE id=?";

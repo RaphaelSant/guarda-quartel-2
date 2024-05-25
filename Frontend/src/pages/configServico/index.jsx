@@ -1,6 +1,7 @@
 import React from "react";
 import '../../css/geral.css';
 import Navbar from "../../components/navbar";
+import dbConfig from "../../components/util/dbConfig";
 
 
 
@@ -13,56 +14,46 @@ export default function ConfigServico() {
         event.preventDefault();
 
         // Coleta os valores dos campos do formulário
-        const postoGraduacaoRegistro = document.getElementById('pg').value;
-        const nomeGuerraRegistro = document.getElementById('nome-guerra').value;
-        const idtMilitarRegistro = document.getElementById('idt-mil').value;
-        const dataEntradaRegistro = document.getElementById('data-entrada').value;
-        const horaEntradaRegistro = document.getElementById('hora-entrada').value;
-        const horaSaidaRegistro = document.getElementById('hora-saida').value;
-        const origemRegistro = document.getElementById('origem').value;
+        const dataServico = document.getElementById('data-servico').value;
+        const sgtNomeGuerra = document.getElementById('sgt-nome-guerra').value;
+        const cbNomeGuerra = document.getElementById('cb-nome-guerra').value;
+        const motoristaNomeGuerra = document.getElementById('motorista-nome-guerra').value;
+        const sdPrimeiroHorario = document.getElementById('sd-primeiro-horario').value;
+        const sdSegundoHorario = document.getElementById('sd-segundo-horario').value;
+        const sdTerceiroHorario = document.getElementById('sd-terceiro-horario').value;
+        const configurado = 1;
 
         // Organiza os dados coletados em um objeto
         const dados = {
-            postoGraduacaoRegistro,
-            nomeGuerraRegistro,
-            idtMilitarRegistro,
-            dataEntradaRegistro,
-            horaEntradaRegistro: horaEntradaRegistro && horaEntradaRegistro.trim() !== "" ? horaEntradaRegistro : null,
-            horaSaidaRegistro: horaSaidaRegistro && horaSaidaRegistro.trim() !== "" ? horaSaidaRegistro : null,
-            origemRegistro,
+            configurado,
+            dataServico,
+            sgtNomeGuerra,
+            cbNomeGuerra,
+            motoristaNomeGuerra,
+            sdPrimeiroHorario,
+            sdSegundoHorario,
+            sdTerceiroHorario,
         };
 
         try {
-            // Envia uma requisição POST para adicionar um novo registro
-            const response = await fetch(`${dbConfig()}/pelotao_durante_expediente`, {
-                // Utiliza o método POST
+            const response = await fetch(`${dbConfig()}/configuracao_servico`, {
                 method: 'POST',
                 headers: {
-                    // Define o tipo de conteúdo como JSON
                     'Content-Type': 'application/json',
                 },
-                // Converte o objeto 'dados' para JSON e o envia no corpo da requisição
                 body: JSON.stringify(dados),
             });
 
-            // Converte a resposta da requisição para JSON
             const responseData = await response.json();
-
-            if (responseData.status != 400) {
+            
+            if (response.status === 201) {
                 // Limpa o formulário após a inserção
-                clearForm();
-                // Atualiza os dados na tela após a inserção 
-                // (supõe-se que fetchData() é uma função que busca os dados atualizados)
-                fetchData();
+                alert(responseData.message);
+                window.location.href = "/home";
             }
 
-            // Exibe um alerta com a mensagem recebida do servidor após a inserção
-            alert(responseData.message);
-
-
         } catch (error) {
-            // Em caso de erro na requisição, exibe um alerta
-            alert('Erro:', error);
+            alert('Erro: ' + error.message);
         }
     };
 
@@ -71,23 +62,19 @@ export default function ConfigServico() {
         <div className="container">
 
             <h1 className="mt-4 text-center">Configuração do serviço</h1>
-            <p className="mt-3 text-center">Esta página proporciona a configuração inicial do serviço, possibilitando a definição da data em que o serviço estará em vigor. <br />Esta etapa é fundamental para garantir a precisão das consultas aos serviços anteriores. Ao configurar corretamente a data de início do serviço, os usuários asseguram que os registros anteriores possam ser facilmente acessados e consultados, promovendo uma gestão eficiente e organizada das informações relacionadas ao serviço.</p>
+            <p className="mt-3 text-center">Esta página proporciona a configuração inicial do serviço, possibilitando a definição da data em que o serviço estará em vigor.</p>
 
-            <form className="row g-3 was-validated mt-4">
+            <form className="row g-3 was-validated mt-4" onSubmit={handleRegistrarSubmit}>
                 <h4>Data do serviço</h4>
                 <div className="col-md-3">
-                    <label htmlFor="sgt-nome-guerra" className="form-label">
+                    <label htmlFor="data-servico" className="form-label">
                         Data do serviço
                     </label>
                     <input
                         type="date"
                         className="form-control"
-                        placeholder="Nome de guerra"
-                        id="sgt-nome-guerra"
-                        maxLength="100"
+                        id="data-servico"
                         required
-                    //value={sgtNomeGuerra}
-                    //onChange={(e) => setSgtNomeGuerra(e.target.value)}
                     />
                     <div className="valid-feedback">OK!</div>
                     <div className="invalid-feedback">Campo obrigatório.</div>
@@ -103,8 +90,6 @@ export default function ConfigServico() {
                         id="sgt-nome-guerra"
                         maxLength="100"
                         required
-                    //value={sgtNomeGuerra}
-                    //onChange={(e) => setSgtNomeGuerra(e.target.value)}
                     />
                     <div className="valid-feedback">OK!</div>
                     <div className="invalid-feedback">Campo obrigatório.</div>
@@ -120,31 +105,28 @@ export default function ConfigServico() {
                         id="cb-nome-guerra"
                         maxLength="100"
                         required
-                    //value={cbNomeGuerra}
-                    //onChange={(e) => setCbNomeGuerra(e.target.value)}
                     />
                     <div className="valid-feedback">OK!</div>
                     <div className="invalid-feedback">Campo obrigatório.</div>
                 </div>
                 <div className="col-md-3">
-                    <label htmlFor="sd-nome-guerra" className="form-label">
+                    <label htmlFor="motorista-nome-guerra" className="form-label">
                         Soldado (Motorista de dia)
                     </label>
                     <input
                         type="text"
                         className="form-control"
                         placeholder="Nome de guerra"
-                        id="sd-nome-guerra"
+                        id="motorista-nome-guerra"
                         maxLength="100"
                         required
-                    //value={sdNomeGuerra}
-                    //onChange={(e) => setSdNomeGuerra(e.target.value)}
                     />
                     <div className="valid-feedback">OK!</div>
                     <div className="invalid-feedback">Campo opcional.</div>
                 </div>
 
                 <hr />
+
                 <h4>Soldados (Plantões)</h4>
                 <div className="col-md-4">
                     <label htmlFor="sd-primeiro-horario" className="form-label">
@@ -157,8 +139,6 @@ export default function ConfigServico() {
                         id="sd-primeiro-horario"
                         maxLength="100"
                         required
-                    //value={sdPrimeiroHorNome}
-                    //onChange={(e) => setSdPrimeiroHorNome(e.target.value)}
                     />
                     <div className="valid-feedback">OK!</div>
                     <div className="invalid-feedback">Campo obrigatório.</div>
@@ -174,8 +154,6 @@ export default function ConfigServico() {
                         id="sd-segundo-horario"
                         maxLength="100"
                         required
-                    //value={sdSegundoHorNome}
-                    //onChange={(e) => setSdSegundoHorNome(e.target.value)}
                     />
                     <div className="valid-feedback">OK!</div>
                     <div className="invalid-feedback">Campo obrigatório.</div>
@@ -191,12 +169,13 @@ export default function ConfigServico() {
                         id="sd-terceiro-horario"
                         maxLength="100"
                         required
-                    //value={sdTerceiroHorNome}
-                    //onChange={(e) => setSdTerceiroHorNome(e.target.value)}
                     />
                     <div className="valid-feedback">OK!</div>
                     <div className="invalid-feedback">Campo obrigatório.</div>
                 </div>
+
+                <button className="btn btn-success" type="submit">Salvar</button>
+
             </form>
         </div>
     </>
