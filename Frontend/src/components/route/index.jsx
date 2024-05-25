@@ -35,6 +35,7 @@ import Manual from "../../pages/manual/index.jsx";
 import ConfigServico from "../../pages/configServico/index.jsx";
 import axios from "axios";
 import dbConfig from "../util/dbConfig.jsx";
+import AtualizarServico from "../../pages/configServico/atualizaServico.jsx";
 
 export default function Rotas() {
   const [autenticado, setAutenticado] = useState(false);
@@ -88,6 +89,12 @@ export default function Rotas() {
           exact
           path="/configServico"
           element={autenticado ? <ConfigServico /> : <ErroPage />}
+        />
+        <Route
+          exact
+          path="/atualizaServico"
+          element={autenticado ? (configurado == 1 ? <AtualizarServico /> : <ConfigServico />) : <ErroPage />
+          }
         />
         <Route
           exact

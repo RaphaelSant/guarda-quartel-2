@@ -24,23 +24,15 @@ export default function Navbar() {
         </Link>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
-            {/* 
-              <li className="nav-item d-flex">
-                <Link to="/config_sv" className="nav-link">
-                  <FontAwesomeIcon icon={faGear} /> Configuração do Sv
-                </Link>
-              </li> 
-            */}
             <li className="nav-item d-flex">
               <Link to="/manual" className="nav-link">
-                  <FontAwesomeIcon icon={faBook} /> Manual
+                <FontAwesomeIcon icon={faBook} /> Manual
               </Link>
             </li>
             <li className="nav-item d-flex">
-              <button className="nav-link" >
-                {" "}
+              <Link to="/atualizaServico" className="nav-link">
                 <FontAwesomeIcon icon={faGear} /> Configuração do Serviço
-              </button>
+              </Link>
             </li>
             <li className="nav-item d-flex">
               <button className="nav-link" onClick={logout}>

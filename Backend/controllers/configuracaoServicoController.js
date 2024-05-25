@@ -58,16 +58,16 @@ router.get("/configuracao_servico/selectId/:id", (req, res) => {
 // Rota para atualizar dados (UPDATE)
 router.put("/configuracao_servico/:id", (req, res) => {
     const id = req.params.id;
-    const { configurado, servico_ref, sgtNomeGuerra, cbNomeGuerra, motoristaNomeGuerra, sdPrimeiroHorNome, sdSegundoHorNome, sdTerceiroHorNome } = req.body;
+    const { dataServico, sgtNomeGuerra, cbNomeGuerra, motoristaNomeGuerra, sdPrimeiroHorario, sdSegundoHorario, sdTerceiroHorario } = req.body;
 
     // Validação dos dados
-    if (!servico_ref) {
+    if (!dataServico) {
         return res.status(400).json({ message: "O campo Data é obrigatório", status: 400 });
     }
 
-    const sql = "UPDATE config_servico SET configurado=?, servico_ref=?, sgtNomeGuerra=?, cbNomeGuerra=?, motoristaNomeGuerra=?, sdPrimeiroHorNome=?, sdSegundoHorNome=?, sdTerceiroHorNome=? WHERE id=?";
+    const sql = "UPDATE config_servico SET servico_ref=?, sgtNomeGuerra=?, cbNomeGuerra=?, motoristaNomeGuerra=?, sdPrimeiroHorNome=?, sdSegundoHorNome=?, sdTerceiroHorNome=? WHERE id=?";
 
-    db.query(sql, [configurado, servico_ref, sgtNomeGuerra, cbNomeGuerra, motoristaNomeGuerra, sdPrimeiroHorNome, sdSegundoHorNome, sdTerceiroHorNome, id], (err, result) => {
+    db.query(sql, [dataServico, sgtNomeGuerra, cbNomeGuerra, motoristaNomeGuerra, sdPrimeiroHorario, sdSegundoHorario, sdTerceiroHorario, id], (err, result) => {
         if (err) return res.status(500).send(err);
 
         return res.status(200).json({ message: "Dados atualizados com sucesso!" });
