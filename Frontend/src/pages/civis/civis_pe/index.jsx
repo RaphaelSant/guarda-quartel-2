@@ -291,8 +291,6 @@ export default function CivisPe() {
         <table className="table text-center table-bordered border-dark table-hover">
           <thead>
             <tr>
-              <th scope="col">Id</th>
-              <th scope="col">config_servico_id</th>
               <th scope="col">Nome</th>
               <th scope="col">Identidade</th>
               <th scope="col">Data</th>
@@ -307,8 +305,6 @@ export default function CivisPe() {
           <tbody>
             {data.map((civis) => (
               <tr key={civis.id} className="align-middle">
-                <td>{civis.id}</td>
-                <td>{civis.config_servico_id}</td>
                 <td>{civis.nome}</td>
                 <td>{civis.cpf}</td>
                 <td>{formatDate(civis.dataEntrada)}</td>
