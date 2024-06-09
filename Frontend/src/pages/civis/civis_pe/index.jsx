@@ -21,6 +21,7 @@ import {
 import clearForm from "../../../components/util/clearForm";
 import { formatDate, formatTime } from "../../../components/util/formatDateTime";
 import dbConfig from "../../../components/util/dbConfig";
+import { getLatestConfigServicoId } from "../../../components/configServico/index.jsx";
 
 export default function CivisPe() {
   const [registroCpf, setRegistroCpf] = useState(['']);
@@ -51,6 +52,7 @@ export default function CivisPe() {
     // Chama a função fetchData para buscar dados da API e atualizar o estado 'data'
     fetchData();
   }, []);
+
 
   // Utilidades para o modal de EDIÇÃO / ATUALIZAÇÃO
   const [id, setId] = useState([]);
@@ -138,6 +140,41 @@ export default function CivisPe() {
     // Previne o comportamento padrão do formulário ao ser submetido (evita atualziar a página)
     event.preventDefault();
 
+    let servConfigID;
+
+    try {
+      // Obtém a última configuração de serviço
+      servConfigID = await getLatestConfigServicoId();
+      if (!servConfigID) {
+        throw new Error("Nenhuma configuração encontrada.");
+      }
+    } catch (error) {
+      // Em caso de erro, exibe um alerta e retorna
+      alert('Erro ao obter a configuração do serviço:', error);
+      return;
+    }
+
+    /*
+    let servConfigID = null; // Inicializando a variável 'servConfigID'
+
+
+    try {
+      const responseConfig = await axios.get(`${dbConfig()}/configuracao_servico`);
+      const configuracoes = responseConfig.data; // Supondo que o retorno seja um array de objetos com as configurações
+
+      if (configuracoes.length > 0) {
+        const ultimaConfiguracao = configuracoes[configuracoes.length - 1]; // Pega o último elemento do array
+        console.log(ultimaConfiguracao);
+        servConfigID = ultimaConfiguracao.id;
+      } else {
+        console.warn("Nenhuma configuração encontrada.");
+      }
+    } catch (error) {
+      console.error("Erro ao buscar configuração:", error);
+    }
+*/
+    console.log(servConfigID);
+
     // Coleta os valores dos campos do formulário
     const cpf = document.getElementById('cpf').value;
     const dataEntrada = document.getElementById('data-entrada').value;
@@ -152,6 +189,7 @@ export default function CivisPe() {
       destino,
       horaEntrada,
       nome,
+      servConfigID,
     };
 
     try {
@@ -224,6 +262,8 @@ export default function CivisPe() {
     }
   };
 
+
+
   return (
     <>
       <Navbar />
@@ -251,6 +291,8 @@ export default function CivisPe() {
         <table className="table text-center table-bordered border-dark table-hover">
           <thead>
             <tr>
+              <th scope="col">Id</th>
+              <th scope="col">config_servico_id</th>
               <th scope="col">Nome</th>
               <th scope="col">Identidade</th>
               <th scope="col">Data</th>
@@ -263,47 +305,34 @@ export default function CivisPe() {
             </tr>
           </thead>
           <tbody>
-            {data.map((civis) => {
-              let id = civis.id;
-              return (
-                <tr key={civis.id} className="align-middle">
-                  <td>{civis.nome}</td>
-
-                  <td>{civis.cpf}</td>
-
-                  <td>{formatDate(civis.dataEntrada)}</td>
-                  <td>{formatTime(civis.horaEntrada)}</td>
-                  <td className={`${civis.horaSaida === null ? "bg-danger text-white fw-bold" : ""}`}>
-                    {civis.horaSaida === null ? 'OM' : formatTime(civis.horaSaida)}</td>
-                  <td>{civis.destino}</td>
-
-                  <td className="d-print-none">
-                    <div className="d-flex align-items-center justify-content-center gap-3">
-                      <div>
-
-                        <button className="bnt-acao" onClick={() => buscarDadosPorId(id)} >
-                          <FontAwesomeIcon
-                            icon={faPenToSquare}
-                            color="#FFD700"
-                          />
-                        </button>
-
-                      </div>
-                      <div>
-                        <button
-                          className="bnt-acao"
-                          onClick={() =>
-                            handleDeleteRegistro(id, civis.nome, civis.cpf)
-                          }
-                        >
-                          <FontAwesomeIcon icon={faTrash} color="#FF0000" />
-                        </button>
-                      </div>
+            {data.map((civis) => (
+              <tr key={civis.id} className="align-middle">
+                <td>{civis.id}</td>
+                <td>{civis.config_servico_id}</td>
+                <td>{civis.nome}</td>
+                <td>{civis.cpf}</td>
+                <td>{formatDate(civis.dataEntrada)}</td>
+                <td>{formatTime(civis.horaEntrada)}</td>
+                <td className={`${civis.horaSaida === null ? "bg-danger text-white fw-bold" : ""}`}>
+                  {civis.horaSaida === null ? 'OM' : formatTime(civis.horaSaida)}
+                </td>
+                <td>{civis.destino}</td>
+                <td className="d-print-none">
+                  <div className="d-flex align-items-center justify-content-center gap-3">
+                    <div>
+                      <button className="bnt-acao" onClick={() => buscarDadosPorId(civis.id)} >
+                        <FontAwesomeIcon icon={faPenToSquare} color="#FFD700" />
+                      </button>
                     </div>
-                  </td>
-                </tr>
-              );
-            })}
+                    <div>
+                      <button className="bnt-acao" onClick={() => handleDeleteRegistro(civis.id, civis.nome, civis.cpf)}>
+                        <FontAwesomeIcon icon={faTrash} color="#FF0000" />
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
         <Imprimir impressao="retrato" />
