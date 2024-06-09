@@ -4,6 +4,8 @@ import Navbar from "../../components/navbar";
 import dbConfig from "../../components/util/dbConfig";
 import axios from "axios";
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
+import estiloAtualizar from "./atualiza.module.css";
 
 export default function AtualizarServico() {
     const [id, setId] = useState(null);
@@ -186,6 +188,7 @@ export default function AtualizarServico() {
                     </div>
 
                     <button className="btn btn-success" type="submit">Salvar</button>
+                    <Link to="/home" className={`${estiloAtualizar.botao_cancelar}`}><button className={`${estiloAtualizar.botao_cancelar} btn btn-danger`} type="submit">Cancelar</button></Link>
                 </form>
             </div>
         </>
