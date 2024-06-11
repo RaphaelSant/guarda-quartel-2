@@ -6,7 +6,7 @@ const router = express.Router();
 // Rota para ler (Read) os dados a serem exibidos para o usuário
 router.get("/civis_pe", (req, res) => {
     // const sql = "SELECT * FROM civis_pe order by dataEntrada, horaEntrada";
-    const sql = "SELECT DISTINCT cp.* FROM civis_pe cp INNER JOIN config_servico cs ON cp.config_servico_id = cs.id WHERE cs.configurado = 1 ORDER BY cp.dataEntrada, cp.horaEntrada;";
+    const sql = "SELECT cp.cpf, cp.dataEntrada, cp.destino, cp.horaEntrada, cp.horaSaida, cp.id, cp.nome FROM civis_pe cp INNER JOIN config_servico cs ON cp.config_servico_id = cs.id WHERE cs.configurado = 1 order by cp.dataEntrada, cp.horaEntrada";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);

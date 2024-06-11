@@ -10,7 +10,7 @@ export const getLatestConfigServicoId = async () => {
 
         if (configuracoes.length > 0) {
             const ultimaConfiguracao = configuracoes[configuracoes.length - 1]; // Pega o último elemento do array
-            servConfigID = ultimaConfiguracao.id;
+            servConfigID = ultimaConfiguracao;
         } else {
             console.warn("Nenhuma configuração encontrada.");
         }

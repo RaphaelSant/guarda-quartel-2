@@ -140,11 +140,13 @@ export default function CivisPe() {
     // Previne o comportamento padrão do formulário ao ser submetido (evita atualziar a página)
     event.preventDefault();
 
+    // Captura o ID da configuração do serviço em vigor
     let servConfigID;
 
     try {
       // Obtém a última configuração de serviço
-      servConfigID = await getLatestConfigServicoId();
+      const configId = await getLatestConfigServicoId();
+      servConfigID = configId.id;
       if (!servConfigID) {
         throw new Error("Nenhuma configuração encontrada.");
       }
@@ -154,26 +156,7 @@ export default function CivisPe() {
       return;
     }
 
-    /*
-    let servConfigID = null; // Inicializando a variável 'servConfigID'
-
-
-    try {
-      const responseConfig = await axios.get(`${dbConfig()}/configuracao_servico`);
-      const configuracoes = responseConfig.data; // Supondo que o retorno seja um array de objetos com as configurações
-
-      if (configuracoes.length > 0) {
-        const ultimaConfiguracao = configuracoes[configuracoes.length - 1]; // Pega o último elemento do array
-        console.log(ultimaConfiguracao);
-        servConfigID = ultimaConfiguracao.id;
-      } else {
-        console.warn("Nenhuma configuração encontrada.");
-      }
-    } catch (error) {
-      console.error("Erro ao buscar configuração:", error);
-    }
-*/
-    console.log(servConfigID);
+    // console.log(servConfigID);
 
     // Coleta os valores dos campos do formulário
     const cpf = document.getElementById('cpf').value;

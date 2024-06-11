@@ -5,7 +5,8 @@ const router = express.Router();
 
 // Rota para ler (Read) os dados a serem exibidos para o usuário
 router.get("/civis_veiculo", (req, res) => {
-    const sql = "SELECT * FROM civis_veiculo order by dataEntrada, horaEntrada";
+    //const sql = "SELECT * FROM civis_veiculo order by dataEntrada, horaEntrada";
+    const sql = "SELECT  cv.id, cv.nome, cv.cnh, cv.placa, cv.dataEntrada, cv.horaEntrada, cv.horaSaida, cv.destino FROM civis_veiculo cv INNER JOIN config_servico cs ON cv.config_servico_id = cs.id WHERE cs.configurado = 1 ORDER BY cv.dataEntrada, cv.horaEntrada";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
@@ -36,15 +37,15 @@ router.get("/civis_veiculo/selectId/:id", (req, res) => {
 
 // Rota para realizar novos registro de dados.
 router.post("/civis_veiculo", (req, res) => {
-    const { nome, cnh, placa, dataEntrada, horaEntrada, horaSaida, destino } = req.body;
-    const sql = "INSERT INTO civis_veiculo (nome, cnh, placa, dataEntrada, horaEntrada, horaSaida, destino) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    const { nome, cnh, placa, dataEntrada, horaEntrada, horaSaida, destino, servConfigID } = req.body;
+    const sql = "INSERT INTO civis_veiculo (nome, cnh, placa, dataEntrada, horaEntrada, horaSaida, destino, config_servico_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     // Validação dos dados
     if (!nome || !cnh || !placa || !dataEntrada || !horaEntrada || !destino) {
         return res.status(400).json({ message: "Todos os campos são obrigatórios.", status: 400 });
     }
 
-    db.query(sql, [nome, cnh, placa, dataEntrada, horaEntrada, horaSaida, destino], (err, result) => {
+    db.query(sql, [nome, cnh, placa, dataEntrada, horaEntrada, horaSaida, destino, servConfigID], (err, result) => {
         if (err) return res.status(500).send(err);
 
         return res.status(200).json({ message: "Dados inseridos com sucesso!" });
