@@ -14,9 +14,10 @@ router.get("/civis_pe", (req, res) => {
 });
 
 // Rota para ler (Read) os dados a serem exibidos para o usuário em serviço anterior
-router.get("/servico_anterior_civis_pe", (req, res) => {
-    const sql = "SELECT * FROM bk_civis_pe order by dataEntrada, horaEntrada";
-    db.query(sql, (err, data) => {
+router.get("/servico_anterior_civis_pe/:date", (req, res) => {
+    const date = req.params.date;
+    const sql = "SELECT cp.cpf, cp.dataEntrada, cp.destino, cp.horaEntrada, cp.horaSaida, cp.id, cp.nome FROM civis_pe cp INNER JOIN config_servico cs ON cp.config_servico_id = cs.id WHERE cs.servico_ref = ? order by cp.dataEntrada, cp.horaEntrada;";
+    db.query(sql, date, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
     });
