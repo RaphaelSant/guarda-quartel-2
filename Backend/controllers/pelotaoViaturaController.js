@@ -5,7 +5,7 @@ const router = express.Router();
 
 // Rota para ler (Read) os dados a serem exibidos para o usuário
 router.get("/pelotao_viatura", (req, res) => {
-    const sql = "SELECT * FROM pelotao_viatura order by dataRegistro, horaSaida";
+    const sql = "SELECT  pv.id, pv.vtr, pv.odmEntrada, pv.odmSaida, pv.dataRegistro, pv.horaEntrada, pv.horaSaida, pv.motorista, pv.chefeVtr, pv.destino FROM pelotao_viatura pv INNER JOIN config_servico cs ON pv.config_servico_id = cs.id WHERE cs.configurado = 1 ORDER BY pv.dataRegistro, pv.horaEntrada";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
@@ -23,15 +23,15 @@ router.get("/servico_anterior_pelotao_viatura", (req, res) => {
 
 // Rota para realizar novos registro de dados. (Create)
 router.post("/pelotao_viatura", (req, res) => {
-    const { vtrRegistro, odmSaidaRegistro, odmEntradaRegistro, dataRegistro, horaSaidaRegistro, horaEntradaRegistro, motoristaRegistro, chefeVtrRegistro, destinoRegistro } = req.body;
-    const sql = "INSERT INTO pelotao_viatura (vtr, odmSaida, odmEntrada, dataRegistro, horaSaida, horaEntrada, motorista, chefeVtr, destino) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    const { vtrRegistro, odmSaidaRegistro, odmEntradaRegistro, dataRegistro, horaSaidaRegistro, horaEntradaRegistro, motoristaRegistro, chefeVtrRegistro, destinoRegistro, servConfigID } = req.body;
+    const sql = "INSERT INTO pelotao_viatura (vtr, odmSaida, odmEntrada, dataRegistro, horaSaida, horaEntrada, motorista, chefeVtr, destino, config_servico_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     // Validação dos dados
     if (!vtrRegistro || !dataRegistro || !motoristaRegistro || !destinoRegistro) {
         return res.status(400).json({ message: "Todos os campos são obrigatórios.", status: 400 });
     }
 
-    db.query(sql, [vtrRegistro, odmSaidaRegistro, odmEntradaRegistro, dataRegistro, horaSaidaRegistro, horaEntradaRegistro, motoristaRegistro, chefeVtrRegistro, destinoRegistro], (err, result) => {
+    db.query(sql, [vtrRegistro, odmSaidaRegistro, odmEntradaRegistro, dataRegistro, horaSaidaRegistro, horaEntradaRegistro, motoristaRegistro, chefeVtrRegistro, destinoRegistro, servConfigID], (err, result) => {
         if (err) return res.status(500).send(err);
 
         return res.status(200).json({ message: "Dados inseridos com sucesso!" });

@@ -20,6 +20,7 @@ import {
 import clearForm from "../../../components/util/clearForm";
 import { formatDate, formatTime } from "../../../components/util/formatDateTime";
 import dbConfig from "../../../components/util/dbConfig";
+import { getLatestConfigServicoId } from "../../../components/configServico";
 
 export default function PelotaoViatura() {
     // Estado para receber os dados gravados no BD
@@ -55,6 +56,24 @@ export default function PelotaoViatura() {
         // Previne o comportamento padrão do formulário ao ser submetido (evita atualziar a página)
         event.preventDefault();
 
+        // Captura o ID da configuração do serviço em vigor
+        let servConfigID;
+
+        try {
+            // Obtém a última configuração de serviço
+            const configId = await getLatestConfigServicoId();
+            servConfigID = configId.id;
+            if (!servConfigID) {
+                throw new Error("Nenhuma configuração encontrada.");
+            }
+        } catch (error) {
+            // Em caso de erro, exibe um alerta e retorna
+            alert('Erro ao obter a configuração do serviço:', error);
+            return;
+        }
+
+        // console.log(servConfigID);
+
         // Coleta os valores dos campos do formulário
         const vtrRegistro = document.getElementById('vtr').value;
         const odmSaidaRegistro = document.getElementById('odm-saida').value;
@@ -77,6 +96,7 @@ export default function PelotaoViatura() {
             motoristaRegistro,
             chefeVtrRegistro: chefeVtrRegistro && chefeVtrRegistro.trim() !== "" ? chefeVtrRegistro : null,
             destinoRegistro,
+            servConfigID,
         };
 
         try {
