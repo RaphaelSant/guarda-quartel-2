@@ -5,7 +5,7 @@ const router = express.Router();
 
 // Rota para ler (Read) os dados a serem exibidos para o usuário
 router.get("/pelotao_durante_expediente", (req, res) => {
-    const sql = "SELECT * FROM pelotao_durante_expediente order by dataEntrada, horaEntrada";
+    const sql = "SELECT distinct pde.id, pde.pg, pde.nomeGuerra, pde.idtMil, pde.dataEntrada, pde.horaEntrada, pde.horaSaida, pde.origem FROM pelotao_durante_expediente pde INNER JOIN config_servico cs ON pde.config_servico_id = cs.id WHERE cs.configurado = 1 order by pde.dataEntrada, pde.horaEntrada";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
@@ -23,15 +23,15 @@ router.get("/servico_anterior_pelotao_durante_expediente", (req, res) => {
 
 // Rota para realizar novos registro de dados. (Create)
 router.post("/pelotao_durante_expediente", (req, res) => {
-    const { postoGraduacaoRegistro, nomeGuerraRegistro, idtMilitarRegistro, dataEntradaRegistro, horaEntradaRegistro, horaSaidaRegistro, origemRegistro } = req.body;
-    const sql = "INSERT INTO pelotao_durante_expediente (pg, nomeGuerra, idtMil, dataEntrada, horaEntrada, horaSaida, origem) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    const { postoGraduacaoRegistro, nomeGuerraRegistro, idtMilitarRegistro, dataEntradaRegistro, horaEntradaRegistro, horaSaidaRegistro, origemRegistro, servConfigID } = req.body;
+    const sql = "INSERT INTO pelotao_durante_expediente (pg, nomeGuerra, idtMil, dataEntrada, horaEntrada, horaSaida, origem, config_servico_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     // Validação dos dados
     if (!postoGraduacaoRegistro || !nomeGuerraRegistro || !idtMilitarRegistro || !dataEntradaRegistro || !origemRegistro) {
         return res.status(400).json({ message: "Todos os campos são obrigatórios.", status: 400 });
     }
 
-    db.query(sql, [postoGraduacaoRegistro, nomeGuerraRegistro, idtMilitarRegistro, dataEntradaRegistro, horaEntradaRegistro, horaSaidaRegistro, origemRegistro], (err, result) => {
+    db.query(sql, [postoGraduacaoRegistro, nomeGuerraRegistro, idtMilitarRegistro, dataEntradaRegistro, horaEntradaRegistro, horaSaidaRegistro, origemRegistro, servConfigID], (err, result) => {
         if (err) return res.status(500).send(err);
 
         return res.status(200).json({ message: "Dados inseridos com sucesso!" });

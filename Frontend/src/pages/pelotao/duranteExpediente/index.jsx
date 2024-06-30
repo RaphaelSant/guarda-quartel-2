@@ -20,6 +20,7 @@ import {
 import clearForm from "../../../components/util/clearForm";
 import { formatDate, formatTime } from "../../../components/util/formatDateTime";
 import dbConfig from "../../../components/util/dbConfig";
+import { getLatestConfigServicoId } from "../../../components/configServico";
 
 export default function PelotaoDuranteExpediente() {
     // Estado para receber os dados gravados no BD
@@ -55,6 +56,24 @@ export default function PelotaoDuranteExpediente() {
         // Previne o comportamento padrão do formulário ao ser submetido (evita atualziar a página)
         event.preventDefault();
 
+        // Captura o ID da configuração do serviço em vigor
+        let servConfigID;
+
+        try {
+            // Obtém a última configuração de serviço
+            const configId = await getLatestConfigServicoId();
+            servConfigID = configId.id;
+            if (!servConfigID) {
+                throw new Error("Nenhuma configuração encontrada.");
+            }
+        } catch (error) {
+            // Em caso de erro, exibe um alerta e retorna
+            alert('Erro ao obter a configuração do serviço:', error);
+            return;
+        }
+
+        // console.log(servConfigID);
+
         // Coleta os valores dos campos do formulário
         const postoGraduacaoRegistro = document.getElementById('pg').value;
         const nomeGuerraRegistro = document.getElementById('nome-guerra').value;
@@ -73,6 +92,7 @@ export default function PelotaoDuranteExpediente() {
             horaEntradaRegistro: horaEntradaRegistro && horaEntradaRegistro.trim() !== "" ? horaEntradaRegistro : null,
             horaSaidaRegistro: horaSaidaRegistro && horaSaidaRegistro.trim() !== "" ? horaSaidaRegistro : null,
             origemRegistro,
+            servConfigID,
         };
 
         try {
