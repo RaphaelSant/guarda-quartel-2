@@ -1,15 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ministerioLogo from "../../assets/img/ministerio-logo.jpg";
+import { getLatestConfigServicoId } from "../configServico";
 
 export default function ImpressaoHeader(props) {
-    let ontem = new Date().setHours(-1);
-    ontem = new Date(ontem); // o comando setHours devolve a data em milisegundos
-    const dataOntem = ontem.toLocaleDateString('pt-BR');
+    const [dataServico, setDataServico] = useState(null);
+
+    useEffect(() => {
+        const fetchDataServico = async () => {
+            try {
+                // Obtém a última configuração de serviço
+                const dataConfig = await getLatestConfigServicoId();
+                const dataServicoConfig = dataConfig.servico_ref;
+                let dataFormatada = new Date(dataServicoConfig);
+                dataFormatada = new Date(dataFormatada);
+                if (!dataServicoConfig) {
+                    throw new Error("Nenhuma configuração encontrada.");
+                }
+                setDataServico(dataFormatada.toLocaleDateString('pt-BR'));
+            } catch (error) {
+                // Em caso de erro, exibe um alerta
+                alert('Erro ao obter a configuração do serviço: ' + error.message);
+            }
+        };
+
+        fetchDataServico();
+    }, []);
 
     return (
         <>
             <div className="position-relative w-100 d-none d-print-block">
-                <div className="position-absolute top-0 start-0 border border-dark pt-5 ps-5 pe-5 ">
+                <div className="position-absolute top-0 start-0 border border-dark pt-5 ps-5 pe-5">
                     <div className="border-top border-dark w-100">
                         <p>SCmt</p>
                     </div>
@@ -32,7 +52,7 @@ export default function ImpressaoHeader(props) {
                     </b>
                 </p>
 
-                <p>{props.titulo} do dia {dataOntem}.</p>
+                <p>{props.titulo} do dia {dataServico}.</p>
             </div>
         </>
     );
