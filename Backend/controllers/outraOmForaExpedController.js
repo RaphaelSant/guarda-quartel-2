@@ -5,14 +5,14 @@ const router = express.Router();
 
 // Rota para ler (Read) os dados a serem exibidos para o usuário
 router.get("/outra_om_fora_expediente", (req, res) => {
-    const sql = "SELECT * FROM oom_fora_expediente order by dataEntrada, horaEntrada";
+    const sql = "SELECT ofe.id, ofe.pg, ofe.nomeGuerra, ofe.om, ofe.idtMil, ofe.dataEntrada, ofe.horaEntrada, ofe.horaSaida, ofe.origem FROM oom_fora_expediente ofe INNER JOIN config_servico cs ON ofe.config_servico_id = cs.id WHERE cs.configurado = 1 order by ofe.dataEntrada, ofe.horaEntrada";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
     });
 });
 
-// Rota para ler (Read) os dados a serem exibidos para o usuário
+// Rota para ler (Read) os dados a serem exibidos para o usuário em serviço anterior
 router.get("/servico_anterior_outra_om_fora_expediente", (req, res) => {
     const sql = "SELECT * FROM bk_oom_fora_expediente order by dataEntrada, horaEntrada";
     db.query(sql, (err, data) => {
@@ -21,18 +21,21 @@ router.get("/servico_anterior_outra_om_fora_expediente", (req, res) => {
     });
 });
 
-// Rota para realizar novos registro de dados. (Create)
+// Rota para realizar novos registros de dados. (Create)
 router.post("/outra_om_fora_expediente", (req, res) => {
-    const { postoGraduacaoRegistro, nomeGuerraRegistro, idtMilitarRegistro, omRegistro, dataEntradaRegistro, horaEntradaRegistro, horaSaidaRegistro, origemRegistro } = req.body;
-    const sql = "INSERT INTO oom_fora_expediente (pg, nomeGuerra, idtMil, om, dataEntrada, horaEntrada, horaSaida, origem) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    const { postoGraduacaoRegistro, nomeGuerraRegistro, idtMilitarRegistro, omRegistro, dataEntradaRegistro, horaEntradaRegistro, horaSaidaRegistro, origemRegistro, servConfigID } = req.body;
+    const sql = "INSERT INTO oom_fora_expediente (pg, nomeGuerra, idtMil, om, dataEntrada, horaEntrada, horaSaida, origem, config_servico_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     // Validação dos dados
-    if (!postoGraduacaoRegistro || !nomeGuerraRegistro || !omRegistro || !idtMilitarRegistro || !dataEntradaRegistro || !origemRegistro) {
+    if (!postoGraduacaoRegistro || !nomeGuerraRegistro || !idtMilitarRegistro || !omRegistro || !dataEntradaRegistro || !origemRegistro || !servConfigID) {
         return res.status(400).json({ message: "Todos os campos são obrigatórios.", status: 400 });
     }
 
-    db.query(sql, [postoGraduacaoRegistro, nomeGuerraRegistro, idtMilitarRegistro, omRegistro, dataEntradaRegistro, horaEntradaRegistro, horaSaidaRegistro, origemRegistro], (err, result) => {
-        if (err) return res.status(500).send(err);
+    db.query(sql, [postoGraduacaoRegistro, nomeGuerraRegistro, idtMilitarRegistro, omRegistro, dataEntradaRegistro, horaEntradaRegistro, horaSaidaRegistro, origemRegistro, servConfigID], (err, result) => {
+        if (err) {
+            console.error(err); // Log para depuração
+            return res.status(500).json({ message: "Erro ao inserir dados no banco de dados.", error: err });
+        }
 
         return res.status(200).json({ message: "Dados inseridos com sucesso!" });
     });
@@ -57,7 +60,7 @@ router.put("/outra_om_fora_expediente/:id", (req, res) => {
     const { pg, nomeGuerra, idtMil, om, dataEntrada, horaEntrada, horaSaida, origem } = req.body;
 
     // Validação dos dados
-    if (!pg || !nomeGuerra || !idtMil || !dataEntrada || !om ||!origem) {
+    if (!pg || !nomeGuerra || !idtMil || !dataEntrada || !om || !origem) {
         return res.status(400).json({ message: "Todos os campos são obrigatórios.", status: 400 });
     }
 

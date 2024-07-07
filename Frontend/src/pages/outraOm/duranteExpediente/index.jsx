@@ -95,7 +95,7 @@ export default function OutraOmDuranteExpediente() {
             servConfigID,
         };
 
-        console.log(dados);
+        // console.log(dados);
 
         try {
             // Envia uma requisição POST para adicionar um novo registro

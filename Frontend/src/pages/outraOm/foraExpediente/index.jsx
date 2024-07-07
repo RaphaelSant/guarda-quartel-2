@@ -20,6 +20,7 @@ import {
 import clearForm from "../../../components/util/clearForm";
 import { formatDate, formatTime } from "../../../components/util/formatDateTime";
 import dbConfig from "../../../components/util/dbConfig";
+import { getLatestConfigServicoId } from "../../../components/configServico";
 
 export default function OutraOmForaExpediente() {
     // Estado para receber os dados gravados no BD
@@ -52,7 +53,7 @@ export default function OutraOmForaExpediente() {
     // Registro pelo modal:
     const handleRegistrarSubmit = async (event) => {
 
-        // Previne o comportamento padrão do formulário ao ser submetido (evita atualziar a página)
+        // Previne o comportamento padrão do formulário ao ser submetido (evita atualizar a página)
         event.preventDefault();
 
         // Coleta os valores dos campos do formulário
@@ -65,6 +66,22 @@ export default function OutraOmForaExpediente() {
         const horaSaidaRegistro = document.getElementById('hora-saida').value;
         const origemRegistro = document.getElementById('origem').value;
 
+        // Captura o ID da configuração do serviço em vigor
+        let servConfigID;
+
+        try {
+            // Obtém a última configuração de serviço
+            const configId = await getLatestConfigServicoId();
+            servConfigID = configId.id;
+            if (!servConfigID) {
+                throw new Error("Nenhuma configuração encontrada.");
+            }
+        } catch (error) {
+            // Em caso de erro, exibe um alerta e retorna
+            alert('Erro ao obter a configuração do serviço: ' + error.message);
+            return;
+        }
+
         // Organiza os dados coletados em um objeto
         const dados = {
             postoGraduacaoRegistro,
@@ -72,10 +89,13 @@ export default function OutraOmForaExpediente() {
             idtMilitarRegistro,
             omRegistro,
             dataEntradaRegistro,
-            horaEntradaRegistro: horaEntradaRegistro && horaEntradaRegistro.trim() !== "" ? horaSaida : null,
-            horaSaidaRegistro: horaSaidaRegistro && horaSaidaRegistro.trim() !== "" ? horaSaida : null,
+            horaEntradaRegistro: horaEntradaRegistro && horaEntradaRegistro.trim() !== "" ? horaEntradaRegistro : null,
+            horaSaidaRegistro: horaSaidaRegistro && horaSaidaRegistro.trim() !== "" ? horaSaidaRegistro : null,
             origemRegistro,
+            servConfigID,
         };
+
+        //console.log(dados);
 
         try {
             // Envia uma requisição POST para adicionar um novo registro
@@ -93,7 +113,7 @@ export default function OutraOmForaExpediente() {
             // Converte a resposta da requisição para JSON
             const responseData = await response.json();
 
-            if (responseData.status != 400) {
+            if (response.status === 200) {
                 // Limpa o formulário após a inserção
                 clearForm();
                 // Atualiza os dados na tela após a inserção 
@@ -106,7 +126,7 @@ export default function OutraOmForaExpediente() {
 
         } catch (error) {
             // Em caso de erro na requisição, exibe um alerta
-            alert('Erro:', error);
+            alert('Erro: ' + error.message);
         }
     };
 
@@ -180,7 +200,7 @@ export default function OutraOmForaExpediente() {
 
             // Exibe um alerta com a mensagem da resposta para informar o usuário sobre o resultado da operação
             alert(response.data.message);
-            
+
             // Retorna os dados da resposta da requisição
             return response.data;
         } catch (error) {
