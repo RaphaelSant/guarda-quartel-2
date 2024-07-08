@@ -37,10 +37,12 @@ import axios from "axios";
 import dbConfig from "../util/dbConfig.jsx";
 import AtualizarServico from "../../pages/configServico/atualizaServico.jsx";
 import RelatorioConsulta from "../../pages/relatorio/servicoAnterior/consulta.jsx";
+import NovoRoteiro from "../../pages/relatorio/roteiroGuarda/novoRoteiro.jsx";
 
 export default function Rotas() {
   const [autenticado, setAutenticado] = useState(false);
   const [configurado, setConfigurado] = useState(false);
+  const [configuradoRoteiro, setConfiguradoRoteiro] = useState(false);
   const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
@@ -49,9 +51,10 @@ export default function Rotas() {
         const autenticado = await verificarAutenticacao();
         setAutenticado(autenticado);
 
-        const responseConfig = await axios.get(`${dbConfig()}/configuracao_servico`);
+        const responseConfig = await axios.get(`${dbConfig()}/configuracao_servico`);        
         const configuracoes = responseConfig.data; // Supondo que o retorno seja um array de objetos com as configurações
 
+        // CONFIGURAÇÃO DO SERVIÇO
         if (configuracoes.length > 0) {
           const ultimaConfiguracao = configuracoes[configuracoes.length - 1]; // Pega o último elemento do array
           const configurado = ultimaConfiguracao.configurado; // Extrai a propriedade 'configurado' do último objeto
@@ -60,6 +63,20 @@ export default function Rotas() {
         } else {
           console.warn("Nenhuma configuração encontrada.");
           setConfigurado(null); // Ou qualquer valor padrão apropriado
+        }
+
+        const responseRoteiro = await axios.get(`${dbConfig()}/relatorio_roteiro_guarda`);
+        const configuracaoRoteiro = responseRoteiro.data; // Supondo que o retorno seja um array de objetos com as configurações
+
+        // CONFIGURAÇÃO DO ROTEIRO DA GUARDA
+        if (configuracaoRoteiro.length > 0) {
+          const ultimaConfiguracao = configuracaoRoteiro[configuracaoRoteiro.length - 1]; // Pega o último elemento do array
+          const configurado = ultimaConfiguracao.configurado; // Extrai a propriedade 'configurado' do último objeto
+          setConfiguradoRoteiro(configurado);
+          //console.log("Novo Roteiro: "+ configurado);
+        } else {
+          console.warn("Nenhuma configuração encontrada.");
+          setConfiguradoRoteiro(null); // Ou qualquer valor padrão apropriado
         }
       } catch (error) {
         console.error("Erro ao verificar autenticação:", error);
@@ -146,12 +163,13 @@ export default function Rotas() {
         <Route
           exact
           path="/relatorio_roteiro_guarda"
-          element={autenticado ? (configurado == 1 ? <RelatorioRoteiroGuarda /> : <ConfigServico />) : <ErroPage />}
+          // element={autenticado ? (configurado == 1 ? <RelatorioRoteiroGuarda /> : <ConfigServico />) : <ErroPage />}
+          element={autenticado ? (configurado === 1 ? (configuradoRoteiro === 1 ? <RelatorioRoteiroGuarda /> : <NovoRoteiro />) : <ConfigServico />) : <ErroPage />}
         />
         <Route
           exact
           path="/relatorio_escala_ronda"
-          element={autenticado ? (configurado == 1 ? <RelatorioEscalaRonda /> : <ConfigServico />) : <ErroPage />}
+          element={autenticado ? (configurado == 1 ? (configuradoRoteiro == 1 ? <RelatorioEscalaRonda /> : <NovoRoteiro />) : <ConfigServico />) : <ErroPage />}
         />
         <Route
           exact

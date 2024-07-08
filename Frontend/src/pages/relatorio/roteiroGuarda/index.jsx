@@ -18,6 +18,7 @@ import {
 } from "../../../components/botao";
 import clearForm from "../../../components/util/clearForm";
 import dbConfig from "../../../components/util/dbConfig";
+import { getLatestConfigServicoId } from "../../../components/configServico";
 
 export default function RelatorioRoteiroGuarda() {
     // Estado para receber os dados gravados no BD
@@ -27,13 +28,15 @@ export default function RelatorioRoteiroGuarda() {
     const fetchData = async () => {
         try {
             // Faz uma requisição para buscar dados da API em http://localhost:8081/relatorio_roteiro_guarda
-            const res = await fetch(`${dbConfig()}/relatorio_roteiro_guarda`);
-
+            const resRelatorio = await fetch(`${dbConfig()}/relatorio_roteiro_guarda`);
+            
             // Converte a resposta da requisição para o formato JSON
-            const fetchedData = await res.json();
-
+            const fetchedData = await resRelatorio.json();
+            
             // Atualiza o estado 'data' do componente com os dados obtidos da API
             setData(fetchedData);
+
+            //console.log(configId);
         } catch (err) {
             // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
             alert(err)
@@ -76,6 +79,8 @@ export default function RelatorioRoteiroGuarda() {
             // Verifica se há dados retornados antes de definir os estados para evitar erros
             if (data) {
 
+                console.log(data);
+
 
                 // Define os estados com os dados obtidos da requisição, usando valores padrão vazios caso não haja dados
                 setId(data.id || "");
@@ -87,7 +92,7 @@ export default function RelatorioRoteiroGuarda() {
                 setCbTpArmamento(data.cbTpArmamento || "");
                 setCbNrArmamento(data.cbNrArmamento || "");
                 setCbQtdMun(data.cbQtdMun || "");
-                setSdNomeGuerra(data.sdNomeGuerra || "");
+                setSdNomeGuerra(data.motoristaNomeGuerra || "");
                 setSdTpArmamento(data.sdTpArmamento || "");
                 setSdNrArmamento(data.sdNrArmamento || "");
                 setSdQtdMun(data.sdQtdMun || "");
@@ -110,23 +115,17 @@ export default function RelatorioRoteiroGuarda() {
     const atualizarDadosPorId = async (id) => {
         try {
             // Envia uma requisição PUT para atualizar os dados do registro com o ID fornecido
-            const response = await axios.put(`${dbConfig()}/relatorio_roteiro_guarda/${id}`, {
+            const response = await axios.put(`${dbConfig()}/relatorio_roteiro_guarda/updateRoteiro/${id}`, {
                 // Envia os dados a serem atualizados no corpo da requisição
-                sgtNomeGuerra, 
                 sgtTpArmamento, 
                 sgtNrArmamento, 
                 sgtQtdMun, 
-                cbNomeGuerra, 
                 cbTpArmamento, 
                 cbNrArmamento, 
                 cbQtdMun, 
-                sdNomeGuerra: sdNomeGuerra && sdNomeGuerra.trim() !== "" ? sdNomeGuerra : null,
                 sdTpArmamento: sdTpArmamento && sdTpArmamento.trim() !== "" ? sdTpArmamento : null, 
                 sdNrArmamento: sdNrArmamento && sdNrArmamento.trim() !== "" ? sdNrArmamento : null,
                 sdQtdMun: sdQtdMun && sdQtdMun.trim() !== "" ? sdQtdMun : null,
-                sdPrimeiroHorNome, 
-                sdSegundoHorNome, 
-                sdTerceiroHorNome
             });
 
             // Exibe um alerta com a mensagem da resposta para informar o usuário sobre o resultado da operação
@@ -163,7 +162,7 @@ export default function RelatorioRoteiroGuarda() {
             </div>
             <p className="text-center d-print-none">Roteiro da guarda</p>
             <div className="text-center mb-4 d-print-none">
-                <EditarRegistros click={() => buscarDadosPorId(1)} />
+                <EditarRegistros click={() => buscarDadosPorId(data[0].id)} />
 
             </div>
             <div className={`container d-flex flex-column justify-content-center align-items-center ${estiloImpressao.container_local}`}>
@@ -209,7 +208,7 @@ export default function RelatorioRoteiroGuarda() {
                             return (
                                 <tr key={militar.id} className="align-middle">
                                     <td className="fw-bold">Soldado</td>
-                                    <td>{militar.sdNomeGuerra === null ? '- - -' : militar.sdNomeGuerra}</td>
+                                    <td>{militar.motoristaNomeGuerra === null ? '- - -' : militar.motoristaNomeGuerra}</td>
                                     <td>{militar.sdTpArmamento === null ? '- - -' : militar.sdTpArmamento}</td>
                                     <td>{militar.sdNrArmamento === null ? '- - -' : militar.sdNrArmamento}</td>
                                     <td>{militar.sdQtdMun === null ? '- - -' : militar.sdQtdMun}</td>
@@ -339,6 +338,7 @@ export default function RelatorioRoteiroGuarda() {
                                         id="sgt-nome-guerra"
                                         maxLength="100"
                                         required
+                                        disabled
                                         value={sgtNomeGuerra}
                                         onChange={(e) => setSgtNomeGuerra(e.target.value)}
                                     />
@@ -409,6 +409,7 @@ export default function RelatorioRoteiroGuarda() {
                                         id="cb-nome-guerra"
                                         maxLength="100"
                                         required
+                                        disabled
                                         value={cbNomeGuerra}
                                         onChange={(e) => setCbNomeGuerra(e.target.value)}
                                     />
@@ -480,6 +481,7 @@ export default function RelatorioRoteiroGuarda() {
                                         id="sd-nome-guerra"
                                         maxLength="100"
                                         required
+                                        disabled
                                         value={sdNomeGuerra}
                                         onChange={(e) => setSdNomeGuerra(e.target.value)}
                                     />
@@ -551,6 +553,7 @@ export default function RelatorioRoteiroGuarda() {
                                         id="sd-primeiro-horario"
                                         maxLength="100"
                                         required
+                                        disabled
                                         value={sdPrimeiroHorNome}
                                         onChange={(e) => setSdPrimeiroHorNome(e.target.value)}
                                     />
@@ -568,6 +571,7 @@ export default function RelatorioRoteiroGuarda() {
                                         id="sd-segundo-horario"
                                         maxLength="100"
                                         required
+                                        disabled
                                         value={sdSegundoHorNome}
                                         onChange={(e) => setSdSegundoHorNome(e.target.value)}
                                     />
@@ -585,6 +589,7 @@ export default function RelatorioRoteiroGuarda() {
                                         id="sd-terceiro-horario"
                                         maxLength="100"
                                         required
+                                        disabled
                                         value={sdTerceiroHorNome}
                                         onChange={(e) => setSdTerceiroHorNome(e.target.value)}
                                     />
@@ -592,10 +597,11 @@ export default function RelatorioRoteiroGuarda() {
                                     <div className="invalid-feedback">Campo obrigatório.</div>
                                 </div>
                             </form>
+                            
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" onClick={(e) => atualizarDadosPorId(1)} className="btn btn-md btn-success">Atualizar Registro</button>
+                            <button type="submit" onClick={(e) => atualizarDadosPorId(data[0].id)} className="btn btn-md btn-success">Atualizar Registro</button>
                         </div>
                     </div>
                 </div>
