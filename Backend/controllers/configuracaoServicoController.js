@@ -79,6 +79,24 @@ router.put("/roteiro_guarda", (req, res) => {
     });
 });
 
+// Rota para atualizar dados do menu "ESCALA DE RONDA" (UPDATE)
+router.put("/escala_ronda", (req, res) => {
+    const { alteracao } = req.body;
+    
+    // Validação dos dados
+    if (!alteracao) {
+        return res.status(400).json({ message: "Campo obrigatório." });
+    }
+
+    const sql = "UPDATE config_servico cs SET relatorio_ronda_observacao=? WHERE cs.configurado=1";
+
+    db.query(sql, [alteracao], (err, result) => {
+        if (err) return res.status(500).send(err);
+
+        return res.status(200).json({ message: "Dados atualizados com sucesso!" });
+    });
+});
+
 // Rota para selecionar os dados por ID
 router.get("/configuracao_servico/selectId/:id", (req, res) => {
     const id = req.params.id;
@@ -91,9 +109,6 @@ router.get("/configuracao_servico/selectId/:id", (req, res) => {
         return res.json(data[0]); // Retorna o primeiro registro encontrado (se houver)
     });
 });
-
-
-
 
 // Rota para deletar dados.
 router.delete("/configuracao_servico/:id", (req, res) => {

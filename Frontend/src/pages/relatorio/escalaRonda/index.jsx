@@ -27,7 +27,7 @@ export default function RelatorioEscalaRonda() {
     const fetchData = async () => {
         try {
             // Faz uma requisição para buscar dados da API em http://localhost:8081/pelotao_viatura
-            const res = await fetch(`${dbConfig()}/relatorio_roteiro_guarda`);
+            const res = await fetch(`${dbConfig()}/configuracao_servico/servico_configurado`);
 
             // Converte a resposta da requisição para o formato JSON
             const fetchedData = await res.json();
@@ -52,15 +52,14 @@ export default function RelatorioEscalaRonda() {
     const [alteracao, setAlteracao] = useState([]);
 
     // Busca de dados por Id para a edição
-    const buscarDadosPorId = async (id) => {
+    const buscarDadosPorId = async () => {
         try {
             // Faz uma requisição GET para obter os dados de um registro específico com o ID fornecido
-            const response = await axios.get(`${dbConfig()}/relatorio_roteiro_guarda/selectId/${id}`);
-            const data = response.data;
-
+            const response = await axios.get(`${dbConfig()}/configuracao_servico/servico_configurado`);
+            const data = response.data[0];
             // Cria uma instância de um modal usando Bootstrap
             const editModal = new bootstrap.Modal(document.getElementById("editarRegistro"));
-
+            
             // Verifica se há dados retornados antes de definir os estados para evitar erros
             if (data) {
 
@@ -83,7 +82,7 @@ export default function RelatorioEscalaRonda() {
     const atualizarDadosPorId = async (id) => {
         try {
             // Envia uma requisição PUT para atualizar os dados do registro com o ID fornecido
-            const response = await axios.put(`${dbConfig()}/relatorio_roteiro_guarda/alteracao/${id}`, {
+            const response = await axios.put(`${dbConfig()}/escala_ronda`, {
                 // Envia os dados a serem atualizados no corpo da requisição
                 alteracao
             });
