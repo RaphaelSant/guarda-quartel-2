@@ -12,16 +12,16 @@ router.get("/configuracao_servico", (req, res) => {
     });
 });
 
-// Rota para ler (Read) os dados a serem exibidos para o usuário em serviço anterior
-router.get("/servico_anterior_configuracao_servico", (req, res) => {
-    const sql = "SELECT * FROM bk_configuracao_servico";
+// Rota para ler (Read) os dados apenas do SERVIÇO CONFIGURADO
+router.get("/configuracao_servico/servico_configurado", (req, res) => {
+    const sql = "SELECT * FROM config_servico cs WHERE cs.configurado = 1";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
     });
 });
 
-// Rota para realizar novos registro de dados. (Create)
+// Rota para realizar novos registros de dados. (Create) - QUANDO SERVIÇO NÃO ESTIVER AINDA CONFIGURADO
 router.post("/configuracao_servico", (req, res) => {
     const { configurado, dataServico, sgtNomeGuerra, cbNomeGuerra, motoristaNomeGuerra, sdPrimeiroHorario, sdSegundoHorario, sdTerceiroHorario } = req.body;
 
@@ -42,20 +42,7 @@ router.post("/configuracao_servico", (req, res) => {
     });
 });
 
-// Rota para selecionar os dados por ID
-router.get("/configuracao_servico/selectId/:id", (req, res) => {
-    const id = req.params.id;
-    const sql = "SELECT * FROM config_servico WHERE id = ?"; // Consulta SQL para buscar o registro pelo ID
-    db.query(sql, id, (err, data) => {
-        if (err) return res.json(err);
-        if (data.length === 0) {
-            return res.json({ message: "Registro não encontrado" });
-        }
-        return res.json(data[0]); // Retorna o primeiro registro encontrado (se houver)
-    });
-});
-
-// Rota para atualizar dados (UPDATE)
+// Rota para atualizar dados do menu "CONFIGURAÇÃO DO SERVIÇO" (UPDATE)
 router.put("/configuracao_servico/:id", (req, res) => {
     const id = req.params.id;
     const { dataServico, sgtNomeGuerra, cbNomeGuerra, motoristaNomeGuerra, sdPrimeiroHorario, sdSegundoHorario, sdTerceiroHorario } = req.body;
@@ -73,6 +60,39 @@ router.put("/configuracao_servico/:id", (req, res) => {
         return res.status(200).json({ message: "Dados atualizados com sucesso!" });
     });
 });
+
+// Rota para atualizar dados do menu "ROTEIRO DA GUARDA" (UPDATE)
+router.put("/roteiro_guarda", (req, res) => {
+    const { sgtTpArmamento, sgtNrArmamento, sgtQtdMun, cbTpArmamento, cbNrArmamento, cbQtdMun, motoristaTpArmamento, motoristaNrArmamento, motoristaQtdMun } = req.body;
+    
+    // Validação dos dados
+    if (!sgtTpArmamento || !sgtNrArmamento || !sgtQtdMun || !cbTpArmamento || !cbNrArmamento || !cbQtdMun || !motoristaTpArmamento || !motoristaNrArmamento || !motoristaQtdMun ) {
+        return res.status(400).json({ message: "Todos os campos são obrigatórios." });
+    }
+
+    const sql = "UPDATE config_servico cs SET sgtTpArmamento=?, sgtNrArmamento=?, sgtQtdMun=?, cbTpArmamento=?, cbNrArmamento=?, cbQtdMun=?, motoristaTpArmamento=?, motoristaNrArmamento=?, motoristaQtdMun=? WHERE cs.configurado=1";
+
+    db.query(sql, [sgtTpArmamento, sgtNrArmamento, sgtQtdMun, cbTpArmamento, cbNrArmamento, cbQtdMun, motoristaTpArmamento, motoristaNrArmamento, motoristaQtdMun], (err, result) => {
+        if (err) return res.status(500).send(err);
+
+        return res.status(200).json({ message: "Dados atualizados com sucesso!" });
+    });
+});
+
+// Rota para selecionar os dados por ID
+router.get("/configuracao_servico/selectId/:id", (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM config_servico WHERE id = ?"; // Consulta SQL para buscar o registro pelo ID
+    db.query(sql, id, (err, data) => {
+        if (err) return res.json(err);
+        if (data.length === 0) {
+            return res.json({ message: "Registro não encontrado" });
+        }
+        return res.json(data[0]); // Retorna o primeiro registro encontrado (se houver)
+    });
+});
+
+
 
 
 // Rota para deletar dados.
