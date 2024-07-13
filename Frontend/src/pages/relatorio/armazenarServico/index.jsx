@@ -121,14 +121,13 @@ export default function ArmazenarServico() {
                         </ol>
                     </nav>
                 </div>
-                <h4 className="text-center d-print-none">Amazenamento de Serviço</h4>
+                <h4 className="text-center d-print-none">Finalizar Serviço</h4>
                 <div className="w-50 m-auto">
                     <p className="text-justify">
-                        O Menu "Armazenar Serviço" é uma ferramenta extremamente delicada.
+                        O Menu "Finalizar Serviço" é uma ferramenta extremamente delicada.
                         Ao utilizá-lo, você estará arquivando suas informações atuais,
                         tornando-as disponíveis <strong>apenas</strong> para consulta e
-                        impressão por um período de 24 horas (Até a passagem do serviço
-                        atual) no Menu "Serviço Anterior".
+                        impressão no Menu "Serviço Anterior".
                     </p>
                 </div>
                 <div className="w-50 m-auto">
@@ -138,7 +137,7 @@ export default function ArmazenarServico() {
                         data-bs-toggle="modal"
                         data-bs-target="#exampleModal"
                     >
-                        Armazenar Serviço
+                        Finalizar Serviço
                     </button>
                     <Cancelar link="/home" />
                 </div>
