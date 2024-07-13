@@ -17,8 +17,6 @@ import {
 } from "../../../components/botao";
 import clearForm from "../../../components/util/clearForm";
 import dbConfig from "../../../components/util/dbConfig.jsx";
-import { da } from "date-fns/locale";
-import ConfigServico from "../../configServico/index.jsx";
 
 export default function RelatorioParteSgtPerm() {
     // Estado para armazenar os dados obtidos da API
