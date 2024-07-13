@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle";
@@ -14,58 +14,47 @@ import { Link } from "react-router-dom";
 export default function ArmazenarServico() {
 
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const timeoutRef = useRef(null);
+    const isLoadingRef = useRef(isLoading); // Usado para manter o valor mais recente de isLoading
 
-    const executeDelete = async (url, errorMessage) => {
-        try {
-            const response = await fetch(url, {
-                method: 'DELETE',
-            });
+    // Atualiza a referência sempre que isLoading muda
+    useEffect(() => {
+        isLoadingRef.current = isLoading;
+    }, [isLoading]);
 
-            if (!response.ok) {
-                throw new Error(errorMessage);
+    const handleFinalizarServico = () => {
+        setIsLoading(true); // Ativa o estado de carregamento
+
+        // Mantém o estado de carregamento por pelo menos 5 segundos
+        timeoutRef.current = setTimeout(async () => {
+            if (isLoadingRef.current) {
+                try {
+                    const response = await axios.put(`${dbConfig()}/finaliza_servico`, {}, {
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    });
+
+                    alert(response.data.message);
+
+                } catch (error) {
+                    console.error("Erro:", error);
+                    alert("Ocorreu um erro ao finalizar o serviço.");
+                } finally {
+                    setIsLoading(false);
+                    timeoutRef.current = null;
+                }
             }
-
-            console.log(`Dados deletados com sucesso: ${url}`);
-        } catch (error) {
-            console.error(`Erro ao deletar dados: ${url}`, error.message);
-            throw new Error(errorMessage);
-        }
+        }, 5000);
     };
 
-    const executePost = async (url, errorMessage) => {
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-            });
-
-            if (!response.ok) {
-                throw new Error(errorMessage);
-            }
-
-            console.log(`Dados postados com sucesso: ${url}`);
-        } catch (error) {
-            console.error(`Erro ao postar dados: ${url}`, error.message);
-            throw new Error(errorMessage);
+    const handleCancel = () => {
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = null;
         }
-    };
-
-    const handleClick = async () => {
-        setIsLoading(true);
-        setError(null);
-
-        try {
-            await executeDelete(`${dbConfig()}/armazenar_servico_destino_delete`, 'Falha ao APAGAR dados das tabelas de destino');
-            await executePost(`${dbConfig()}/armazenar_servico`, 'Falha ao copiar dados');
-            await executeDelete(`${dbConfig()}/armazenar_servico_origem_delete`, 'Falha ao APAGAR dados das tabelas de origem');
-
-            console.log('Processo concluído com sucesso!');
-            alert('Processo concluído com sucesso!');
-        } catch (error) {
-            setError(error.message);
-        } finally {
-            setIsLoading(false);
-        }
+        setIsLoading(false);
+        alert("Operação cancelada");
     };
 
     return (
@@ -92,14 +81,18 @@ export default function ArmazenarServico() {
                             ></button>
                         </div>
                         <div className="modal-body">
-                            Os dados ficarão disponíveis apenas para consulta e impressão por um período de 24 horas (Até a passagem do serviço atual) no Menu <strong>Serviço Anterior</strong>.
+                            Os dados ficarão disponíveis apenas para consulta e impressão no Menu <strong>Serviço Anterior</strong>.
                         </div>
                         <div className="modal-footer">
-                            <button className="btn btn-danger" onClick={handleClick} disabled={isLoading}>
-                                {isLoading ? <div className="spinner-border text-light" role="status">
-                                    <span className="visually-hidden">Loading...</span>
-                                </div> : 'Armazenar Serviço'}
+
+                            <button className="btn btn-danger" onClick={handleFinalizarServico} disabled={isLoading}>
+                                {isLoading ? "Finalizando..." : "Finalizar Serviço"}
                             </button>
+                            {isLoading && (
+                                <button className="btn btn-alert" onClick={handleCancel} disabled={!isLoading}>
+                                    Cancelar
+                                </button>
+                            )}
 
                             <button
                                 type="button"

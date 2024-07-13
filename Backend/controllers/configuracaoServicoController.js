@@ -161,6 +161,18 @@ router.put("/parte_sgt_permanencia", (req, res) => {
     });
 });
 
+// Rota para "FINALIZAR O SERVIÇO" (UPDATE)
+router.put("/finaliza_servico", (req, res) => {
+
+    const sql = "UPDATE config_servico cs SET cs.configurado=0 WHERE cs.configurado=1";
+
+    db.query(sql, (err, result) => {
+        if (err) return res.status(500).send(err);
+
+        return res.status(200).json({ message: "Dados atualizados com sucesso!" });
+    });
+});
+
 // Rota para selecionar os dados por ID
 router.get("/configuracao_servico/selectId/:id", (req, res) => {
     const id = req.params.id;
