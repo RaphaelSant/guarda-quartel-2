@@ -64,9 +64,9 @@ router.put("/configuracao_servico/:id", (req, res) => {
 // Rota para atualizar dados do menu "ROTEIRO DA GUARDA" (UPDATE)
 router.put("/roteiro_guarda", (req, res) => {
     const { sgtTpArmamento, sgtNrArmamento, sgtQtdMun, cbTpArmamento, cbNrArmamento, cbQtdMun, motoristaTpArmamento, motoristaNrArmamento, motoristaQtdMun } = req.body;
-    
+
     // Validação dos dados
-    if (!sgtTpArmamento || !sgtNrArmamento || !sgtQtdMun || !cbTpArmamento || !cbNrArmamento || !cbQtdMun || !motoristaTpArmamento || !motoristaNrArmamento || !motoristaQtdMun ) {
+    if (!sgtTpArmamento || !sgtNrArmamento || !sgtQtdMun || !cbTpArmamento || !cbNrArmamento || !cbQtdMun || !motoristaTpArmamento || !motoristaNrArmamento || !motoristaQtdMun) {
         return res.status(400).json({ message: "Todos os campos são obrigatórios." });
     }
 
@@ -82,7 +82,7 @@ router.put("/roteiro_guarda", (req, res) => {
 // Rota para atualizar dados do menu "ESCALA DE RONDA" (UPDATE)
 router.put("/escala_ronda", (req, res) => {
     const { alteracao } = req.body;
-    
+
     // Validação dos dados
     if (!alteracao) {
         return res.status(400).json({ message: "Campo obrigatório." });
@@ -93,6 +93,70 @@ router.put("/escala_ronda", (req, res) => {
     db.query(sql, [alteracao], (err, result) => {
         if (err) return res.status(500).send(err);
 
+        return res.status(200).json({ message: "Dados atualizados com sucesso!" });
+    });
+});
+
+// Rota para atualizar dados do menu "PARTE SGT PERMANENCIA" (UPDATE)
+router.put("/parte_sgt_permanencia", (req, res) => {
+    // Desestruturação dos dados do corpo da requisição
+    const {
+        paradaDiaria,
+        recebimentoServico,
+        pessoalServico,
+        consPonta,
+        consPontaAnterior,
+        consFPonta,
+        consFPontaAnterior,
+        consTotal,
+        consTotalAnterior,
+        rancho,
+        lixeiras,
+        armtMunicao,
+        dependencias,
+        claviculario,
+        bombaAgua,
+        revistaRecolher,
+        radios,
+        cameras,
+        materialCarga,
+        ocorrencias,
+        correspondencias,
+        viaturas,
+        passagemServico
+    } = req.body;
+
+    // Verificação simples se todos os campos necessários estão presentes
+    if (!paradaDiaria || !recebimentoServico || !pessoalServico) {
+        // Adicione verificações adicionais conforme necessário
+        return res.status(400).json({ message: "Faltam dados necessários para a atualização." });
+    }
+
+    // String SQL para atualizar a tabela
+    const sql = `
+        UPDATE config_servico 
+        SET paradaDiaria = ?, recebimentoServico = ?, pessoalServico = ?, consPonta = ?, 
+            consPontaAnterior = ?, consFPonta = ?, consFPontaAnterior = ?, consTotal = ?, 
+            consTotalAnterior = ?, rancho = ?, lixeiras = ?, armtMunicao = ?, dependencias = ?, 
+            claviculario = ?, bombaAgua = ?, revistaRecolher = ?, radios = ?, cameras = ?, 
+            materialCarga = ?, ocorrencias = ?, correspondencias = ?, viaturas = ?, passagemServico = ? 
+        WHERE configurado = 1
+    `;
+
+    // Executa a consulta no banco de dados
+    db.query(sql, [
+        paradaDiaria, recebimentoServico, pessoalServico, consPonta,
+        consPontaAnterior, consFPonta, consFPontaAnterior, consTotal,
+        consTotalAnterior, rancho, lixeiras, armtMunicao, dependencias,
+        claviculario, bombaAgua, revistaRecolher, radios, cameras,
+        materialCarga, ocorrencias, correspondencias, viaturas, passagemServico
+    ], (err, result) => {
+        if (err) {
+            // Retorna erro de servidor interno se ocorrer algum problema
+            return res.status(500).send(err);
+        }
+
+        // Retorna sucesso se a atualização for bem-sucedida
         return res.status(200).json({ message: "Dados atualizados com sucesso!" });
     });
 });

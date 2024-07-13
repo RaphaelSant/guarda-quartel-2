@@ -5,7 +5,6 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle";
-import { capturaAno, capturaDia, capturaMes } from "../../../components/util/capturaData.jsx";
 
 import ImpressaoFooter from "../../../components/impressao/impressaoFooter";
 import estiloImpressao from "../../../components/impressao/css/PrintPortrait.module.css";
@@ -18,57 +17,35 @@ import {
 } from "../../../components/botao";
 import clearForm from "../../../components/util/clearForm";
 import dbConfig from "../../../components/util/dbConfig.jsx";
+import { da } from "date-fns/locale";
+import ConfigServico from "../../configServico/index.jsx";
 
 export default function RelatorioParteSgtPerm() {
-    // Estado para receber os dados gravados no BD
+    // Estado para armazenar os dados obtidos da API
     const [data, setData] = useState([]);
-    const [dataMil, setDataMil] = useState([]);
+    // Estado para indicar se os dados estão sendo carregados
+    const [loading, setLoading] = useState(true);
 
-    // Função para buscar dados da API e atualizar o estado 'data' - Parte Sgt Permanencia
+    // Função assíncrona para buscar dados da API e atualizar o estado 'data'
     const fetchData = async () => {
         try {
-            // Faz uma requisição para buscar dados da API em http://localhost:8081/relatorio_parte_sgt
-            const res = await fetch(`${dbConfig()}/relatorio_parte_sgt`);
-
-            // Converte a resposta da requisição para o formato JSON
+            const res = await fetch(`${dbConfig()}/configuracao_servico/servico_configurado`);
             const fetchedData = await res.json();
-
-            console.log('teste');
-
-            // Atualiza o estado 'data' do componente com os dados obtidos da API
-            setData(fetchedData);
+            setData(fetchedData); // Atualiza o estado com os dados obtidos
         } catch (err) {
-            // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-            alert(err)
+            alert(err);
             console.log(err);
+        } finally {
+            setLoading(false); // Indica que o carregamento terminou
         }
     };
 
-    // Função para buscar dados da API e atualizar o estado 'dataMil' - Roteiro da guarda
-    const fetchDataGuarnicao = async () => {
-        try {
-            // Faz uma requisição para buscar dados da API em http://localhost:8081/relatorio_roteiro_guarda
-            const res = await fetch(`${dbConfig()}/relatorio_roteiro_guarda`);
-
-            // Converte a resposta da requisição para o formato JSON
-            const fetchedData = await res.json();
-
-            // Atualiza o estado 'data' do componente com os dados obtidos da API
-            setDataMil(fetchedData);
-        } catch (err) {
-            // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-            alert(err)
-            console.log(err);
-        }
-    };
-    
     // Este useEffect será executado após a montagem inicial do componente
     useEffect(() => {
         // Chama a função fetchData para buscar dados da API e atualizar o estado 'data'
         fetchData();
-        fetchDataGuarnicao();
     }, []);
-    
+
     // Utilidades para o modal de EDIÇÃO / ATUALIZAÇÃO
     const [id, setId] = useState([]);
     // Variaveis locais para alteração no banco de dados.
@@ -97,14 +74,15 @@ export default function RelatorioParteSgtPerm() {
     const [radios, setRadios] = useState("");
 
     // Busca de dados por Id para a edição
-    const buscarDadosPorId = async (id) => {
+    const buscarDadosPorId = async () => {
         try {
             // Faz uma requisição GET para obter os dados de um registro específico com o ID fornecido
-            const response = await axios.get(`${dbConfig()}/relatorio_parte_sgt/selectId/${id}`);
-            const data = response.data;
+            const response = await axios.get(`${dbConfig()}/configuracao_servico/servico_configurado`);
+            const data = response.data[0];
             // Cria uma instância de um modal usando Bootstrap
             const editModal = new bootstrap.Modal(document.getElementById("editarRegistro"));
-
+            
+            //console.log(data)
             // Verifica se há dados retornados antes de definir os estados para evitar erros
             if (data) {
                 // Define os estados com os dados obtidos da requisição, usando valores padrão vazios caso não haja dados
@@ -147,10 +125,11 @@ export default function RelatorioParteSgtPerm() {
     };
 
     // Ao clicar no botão atualizar dados do modal de edição essa função será executada
-    const atualizarDadosPorId = async (id) => {
+    const atualizarDadosPorId = async () => {
+
         try {
             // Envia uma requisição PUT para atualizar os dados do registro com o ID fornecido
-            const response = await axios.put(`${dbConfig()}/relatorio_parte_sgt/${id}`, {
+            const response = await axios.put(`${dbConfig()}/parte_sgt_permanencia`, {
                 // Envia os dados a serem atualizados no corpo da requisição
                 paradaDiaria,
                 recebimentoServico,
@@ -179,16 +158,17 @@ export default function RelatorioParteSgtPerm() {
 
             // Exibe um alerta com a mensagem da resposta para informar o usuário sobre o resultado da operação
             alert(response.data.message);
+            
 
             // Limpa o formulário após a atualização dos dados
             clearForm();
 
             await fetchData();
-            await fetchDataGuarnicao();
 
             // Retorna os dados da resposta da requisição
             return response.data;
         } catch (error) {
+            console.log(error);
             const mensagem = error.response.data.message;
             // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
             alert(mensagem);
@@ -198,14 +178,26 @@ export default function RelatorioParteSgtPerm() {
         }
     };
 
-    const dataAtual = new Date();
-    const dataAnterior = new Date();
-    
+    // Se os dados ainda estão sendo carregados, mostra uma mensagem de carregamento
+    if (loading) {
+        return <div>Carregando...</div>;
+    }
+
+    // Definindo datas e formatando-as
+    const dataAtual = new Date(data[0].servico_ref);
+    const dataPosterior = new Date(data[0].servico_ref);
+
     const options = { day: 'numeric', month: 'long', year: 'numeric' };
-    dataAnterior.setDate(dataAnterior.getDate() - 1); // Obtém a data do dia anterior
-    
+    dataPosterior.setDate(dataPosterior.getDate() + 1); // Obtém a data do dia Posterior
+
     const dataPorExtenso = new Intl.DateTimeFormat('pt-BR', options).format(dataAtual);
-    const dataAnteriorPorExtenso = new Intl.DateTimeFormat('pt-BR', options).format(dataAnterior);
+    const dataPosteriorPorExtenso = new Intl.DateTimeFormat('pt-BR', options).format(dataPosterior);
+
+
+    // Quando os dados estiverem disponíveis, faz o log
+    //console.log(data[0].servico_ref);
+
+
     return (
         <>
             <Navbar />
@@ -236,7 +228,7 @@ export default function RelatorioParteSgtPerm() {
                                 Comando Militar da Amazônia – 12ª Região Militar <br />
                                 17ª Brigada de Infantaria de Selva <br />
                                 17º Pelotão de Comunicações de Selva <br />
-                                <span className="fw-light" style={{ fontSize: 15 + 'px' }}>Parte do Sgt Permanência, referente ao serviço do dia {dataAnteriorPorExtenso} para o dia {dataPorExtenso}</span>
+                                <span className="fw-light" style={{ fontSize: 15 + 'px' }}>Parte do Sgt Permanência, referente ao serviço do dia {dataPorExtenso} para o dia {dataPosteriorPorExtenso}</span>
                             </th>
                             <th scope="col" className="col-3">Enc Material</th>
                         </tr>
@@ -249,23 +241,19 @@ export default function RelatorioParteSgtPerm() {
                                 <p className="my-1"><b>01 – Parada Diária:</b> {parteSgt.paradaDiaria}</p>
                                 <p className="my-1"><b>02 – Recebimento do Serviço:</b> {parteSgt.recebimentoServico}</p>
                                 <p className="my-1"><b>03 – Pessoal de Serviço:</b> {parteSgt.pessoalServico}</p>
-                                {dataMil.map((militares) => {
-                                    return (
-                                        <table className="table table-bordered border-dark table-hover table-local" key={militares.id}>
-                                            <tbody>
-                                                <tr>
-                                                    <td><b>Cmt da Gda: </b>{militares.sgtNomeGuerra}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><b>Cb da Gda: </b> {militares.cbNomeGuerra}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><b>Plantões: </b> {militares.sdPrimeiroHorNome}; {militares.sdSegundoHorNome} e {militares.sdTerceiroHorNome}.</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    );
-                                })}
+                                <table className="table table-bordered border-dark table-hover table-local" key={parteSgt.id}>
+                                    <tbody>
+                                        <tr>
+                                            <td><b>Cmt da Gda: </b>{parteSgt.sgtNomeGuerra}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Cb da Gda: </b> {parteSgt.cbNomeGuerra}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Plantões: </b> {parteSgt.sdPrimeiroHorNome}; {parteSgt.sdSegundoHorNome} e {parteSgt.sdTerceiroHorNome}.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                                 <p className="my-1"><b>04 - Energia Elétrica:</b></p>
                                 <table className="table text-center table-bordered border-dark table-hover table-local">
                                     <thead>
@@ -684,7 +672,7 @@ export default function RelatorioParteSgtPerm() {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" onClick={(e) => atualizarDadosPorId(1)} className="btn btn-md btn-success">Atualizar Registro</button>
+                            <button type="submit" onClick={(e) => atualizarDadosPorId()} className="btn btn-md btn-success">Atualizar Registro</button>
                         </div>
                     </div>
                 </div>
