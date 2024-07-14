@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle";
 
@@ -11,14 +9,14 @@ import estiloImpressao from "../../../../components/impressao/css/PrintLandscape
 import "../../../../css/estiloTabela.css";
 
 import Navbar from "../../../../components/navbar";
-import {
-    Imprimir,
-    NovoRegistro2,
-} from "../../../../components/botao";
+import { Imprimir } from "../../../../components/botao";
 import { formatDate, formatTime } from "../../../../components/util/formatDateTime";
 import dbConfig from "../../../../components/util/dbConfig";
+import axios from "axios";
 
 export default function ServicoAnteriorCivisVeiculo() {
+    const selectedDate = localStorage.getItem('selectedDate');
+
     // Estado para receber os dados gravados no BD
     const [data, setData] = useState([]);
 
@@ -27,16 +25,12 @@ export default function ServicoAnteriorCivisVeiculo() {
 
         // Função interna para buscar os dados da API e atualizar o estado 'data'
         const fetchData = async () => {
+
             try {
-                // Faz uma requisição para buscar dados de uma API em http://localhost:8081/servico_anterior_civis_veiculo
-                const response = await fetch(`${dbConfig()}/servico_anterior_civis_veiculo`);
-                // Converte a resposta para JSON
-                const data = await response.json();
-                // Define os dados recebidos no estado 'data' do componente
-                setData(data);
-            } catch (err) {
-                // Captura e lida com erros, caso ocorram na requisição
-                console.log(err);
+                const response = await axios.get(`${dbConfig()}/servico_anterior_veiculo_civis/${selectedDate}`);
+                setData(response.data);
+            } catch (error) {
+                console.error("Erro ao buscar os serviços:", error);
             }
         };
 
@@ -58,12 +52,15 @@ export default function ServicoAnteriorCivisVeiculo() {
                             <Link to="/relatorio_servico_anterior">Serviço Anterior</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
+                            <Link to="/relatorio_servico_anterior/consulta_servico_anterior">Consulta ao dia {formatDate(selectedDate)}</Link>
+                        </li>
+                        <li className="breadcrumb-item active" aria-current="page">
                             Registro de veículos civis
                         </li>
                     </ol>
                 </nav>
             </div>
-            <p className="text-center d-print-none">Entrada e saída de veículos civis</p>
+            <p className="text-center d-print-none">Entrada e saída de veículos civis do dia {formatDate(selectedDate)}</p>
             <div
                 className={`container d-flex flex-column justify-content-center align-items-center ${estiloImpressao.container_local}`}
             >

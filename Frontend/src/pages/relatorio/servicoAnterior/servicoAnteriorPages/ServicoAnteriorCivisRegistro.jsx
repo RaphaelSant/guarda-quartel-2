@@ -27,7 +27,7 @@ export default function ServicoAnteriorCivisRegistro() {
 
         // Função interna para buscar os dados da API e atualizar o estado 'data'
         const fetchData = async () => {
-            
+
             try {
                 const response = await axios.get(`${dbConfig()}/servico_anterior_civis_pe/${selectedDate}`);
                 setData(response.data);
@@ -64,11 +64,11 @@ export default function ServicoAnteriorCivisRegistro() {
                         <li className="breadcrumb-item">
                             <Link to="/home">Página Inicial</Link>
                         </li>
-                        <li className="breadcrumb-item">
-                            <Link to="/relatorio_servico_anterior">Serviço Anterior</Link>
+                        <li className="breadcrumb-item active" aria-current="page">
+                            <Link to="/relatorio_servico_anterior">Consulta ao serviço anterior</Link>
                         </li>
-                        <li className="breadcrumb-item">
-                            <Link to="/relatorio_servico_anterior/consulta_servico_anterior">Consulta Serviço Anterior</Link>
+                        <li className="breadcrumb-item active" aria-current="page">
+                            <Link to="/relatorio_servico_anterior/consulta_servico_anterior">Consulta ao dia {formatDate(selectedDate)}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             Registro de Civil
