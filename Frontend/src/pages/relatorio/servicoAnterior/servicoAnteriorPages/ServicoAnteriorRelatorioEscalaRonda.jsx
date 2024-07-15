@@ -11,26 +11,22 @@ import "../../../../css/estiloTabela.css";
 import Navbar from "../../../../components/navbar";
 import { Imprimir } from "../../../../components/botao";
 import dbConfig from "../../../../components/util/dbConfig";
+import axios from "axios";
+import { formatDate } from "../../../../components/util/formatDateTime";
 
 export default function ServicoAnteriorRelatorioEscalaRonda() {
+    const selectedDate = localStorage.getItem('selectedDate');
+
     // Estado para receber os dados gravados no BD
     const [data, setData] = useState([]);
 
-    // Função para buscar dados da API e atualizar o estado 'data'
+    // Função interna para buscar os dados da API e atualizar o estado 'data'
     const fetchData = async () => {
         try {
-            // Faz uma requisição para buscar dados da API em http://localhost:8081/pelotao_viatura
-            const res = await fetch(`${dbConfig()}/servico_anterior_relatorio_roteiro_guarda`);
-
-            // Converte a resposta da requisição para o formato JSON
-            const fetchedData = await res.json();
-
-            // Atualiza o estado 'data' do componente com os dados obtidos da API
-            setData(fetchedData);
-        } catch (err) {
-            // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-            alert(err)
-            console.log(err);
+            const response = await axios.get(`${dbConfig()}/servico_anterior_configuracao_servico/${selectedDate}`);
+            setData(response.data);
+        } catch (error) {
+            console.error("Erro ao buscar os serviços:", error);
         }
     };
 
@@ -53,12 +49,15 @@ export default function ServicoAnteriorRelatorioEscalaRonda() {
                             <Link to="/relatorio_servico_anterior">Serviço Anterior</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
+                            <Link to="/relatorio_servico_anterior/consulta_servico_anterior">Consulta ao dia {formatDate(selectedDate)}</Link>
+                        </li>
+                        <li className="breadcrumb-item active" aria-current="page">
                             Escala de ronda do comandante da guarda
                         </li>
                     </ol>
                 </nav>
             </div>
-            <p className="text-center d-print-none">Escala de ronda do comandante da guarda</p>
+            <p className="text-center d-print-none">Escala de ronda do comandante da guarda do dia {formatDate(selectedDate)}</p>
 
             <div className={`container d-flex flex-column justify-content-center align-items-center ${estiloImpressao.container_local}`}>
                 <ImpressaoHeader titulo="Escala de ronda do comandante da guarda" />
