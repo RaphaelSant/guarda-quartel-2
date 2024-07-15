@@ -75,6 +75,16 @@ router.get("/servico_anterior_outra_om_fora_expediente/:date", (req, res) => {
     });
 });
 
+// OUTAS OMs ENTRADA E SAIDA DE VIATURAS
+router.get("/servico_anterior_outra_om_viatura/:date", (req, res) => {
+    const date = req.params.date;
+    const sql = "SELECT oomv.vtr, oomv.odmEntrada, oomv.odmSaida, oomv.dataRegistro, oomv.horaEntrada, oomv.horaSaida, oomv.motorista, oomv.chefeVtr, oomv.destino, oomv.id FROM oom_viatura oomv INNER JOIN config_servico cs ON oomv.config_servico_id = cs.id WHERE cs.servico_ref = ? order by oomv.dataRegistro, oomv.horaEntrada";
+    db.query(sql, date, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
 
 
 module.exports = router;
