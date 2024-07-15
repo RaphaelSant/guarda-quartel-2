@@ -55,6 +55,16 @@ router.get("/servico_anterior_pelotao_viatura/:date", (req, res) => {
     });
 });
 
+// OUTRAS OMs ENTRADA E SAIDA DE MILITARES DURANTE EXPEDIENTE
+router.get("/servico_anterior_outra_om_durante_expediente/:date", (req, res) => {
+    const date = req.params.date;
+    const sql = "SELECT ode.id, ode.pg, ode.nomeGuerra, ode.om, ode.idtMil, ode.dataEntrada, ode.horaEntrada, ode.horaSaida, ode.origem FROM oom_durante_expediente ode INNER JOIN config_servico cs ON ode.config_servico_id = cs.id WHERE cs.servico_ref = ? order by ode.dataEntrada, ode.horaEntrada";
+    db.query(sql, date, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
 
 
 module.exports = router;
