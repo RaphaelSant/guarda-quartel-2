@@ -65,6 +65,16 @@ router.get("/servico_anterior_outra_om_durante_expediente/:date", (req, res) => 
     });
 });
 
+// OUTRAS OMs ENTRADA E SAIDA DE MILITARES FORA EXPEDIENTE
+router.get("/servico_anterior_outra_om_fora_expediente/:date", (req, res) => {
+    const date = req.params.date;
+    const sql = "SELECT ofe.id, ofe.pg, ofe.nomeGuerra, ofe.om, ofe.idtMil, ofe.dataEntrada, ofe.horaEntrada, ofe.horaSaida, ofe.origem FROM oom_fora_expediente ofe INNER JOIN config_servico cs ON ofe.config_servico_id = cs.id WHERE cs.servico_ref = ? order by ofe.dataEntrada, ofe.horaEntrada";
+    db.query(sql, date, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
 
 
 module.exports = router;

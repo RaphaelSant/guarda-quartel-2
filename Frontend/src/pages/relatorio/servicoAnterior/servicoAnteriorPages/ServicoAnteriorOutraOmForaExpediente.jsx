@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faPenToSquare, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { format } from "date-fns";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle";
@@ -13,33 +10,23 @@ import estiloImpressao from "../../../../components/impressao/css/PrintLandscape
 import "../../../../css/estiloTabela.css";
 
 import Navbar from "../../../../components/navbar";
-import {
-    Imprimir,
-    NovoRegistro2,
-} from "../../../../components/botao";
-import clearForm from "../../../../components/util/clearForm";
+import { Imprimir } from "../../../../components/botao";
 import { formatDate, formatTime } from "../../../../components/util/formatDateTime";
 import dbConfig from "../../../../components/util/dbConfig";
 
 export default function ServicoAnteriorOutraOmForaExpediente() {
+    const selectedDate = localStorage.getItem('selectedDate');
+
     // Estado para receber os dados gravados no BD
     const [data, setData] = useState([]);
 
-    // Função para buscar dados da API e atualizar o estado 'data'
+    // Função interna para buscar os dados da API e atualizar o estado 'data'
     const fetchData = async () => {
         try {
-            // Faz uma requisição para buscar dados da API em http://localhost:8081/outra_om_durante_expediente
-            const res = await fetch(`${dbConfig()}/servico_anterior_outra_om_fora_expediente`);
-
-            // Converte a resposta da requisição para o formato JSON
-            const fetchedData = await res.json();
-
-            // Atualiza o estado 'data' do componente com os dados obtidos da API
-            setData(fetchedData);
-        } catch (err) {
-            // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-            alert(err)
-            console.log(err);
+            const response = await axios.get(`${dbConfig()}/servico_anterior_outra_om_fora_expediente/${selectedDate}`);
+            setData(response.data);
+        } catch (error) {
+            console.error("Erro ao buscar os serviços:", error);
         }
     };
 
@@ -62,12 +49,15 @@ export default function ServicoAnteriorOutraOmForaExpediente() {
                             <Link to="/relatorio_servico_anterior">Serviço Anterior</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
+                            <Link to="/relatorio_servico_anterior/consulta_servico_anterior">Consulta ao dia {formatDate(selectedDate)}</Link>
+                        </li>
+                        <li className="breadcrumb-item active" aria-current="page">
                             Militares de outras OM fora de expediente
                         </li>
                     </ol>
                 </nav>
             </div>
-            <p className="text-center d-print-none">Entrada e saída de militares outras organizações militares fora de expediente</p>
+            <p className="text-center d-print-none">Entrada e saída de militares outras organizações militares fora de expediente do dia {formatDate(selectedDate)}</p>
             <div
                 className={`container d-flex flex-column justify-content-center align-items-center ${estiloImpressao.container_local}`}
             >
@@ -98,9 +88,12 @@ export default function ServicoAnteriorOutraOmForaExpediente() {
                                     <td>{dados.idtMil}</td>
                                     <td>{dados.om}</td>
                                     <td>{formatDate(dados.dataEntrada)}</td>
-                                    <td>{formatTime(dados.horaEntrada)}</td>
-                                    <td className={`${dados.horaSaida === null || dados.horaSaida === '00:00:00' ? "bg-danger text-white fw-bold" : ""}`}>
-                                        {dados.horaSaida === null || dados.horaSaida === '00:00:00' ? 'OM' : formatTime(dados.horaSaida)}</td>
+                                    <td>
+                                        {dados.horaEntrada === null || dados.horaEntrada === '00:00:00' ? '- - -' : formatTime(dados.horaEntrada)}
+                                    </td>
+                                    <td>
+                                        {dados.horaSaida === null || dados.horaSaida === '00:00:00' ? '- - -' : formatTime(dados.horaSaida)}
+                                    </td>
                                     <td>{dados.origem}</td>
                                 </tr>
                             );
