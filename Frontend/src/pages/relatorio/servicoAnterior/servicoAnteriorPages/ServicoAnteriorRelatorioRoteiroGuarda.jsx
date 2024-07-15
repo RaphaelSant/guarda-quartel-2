@@ -11,26 +11,22 @@ import "../../../../css/estiloTabela.css";
 import Navbar from "../../../../components/navbar";
 import { Imprimir } from "../../../../components/botao";
 import dbConfig from "../../../../components/util/dbConfig";
+import axios from "axios";
+import { formatDate } from "../../../../components/util/formatDateTime";
 
 export default function ServicoAnteriorRelatorioRoteiroGuarda() {
+    const selectedDate = localStorage.getItem('selectedDate');
+
     // Estado para receber os dados gravados no BD
     const [data, setData] = useState([]);
 
-    // Função para buscar dados da API e atualizar o estado 'data'
+    // Função interna para buscar os dados da API e atualizar o estado 'data'
     const fetchData = async () => {
         try {
-            // Faz uma requisição para buscar dados da API em http://localhost:8081/relatorio_roteiro_guarda
-            const res = await fetch(`${dbConfig()}/servico_anterior_relatorio_roteiro_guarda`);
-
-            // Converte a resposta da requisição para o formato JSON
-            const fetchedData = await res.json();
-
-            // Atualiza o estado 'data' do componente com os dados obtidos da API
-            setData(fetchedData);
-        } catch (err) {
-            // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-            alert(err)
-            console.log(err);
+            const response = await axios.get(`${dbConfig()}/servico_anterior_configuracao_servico/${selectedDate}`);
+            setData(response.data);
+        } catch (error) {
+            console.error("Erro ao buscar os serviços:", error);
         }
     };
 
@@ -53,12 +49,15 @@ export default function ServicoAnteriorRelatorioRoteiroGuarda() {
                             <Link to="/relatorio_servico_anterior">Serviço Anterior</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
+                            <Link to="/relatorio_servico_anterior/consulta_servico_anterior">Consulta ao dia {formatDate(selectedDate)}</Link>
+                        </li>
+                        <li className="breadcrumb-item active" aria-current="page">
                             Roteiro da guarda
                         </li>
                     </ol>
                 </nav>
             </div>
-            <p className="text-center d-print-none">Roteiro da guarda</p>
+            <p className="text-center d-print-none">Roteiro da guarda do dia {formatDate(selectedDate)}</p>
             <div className={`container d-flex flex-column justify-content-center align-items-center ${estiloImpressao.container_local}`}>
                 <ImpressaoHeader titulo="Roteiro da guarda" />
 
@@ -102,10 +101,10 @@ export default function ServicoAnteriorRelatorioRoteiroGuarda() {
                             return (
                                 <tr key={militar.id} className="align-middle">
                                     <td className="fw-bold">Soldado</td>
-                                    <td>{militar.sdNomeGuerra}</td>
-                                    <td>{militar.sdTpArmamento}</td>
-                                    <td>{militar.sdNrArmamento}</td>
-                                    <td>{militar.sdQtdMun}</td>
+                                    <td>{militar.motoristaNomeGuerra}</td>
+                                    <td>{militar.motoristaTpArmamento}</td>
+                                    <td>{militar.motoristaNrArmamento}</td>
+                                    <td>{militar.motoristaQtdMun}</td>
                                     <td className="fw-bold">Mot Dia</td>
                                 </tr>
                             );
