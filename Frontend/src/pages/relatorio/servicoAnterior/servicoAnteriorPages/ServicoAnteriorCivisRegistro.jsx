@@ -34,20 +34,6 @@ export default function ServicoAnteriorCivisRegistro() {
             } catch (error) {
                 console.error("Erro ao buscar os serviços:", error);
             }
-            /*
-                try {
-                    // Faz uma requisição para buscar dados de uma API em http://localhost:8081/servico_anterior_civis_veiculo
-                    //const response = await fetch(`${dbConfig()}/servico_anterior_civis_pe`);
-                    const response = await axios.get(`${dbConfig()}/servico_anterior_civis_pe/${selectedDate}`);
-                    // Converte a resposta para JSON
-                    const data = await response.json();
-                    // Define os dados recebidos no estado 'data' do componente
-                    setData(data);
-                } catch (err) {
-                    // Captura e lida com erros, caso ocorram na requisição
-                    console.log(err);
-                }
-            */
         };
 
         // Chama a função para buscar dados apenas uma vez após a montagem do componente
@@ -103,9 +89,12 @@ export default function ServicoAnteriorCivisRegistro() {
                                     <td>{civis.cpf}</td>
 
                                     <td>{formatDate(civis.dataEntrada)}</td>
-                                    <td>{formatTime(civis.horaEntrada)}</td>
-                                    <td className={`${civis.horaSaida === null || civis.horaSaida === '00:00:00' ? "bg-danger text-white fw-bold" : ""}`}>
-                                        {civis.horaSaida === null || civis.horaSaida === '00:00:00' ? 'OM' : formatTime(civis.horaSaida)}</td>
+                                    <td>
+                                        {civis.horaEntrada === null || civis.horaEntrada === '00:00:00' ? '- - -' : formatTime(civis.horaEntrada)}
+                                    </td>
+                                    <td>
+                                        {civis.horaSaida === null || civis.horaSaida === '00:00:00' ? '- - -' : formatTime(civis.horaSaida)}
+                                    </td>
                                     <td>{civis.destino}</td>
                                 </tr>
                             );

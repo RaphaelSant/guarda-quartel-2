@@ -35,7 +35,7 @@ export default function Navbar() {
               </Link>
             </li>
             <li className="nav-item d-flex">
-              <button className="nav-link" onClick={logout}>
+              <button className="nav-link text-danger" onClick={logout}>
                 {" "}
                 <FontAwesomeIcon icon={faPowerOff} /> Logout
               </button>

@@ -88,9 +88,12 @@ export default function ServicoAnteriorPelotaoForaExpediente() {
 
                                     <td>{dados.idtMil}</td>
                                     <td>{formatDate(dados.dataEntrada)}</td>
-                                    <td>{dados.horaEntrada === null || dados.horaEntrada === '00:00:00' ? '- - -' : formatTime(dados.horaEntrada)}</td>
                                     <td>
-                                        {dados.horaSaida === null || dados.horaSaida === '00:00:00' ? '- - -' : formatTime(dados.horaSaida)}</td>
+                                        {dados.horaEntrada === null || dados.horaEntrada === '00:00:00' ? '- - -' : formatTime(dados.horaEntrada)}
+                                    </td>
+                                    <td>
+                                        {dados.horaSaida === null || dados.horaSaida === '00:00:00' ? '- - -' : formatTime(dados.horaSaida)}
+                                    </td>
                                     <td>{dados.origem}</td>
                                 </tr>
                             );

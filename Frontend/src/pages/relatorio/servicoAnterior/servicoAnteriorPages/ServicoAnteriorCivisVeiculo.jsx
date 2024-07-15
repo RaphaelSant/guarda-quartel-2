@@ -89,9 +89,12 @@ export default function ServicoAnteriorCivisVeiculo() {
 
                                     <td>{civis.placa}</td>
                                     <td>{formatDate(civis.dataEntrada)}</td>
-                                    <td>{formatTime(civis.horaEntrada)}</td>
-                                    <td className={`${civis.horaSaida === null || civis.horaSaida === '00:00:00' ? "bg-danger text-white fw-bold" : ""}`}>
-                                        {civis.horaSaida === null || civis.horaSaida === '00:00:00' ? 'OM' : formatTime(civis.horaSaida)}</td>
+                                    <td>
+                                        {civis.horaEntrada === null || civis.horaEntrada === '00:00:00' ? '- - -' : formatTime(civis.horaEntrada)}
+                                    </td>
+                                    <td>
+                                        {civis.horaSaida === null || civis.horaSaida === '00:00:00' ? '- - -' : formatTime(civis.horaSaida)}
+                                    </td>
                                     <td>{civis.destino}</td>
 
                                 </tr>
