@@ -12,6 +12,15 @@ router.get("/configuracao_servico", (req, res) => {
     });
 });
 
+// Rota para ler (Read) os dados a serem exibidos para o usuário
+router.get("/configuracao_servico_dates", (req, res) => {
+    const sql = "SELECT servico_ref FROM config_servico";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
 // Rota para ler (Read) os dados apenas do SERVIÇO CONFIGURADO
 router.get("/configuracao_servico/servico_configurado", (req, res) => {
     const sql = "SELECT * FROM config_servico cs WHERE cs.configurado = 1";
