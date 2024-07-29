@@ -36,6 +36,8 @@ export default function ArmazenarServico() {
                     });
 
                     alert(response.data.message);
+                    
+                    window.location.href = "/configServico";
 
                 } catch (error) {
                     console.error("Erro:", error);
