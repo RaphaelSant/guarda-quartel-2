@@ -6,7 +6,7 @@ import logo from "../../assets/img/Logo.png";
 
 import { verificarAutenticacao } from '../../components/autenticacao';
 import dbConfig from "../../components/util/dbConfig";
-import { layer } from "@fortawesome/fontawesome-svg-core";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const [usuario, setUsuario] = useState("");
@@ -40,25 +40,34 @@ export default function Login() {
         // Verifique a autenticação após o login
         const autenticado = await verificarAutenticacao();
         if (autenticado) {
-          if (configServicoConfigurado == 1) {
-            window.location.href = "/home";
-          } else {
-            window.location.href = "/configServico";
-          }
+          // Emitir mensagem de sucesso
+          toast.success("Logado com sucesso!");
+
+          // Adicionar um atraso antes do redirecionamento
+          setTimeout(() => {
+            if (configServicoConfigurado == 1) {
+              window.location.href = "/home";
+            } else {
+              window.location.href = "/configServico";
+            }
+          }, 2000); // 2 segundos de atraso
         } else {
           setMensagem('Usuário não autenticado');
         }
 
+
+
       } else {
         // Se a resposta não contiver um token, considere como falha de autenticação
-        setMensagem('Usuário ou senha incorretos');
+        toast.error("Usuário ou senha incorretos!");
       }
     } catch (error) {
       // Se houver um erro na requisição, exiba uma mensagem de erro genérica
-      setMensagem('Erro ao realizar o login');
-      console.log(error);
+      toast.error("Usuário ou senha incorretos!");
     }
   };
+
+
 
   return (
     <>
@@ -110,18 +119,6 @@ export default function Login() {
               >
                 Entrar
               </button>
-              {mensagem && (
-                <p
-                  className={`${estiloLogin.msg} text-center mt-2 ${mensagem === "Usuário autenticado!"
-                    ? "alert alert-success"
-                    : "alert alert-danger"
-                    }`}
-                >
-                  {mensagem}
-                </p>
-              )}
-
-
             </form>
           </div>
         </div>
