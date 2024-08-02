@@ -22,6 +22,8 @@ import clearForm from "../../../components/util/clearForm";
 import { formatDate, formatTime } from "../../../components/util/formatDateTime";
 import dbConfig from "../../../components/util/dbConfig";
 import { getLatestConfigServicoId } from "../../../components/configServico/index.jsx";
+import { toast } from "react-toastify";
+import Swal from 'sweetalert2';
 
 export default function CivisPe() {
   const [registroCpf, setRegistroCpf] = useState(['']);
@@ -42,8 +44,8 @@ export default function CivisPe() {
       setData(fetchedData);
     } catch (err) {
       // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-      alert(err)
-      console.log(err);
+      toast.error(err);
+      // console.log(err);
     }
   };
 
@@ -95,8 +97,9 @@ export default function CivisPe() {
 
     } catch (error) {
       // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-      alert(error);
-      console.error("Erro ao buscar dados:", error);
+      toast.error(error);
+      // alert(error);
+      // console.error("Erro ao buscar dados:", error);
     }
   };
 
@@ -116,8 +119,8 @@ export default function CivisPe() {
       });
 
       // Exibe um alerta com a mensagem da resposta para informar o usuário sobre o resultado da operação
-      alert(response.data.message);
-
+      // alert(response.data.message);
+      toast.success(response.data.message);
       await fetchData();
 
       // Retorna os dados da resposta da requisição
@@ -126,8 +129,9 @@ export default function CivisPe() {
       const msg = error.response.data.message;
       // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
       //alert('Erro ao atualizar dados:', msg);
-      alert(`Erro ao atualizar dados: ${msg}`);
-      console.log('Erro ao atualizar dados:', msg);
+      toast.error(msg);
+      // alert(`Erro ao atualizar dados: ${msg}`);
+      // console.log('Erro ao atualizar dados:', msg);
 
       // Lança o erro novamente para ser tratado por quem chamou essa função
       throw error;
@@ -152,7 +156,8 @@ export default function CivisPe() {
       }
     } catch (error) {
       // Em caso de erro, exibe um alerta e retorna
-      alert('Erro ao obter a configuração do serviço:', error);
+      // alert('Erro ao obter a configuração do serviço:', error);
+      toast.error(`Erro ao obter a configuração do serviço:, ${error}`);
       return;
     }
 
@@ -201,13 +206,15 @@ export default function CivisPe() {
       }
 
       // Exibe um alerta com a mensagem recebida do servidor após a inserção
-      alert(responseData.message);
+      // alert(responseData.message);
+      toast.success(responseData.message);
 
 
 
     } catch (error) {
       // Em caso de erro na requisição, exibe um alerta
-      alert('Erro:', error);
+      // alert('Erro:', error);
+      toast.error(error);
     }
   };
 
@@ -225,14 +232,39 @@ export default function CivisPe() {
       await fetchData();
 
       // Exibe um alerta da mensagem retornada após a exclusão (mensagem de sucesso ou erro)
-      alert(data.message);
+      // alert(data.message);
     } catch (error) {
       // Em caso de erro na requisição, Exibe um alerta
-      alert('Erro:', error)
+      toast.error(error);
     }
   };
 
   // Função executada ao clicar no botao Deletar
+  const handleDeleteRegistro = (id, nome, cpf) => {
+    Swal.fire({
+      title: 'Tem certeza de que deseja excluir este registro?',
+      html: `Nome: ${nome} <br> CPF: ${cpf}`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, excluir!',
+      cancelButtonText: 'Cancelar',
+      customClass: {
+        confirmButton: 'btn btn-primary btn-lg',
+        cancelButton: 'btn btn-secondary btn-lg'
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteRegistro(id);
+        Swal.fire(
+          'Excluído!',
+          'O registro foi excluído com sucesso.',
+          'success'
+        );
+      }
+    });
+  };
+
+  /*
   const handleDeleteRegistro = (id, nome, cpf) => {
     // Exibe um diálogo de confirmação ao usuário, mostrando os detalhes do registro que será excluído
     const shouldDelete = window.confirm(
@@ -244,7 +276,7 @@ export default function CivisPe() {
       deleteRegistro(id);
     }
   };
-
+  */
 
 
   return (

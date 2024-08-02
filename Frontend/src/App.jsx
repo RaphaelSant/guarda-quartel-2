@@ -1,5 +1,5 @@
 import Rotas from './components/route'
-import { ToastContainer } from 'react-toastify'
+import { Flip, ToastContainer } from 'react-toastify'
 
 function App() {
 
@@ -17,7 +17,7 @@ function App() {
         pauseOnHover 
         theme="colored" 
         className="toast-container" 
-        transition:Bounce
+        transition:Flip
       />
     </>
   )
