@@ -120,7 +120,14 @@ export default function CivisPe() {
 
       // Exibe um alerta com a mensagem da resposta para informar o usuário sobre o resultado da operação
       // alert(response.data.message);
-      toast.success(response.data.message);
+      // toast.success(response.data.message);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${response.data.message}`,
+        showConfirmButton: false,
+        timer: 2000
+      });
       await fetchData();
 
       // Retorna os dados da resposta da requisição
@@ -129,7 +136,14 @@ export default function CivisPe() {
       const msg = error.response.data.message;
       // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
       //alert('Erro ao atualizar dados:', msg);
-      toast.error(msg);
+      // toast.error(msg);
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${msg}`,
+        showConfirmButton: false,
+        timer: 2000
+      });
       // alert(`Erro ao atualizar dados: ${msg}`);
       // console.log('Erro ao atualizar dados:', msg);
 
@@ -198,18 +212,32 @@ export default function CivisPe() {
 
       // Limpa o formulário após a inserção
       if (responseData.status != 400) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: `${responseData.message}`,
+          showConfirmButton: false,
+          timer: 2000
+        });
+
         clearForm();
         setRegistroCpf('');
         // Atualiza os dados na tela após a inserção 
         // (supõe-se que fetchData() é uma função que busca os dados atualizados)
         fetchData();
+      } else {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: responseData.message,
+          showConfirmButton: false,
+          timer: 2000
+        });
       }
 
       // Exibe um alerta com a mensagem recebida do servidor após a inserção
       // alert(responseData.message);
-      toast.success(responseData.message);
-
-
+      // toast.success(responseData.message);
 
     } catch (error) {
       // Em caso de erro na requisição, exibe um alerta
@@ -235,7 +263,7 @@ export default function CivisPe() {
       // alert(data.message);
     } catch (error) {
       // Em caso de erro na requisição, Exibe um alerta
-      toast.error(error);
+      // toast.error(error);
     }
   };
 
@@ -255,11 +283,17 @@ export default function CivisPe() {
     }).then((result) => {
       if (result.isConfirmed) {
         deleteRegistro(id);
-        Swal.fire(
-          'Excluído!',
-          'O registro foi excluído com sucesso.',
-          'success'
-        );
+        Swal.fire({
+          title: 'Excluído!',
+          text: 'O registro foi excluído com sucesso.',
+          icon: 'success',
+          customClass: {
+            title: 'success-title',
+            popup: 'success-popup',
+            confirmButton: 'btn btn-primary btn-lg',
+            content: 'success-content'
+          }
+        });
       }
     });
   };

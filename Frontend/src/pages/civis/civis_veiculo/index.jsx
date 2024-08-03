@@ -21,6 +21,8 @@ import clearForm from "../../../components/util/clearForm";
 import { formatDate, formatTime } from "../../../components/util/formatDateTime";
 import dbConfig from "../../../components/util/dbConfig";
 import { getLatestConfigServicoId } from "../../../components/configServico";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 export default function CivisVeiculo() {
   // Estado para receber os dados gravados no BD
@@ -39,8 +41,8 @@ export default function CivisVeiculo() {
       setData(fetchedData);
     } catch (err) {
       // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-      alert(err)
-      console.log(err);
+      toast.error(err);
+      // alert(err)
     }
   };
 
@@ -59,8 +61,6 @@ export default function CivisVeiculo() {
 
       // Cria uma instância de um modal usando Bootstrap
       const editModal = new bootstrap.Modal(document.getElementById("editarRegistro"));
-
-      console.log(data);
 
       // Verifica se há dados retornados antes de definir os estados para evitar erros
       if (data) {
@@ -84,8 +84,8 @@ export default function CivisVeiculo() {
 
     } catch (error) {
       // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-      alert(error);
-      console.error("Erro ao buscar dados:", error);
+      toast.error(error);
+      // alert(error);
     }
   };
 
@@ -117,8 +117,14 @@ export default function CivisVeiculo() {
       });
 
       // Exibe um alerta com a mensagem da resposta para informar o usuário sobre o resultado da operação
-      alert(response.data.message);
-
+      // alert(response.data.message);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${response.data.message}`,
+        showConfirmButton: false,
+        timer: 2000
+      });
       await fetchData();
 
       // Retorna os dados da resposta da requisição
@@ -127,8 +133,15 @@ export default function CivisVeiculo() {
       const msg = error.response.data.message;
       // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
       //alert('Erro ao atualizar dados:', msg);
-      alert(`Erro ao atualizar dados: ${msg}`);
-
+      // alert(`Erro ao atualizar dados: ${msg}`);
+      // toast.error(msg);
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${msg}`,
+        showConfirmButton: false,
+        timer: 2000
+      });
       // Lança o erro novamente para ser tratado por quem chamou essa função
       throw error;
     }
@@ -152,7 +165,8 @@ export default function CivisVeiculo() {
       }
     } catch (error) {
       // Em caso de erro, exibe um alerta e retorna
-      alert('Erro ao obter a configuração do serviço:', error);
+      toast.error(error);
+      // alert('Erro ao obter a configuração do serviço:', error);
       return;
     }
 
@@ -194,19 +208,43 @@ export default function CivisVeiculo() {
       const responseData = await response.json();
 
       if (responseData.status != 400) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: `${responseData.message}`,
+          showConfirmButton: false,
+          timer: 2000
+        });
+
         // Limpa o formulário após a inserção
         clearForm();
         // Atualiza os dados na tela após a inserção 
         // (supõe-se que fetchData() é uma função que busca os dados atualizados)
         fetchData();
+      } else {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: responseData.message,
+          showConfirmButton: false,
+          timer: 2000
+        });
       }
-
-      // Exibe um alerta com a mensagem recebida do servidor após a inserção
-      alert(responseData.message);
+      /*
+      // Exibe um alerta com a mensagem recebida do servidor após a inserção/
+      // alert(responseData.message);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${responseData.message}`,
+        showConfirmButton: false,
+        timer: 2000
+      });*/
 
     } catch (error) {
       // Em caso de erro na requisição, exibe um alerta
-      alert('Erro:', error);
+      toast.error(error);
+      // alert('Erro:', error);
     }
   };
 
@@ -224,14 +262,47 @@ export default function CivisVeiculo() {
       await fetchData();
 
       // Exibe um alerta da mensagem retornada após a exclusão (mensagem de sucesso ou erro)
-      alert(data.message);
+      // toast.success(data.message);
+      // alert(data.message);
     } catch (error) {
       // Em caso de erro na requisição, Exibe um alerta
-      alert('Erro:', error)
+      toast.error(error);
+      // alert('Erro:', error)
     }
   };
 
   // Função executada ao clicar no botao Deletar
+  // Função executada ao clicar no botao Deletar
+  const handleDeleteRegistro = (id, nome, placa) => {
+    Swal.fire({
+      title: 'Tem certeza de que deseja excluir este registro?',
+      html: `Nome: ${nome} <br> Placa: ${placa}`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, excluir!',
+      cancelButtonText: 'Cancelar',
+      customClass: {
+        confirmButton: 'btn btn-primary btn-lg',
+        cancelButton: 'btn btn-secondary btn-lg'
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteRegistro(id);
+        Swal.fire({
+          title: 'Excluído!',
+          text: 'O registro foi excluído com sucesso.',
+          icon: 'success',
+          customClass: {
+            title: 'success-title',
+            popup: 'success-popup',
+            confirmButton: 'btn btn-primary btn-lg',
+            content: 'success-content'
+          }
+        });
+      }
+    });
+  };
+  /*
   const handleDeleteRegistro = (id, nome, placa) => {
     // Exibe um diálogo de confirmação ao usuário, mostrando os detalhes do registro que será excluído
     const shouldDelete = window.confirm(
@@ -243,6 +314,7 @@ export default function CivisVeiculo() {
       deleteRegistro(id);
     }
   };
+  */
 
   return (
     <>
