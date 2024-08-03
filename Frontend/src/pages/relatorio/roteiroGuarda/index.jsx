@@ -129,7 +129,7 @@ export default function RelatorioRoteiroGuarda() {
                 motoristaNrArmamento: motoristaNrArmamento && motoristaNrArmamento.trim() !== "" ? motoristaNrArmamento : null,
                 motoristaQtdMun: motoristaQtdMun && motoristaQtdMun.trim() !== "" ? motoristaQtdMun : null,
             });
-            console.log(response.data.status);
+            
             if (response.data.status != 400) {
                 Swal.fire({
                     position: "center",
