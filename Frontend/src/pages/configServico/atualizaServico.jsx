@@ -6,6 +6,8 @@ import axios from "axios";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import estiloAtualizar from "./atualiza.module.css";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 export default function AtualizarServico() {
     const [id, setId] = useState(null);
@@ -33,8 +35,9 @@ export default function AtualizarServico() {
                 setSdSegundoHorNome(ultimaConfiguracao.sdSegundoHorNome);
                 setSdTerceiroHorNome(ultimaConfiguracao.sdTerceiroHorNome);
             } catch (err) {
-                alert(err);
-                console.log(err);
+                // alert(err);
+                // console.log(err);
+                toast.error(err);
             }
         };
 
@@ -61,12 +64,23 @@ export default function AtualizarServico() {
             const responseData = response.data;
 
             if (response.status === 200 || response.status === 201) {
-                alert(responseData.message);
-                window.location.href = "/home";
+                // alert(responseData.message);
+                // window.location.href = "/home";
+                Swal.fire({
+                    title: 'Sucesso!',
+                    text: responseData.message,
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        confirmButton: 'btn btn-success btn-lg',
+                    }
+                });
+
             }
 
         } catch (error) {
-            alert('Erro: ' + error.message);
+            // alert('Erro: ' + error.message);
+            toast.error(error.message);
         }
     };
 
@@ -74,7 +88,20 @@ export default function AtualizarServico() {
         <>
             <Navbar />
             <div className="container">
-                <h1 className="mt-4 text-center">Atualizar Serviço</h1>
+                <div className="d-flex align-items-center justify-content-center mt-4 p-0 d-print-none">
+                    <nav aria-label="breadcrumb">
+                        <ol className="breadcrumb">
+                            <li className="breadcrumb-item">
+                                <Link to="/home">Página Inicial</Link>
+                            </li>
+                            <li className="breadcrumb-item active" aria-current="page">
+                                Atualizar Serviço
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+
+                <h1 className="mt-2 text-center">Atualizar Serviço</h1>
                 <p className="mt-3 text-center">Esta página proporciona a edição dos membros da guarnição de serviço, possibilitando a correção da data em que o serviço estará em vigor.</p>
 
                 <form className="row g-3 was-validated mt-4" onSubmit={handleRegistrarSubmit}>

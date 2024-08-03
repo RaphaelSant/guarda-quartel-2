@@ -2,6 +2,8 @@ import React from "react";
 import '../../css/geral.css';
 import Navbar from "../../components/navbar";
 import dbConfig from "../../components/util/dbConfig";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 
 
@@ -45,15 +47,28 @@ export default function ConfigServico() {
             });
 
             const responseData = await response.json();
-            
+
             if (response.status === 201) {
                 // Limpa o formulário após a inserção
-                alert(responseData.message);
-                window.location.href = "/home";
+                // alert(responseData.message);
+                // window.location.href = "/home";
+
+                Swal.fire({
+                    title: 'Sucesso!',
+                    text: responseData.message,
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        confirmButton: 'btn btn-success btn-lg',
+                    }
+                }).then(() => {
+                    window.location.href = "/home";
+                });
             }
 
         } catch (error) {
-            alert('Erro: ' + error.message);
+            // alert('Erro: ' + error.message);
+            toast.error(error.message);
         }
     };
 
