@@ -17,6 +17,8 @@ import {
 } from "../../../components/botao";
 import clearForm from "../../../components/util/clearForm";
 import dbConfig from "../../../components/util/dbConfig.jsx";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 export default function RelatorioParteSgtPerm() {
     // Estado para armazenar os dados obtidos da API
@@ -31,8 +33,9 @@ export default function RelatorioParteSgtPerm() {
             const fetchedData = await res.json();
             setData(fetchedData); // Atualiza o estado com os dados obtidos
         } catch (err) {
-            alert(err);
-            console.log(err);
+            // alert(err);
+            // console.log(err);
+            toast.error(err);
         } finally {
             setLoading(false); // Indica que o carregamento terminou
         }
@@ -79,7 +82,7 @@ export default function RelatorioParteSgtPerm() {
             const data = response.data[0];
             // Cria uma instância de um modal usando Bootstrap
             const editModal = new bootstrap.Modal(document.getElementById("editarRegistro"));
-            
+
             //console.log(data)
             // Verifica se há dados retornados antes de definir os estados para evitar erros
             if (data) {
@@ -113,12 +116,13 @@ export default function RelatorioParteSgtPerm() {
                 editModal.show();
             }
 
-            console.log(viaturas);
+            // console.log(viaturas);
 
         } catch (error) {
             // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-            alert(error);
-            console.error("Erro ao buscar dados:", error);
+            // alert(error);
+            // console.error("Erro ao buscar dados:", error);
+            toast.error("Erro ao buscar dados:", error);
         }
     };
 
@@ -155,8 +159,19 @@ export default function RelatorioParteSgtPerm() {
             });
 
             // Exibe um alerta com a mensagem da resposta para informar o usuário sobre o resultado da operação
-            alert(response.data.message);
-            
+            // alert(response.data.message);
+            if (response.data.status != 400) {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: `${response.data.message}`,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+
+                fetchData();
+            }
+
 
             // Limpa o formulário após a atualização dos dados
             clearForm();
@@ -166,10 +181,18 @@ export default function RelatorioParteSgtPerm() {
             // Retorna os dados da resposta da requisição
             return response.data;
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             const mensagem = error.response.data.message;
             // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-            alert(mensagem);
+            // alert(mensagem);
+            // console.log(error);
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: `${mensagem}`,
+                showConfirmButton: false,
+                timer: 2000
+            });
 
             // Lança o erro novamente para ser tratado por quem chamou essa função
             // throw error;
@@ -320,9 +343,8 @@ export default function RelatorioParteSgtPerm() {
                         </div>
                         <div className="modal-body" id="modal-body">
                             <form
-                                className="row g-3 needs-validation"
+                                className="row g-3 was-validated"
                                 id="needs-validation"
-                                noValidate
                             >
                                 <div className="col-md-6">
                                     <label htmlFor="parada-diaria" className="form-label">
@@ -333,6 +355,7 @@ export default function RelatorioParteSgtPerm() {
                                         className="form-control"
                                         placeholder="01 - Parada Diária"
                                         id="parada-diaria"
+                                        required
                                         value={paradaDiaria}
                                         onChange={(e) => setParadaDiaria(e.target.value)}
                                     />
@@ -348,6 +371,7 @@ export default function RelatorioParteSgtPerm() {
                                         className="form-control"
                                         placeholder="02 - Recebimento do Serviço"
                                         id="recebimento-servico"
+                                        required
                                         value={recebimentoServico}
                                         onChange={(e) => setRecebimentoServico(e.target.value)}
                                     />
@@ -364,6 +388,7 @@ export default function RelatorioParteSgtPerm() {
                                         placeholder="03 – Pessoal de Serviço"
                                         id="pessoal-servico"
                                         value={pessoalServico}
+                                        required
                                         onChange={(e) => setPessoalServico(e.target.value)}
                                     />
                                     <div className="valid-feedback">OK!</div>
@@ -379,6 +404,7 @@ export default function RelatorioParteSgtPerm() {
                                         className="form-control"
                                         placeholder="Consumo de ponta (4) - Atual"
                                         id="consumo-ponta-atual"
+                                        required
                                         value={consPonta}
                                         onChange={(e) => setConsPonta(e.target.value)}
                                     />
@@ -395,6 +421,7 @@ export default function RelatorioParteSgtPerm() {
                                         placeholder="Consumo de ponta (4) - Anterior"
                                         id="consumo-ponta-anterior"
                                         value={consPontaAnterior}
+                                        required
                                         onChange={(e) => setConsPontaAnterior(e.target.value)}
                                     />
                                     <div className="valid-feedback">OK!</div>
@@ -410,6 +437,7 @@ export default function RelatorioParteSgtPerm() {
                                         placeholder="Consumo de fora de ponta (8) - Atual"
                                         id="consumo-fora-ponta-atual"
                                         value={consFPonta}
+                                        required
                                         onChange={(e) => setConsFPonta(e.target.value)}
                                     />
                                     <div className="valid-feedback">OK!</div>
@@ -425,6 +453,7 @@ export default function RelatorioParteSgtPerm() {
                                         placeholder="Consumo de fora de ponta (8) - anterior"
                                         id="consumo-fora-ponta-anterior"
                                         value={consFPontaAnterior}
+                                        required
                                         onChange={(e) => setConsFPontaAnterior(e.target.value)}
                                     />
                                     <div className="valid-feedback">OK!</div>
@@ -440,6 +469,7 @@ export default function RelatorioParteSgtPerm() {
                                         placeholder="Consumo de fora de ponta (8) - anterior"
                                         id="consumo-total"
                                         value={consTotal}
+                                        required
                                         onChange={(e) => setConsTotal(e.target.value)}
                                     />
                                 </div>
@@ -453,6 +483,7 @@ export default function RelatorioParteSgtPerm() {
                                         placeholder="Consumo de fora de ponta (8) - anterior"
                                         id="consumo-total-anterior"
                                         value={consTotalAnterior}
+                                        required
                                         onChange={(e) => setConsTotalAnterior(e.target.value)}
                                     />
                                 </div>
@@ -466,6 +497,7 @@ export default function RelatorioParteSgtPerm() {
                                         placeholder="05 – Rancho"
                                         id="rancho"
                                         value={rancho}
+                                        required
                                         onChange={(e) => setRancho(e.target.value)}
                                     />
                                     <div className="valid-feedback">OK!</div>
@@ -481,6 +513,7 @@ export default function RelatorioParteSgtPerm() {
                                         placeholder="06 – Lixeiras"
                                         id="lixeiras"
                                         value={lixeiras}
+                                        required
                                         onChange={(e) => setLixeiras(e.target.value)}
                                     />
                                     <div className="valid-feedback">OK!</div>
@@ -496,6 +529,7 @@ export default function RelatorioParteSgtPerm() {
                                         placeholder="07 - Armamento e munição"
                                         id="armto-municao"
                                         value={armtMunicao}
+                                        required
                                         onChange={(e) => setArmtMunicao(e.target.value)}
                                     />
                                     <div className="valid-feedback">OK!</div>
@@ -511,6 +545,7 @@ export default function RelatorioParteSgtPerm() {
                                         placeholder="08 – Dependências"
                                         id="dependencias"
                                         value={dependencias}
+                                        required
                                         onChange={(e) => setDependencias(e.target.value)}
                                     />
                                     <div className="valid-feedback">OK!</div>
@@ -526,6 +561,7 @@ export default function RelatorioParteSgtPerm() {
                                         placeholder="09 – Claviculário"
                                         id="claviculario"
                                         value={claviculario}
+                                        required
                                         onChange={(e) => setClaviculario(e.target.value)}
                                     />
                                     <div className="valid-feedback">OK!</div>
@@ -541,6 +577,7 @@ export default function RelatorioParteSgtPerm() {
                                         placeholder="10 – Bomba d'água:"
                                         id="bombaAgua"
                                         value={bombaAgua}
+                                        required
                                         onChange={(e) => setBombaAgua(e.target.value)}
                                     />
                                     <div className="valid-feedback">OK!</div>
@@ -556,6 +593,7 @@ export default function RelatorioParteSgtPerm() {
                                         placeholder="11 – Revista do recolher"
                                         id="revistaRecolher"
                                         value={revistaRecolher}
+                                        required
                                         onChange={(e) => setRevistaRecolher(e.target.value)}
                                     />
                                     <div className="valid-feedback">OK!</div>
@@ -571,6 +609,7 @@ export default function RelatorioParteSgtPerm() {
                                         placeholder="12 – Rádios"
                                         id="radios"
                                         value={radios}
+                                        required
                                         onChange={(e) => setRadios(e.target.value)}
                                     />
                                     <div className="valid-feedback">OK!</div>
@@ -586,6 +625,7 @@ export default function RelatorioParteSgtPerm() {
                                         placeholder="13 – Câmeras"
                                         id="cameras"
                                         value={cameras}
+                                        required
                                         onChange={(e) => setCameras(e.target.value)}
                                     />
                                     <div className="valid-feedback">OK!</div>
@@ -601,6 +641,7 @@ export default function RelatorioParteSgtPerm() {
                                         placeholder="14 – Material Carga"
                                         id="material-carga"
                                         value={materialCarga}
+                                        required
                                         onChange={(e) => setMaterialCarga(e.target.value)}
                                     />
                                     <div className="valid-feedback">OK!</div>
@@ -616,6 +657,7 @@ export default function RelatorioParteSgtPerm() {
                                         placeholder="16 – Ocorrências"
                                         id="ocorrencias"
                                         value={ocorrencias}
+                                        required
                                         onChange={(e) => setOcorrencias(e.target.value)}
                                     />
                                     <div className="valid-feedback">OK!</div>
@@ -631,6 +673,7 @@ export default function RelatorioParteSgtPerm() {
                                         placeholder="17 – Correspondências"
                                         id="correspondencias"
                                         value={correspondencias}
+                                        required
                                         onChange={(e) => setCorrespondencias(e.target.value)}
                                     />
                                     <div className="valid-feedback">OK!</div>
@@ -646,6 +689,7 @@ export default function RelatorioParteSgtPerm() {
                                         placeholder="18 – Viaturas"
                                         id="viaturas"
                                         value={viaturas}
+                                        required
                                         onChange={(e) => setViaturas(e.target.value)}
                                     />
                                     <div className="valid-feedback">OK!</div>
@@ -661,6 +705,7 @@ export default function RelatorioParteSgtPerm() {
                                         placeholder="19 – Passagem do serviço"
                                         id="passagem-servico"
                                         value={passagemServico}
+                                        required
                                         onChange={(e) => setPassagemServico(e.target.value)}
                                     />
                                     <div className="valid-feedback">OK!</div>

@@ -136,9 +136,31 @@ router.put("/parte_sgt_permanencia", (req, res) => {
     } = req.body;
 
     // Verificação simples se todos os campos necessários estão presentes
-    if (!paradaDiaria || !recebimentoServico || !pessoalServico) {
+    if (!paradaDiaria ||
+        !recebimentoServico ||
+        !pessoalServico ||
+        !consPonta ||
+        !consPontaAnterior ||
+        !consFPonta ||
+        !consFPontaAnterior ||
+        !consTotal ||
+        !consTotalAnterior ||
+        !rancho ||
+        !lixeiras ||
+        !armtMunicao ||
+        !dependencias ||
+        !claviculario ||
+        !bombaAgua ||
+        !revistaRecolher ||
+        !radios ||
+        !cameras ||
+        !materialCarga ||
+        !ocorrencias ||
+        !correspondencias ||
+        !viaturas ||
+        !passagemServico) {
         // Adicione verificações adicionais conforme necessário
-        return res.status(400).json({ message: "Faltam dados necessários para a atualização." });
+        return res.status(400).json({ message: "Todos os campos são obrigatórios" });
     }
 
     // String SQL para atualizar a tabela
