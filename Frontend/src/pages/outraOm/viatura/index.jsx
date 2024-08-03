@@ -21,6 +21,8 @@ import clearForm from "../../../components/util/clearForm";
 import { formatDate, formatTime } from "../../../components/util/formatDateTime";
 import dbConfig from "../../../components/util/dbConfig";
 import { getLatestConfigServicoId } from "../../../components/configServico";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 export default function OutraOmViatura() {
     // Estado para receber os dados gravados no BD
@@ -39,8 +41,9 @@ export default function OutraOmViatura() {
             setData(fetchedData);
         } catch (err) {
             // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-            alert(err)
-            console.log(err);
+            // alert(err)
+            // console.log(err);
+            toast.error(err);
         }
     };
 
@@ -68,7 +71,8 @@ export default function OutraOmViatura() {
             }
         } catch (error) {
             // Em caso de erro, exibe um alerta e retorna
-            alert('Erro ao obter a configuração do serviço: ' + error.message);
+            toast.error('Erro ao obter a configuração do serviço: ' + error.message);
+            // alert('Erro ao obter a configuração do serviço: ' + error.message);
             return;
         }
 
@@ -97,8 +101,6 @@ export default function OutraOmViatura() {
             servConfigID,
         };
 
-        console.log(dados);
-
         try {
             // Envia uma requisição POST para adicionar um novo registro
             const response = await fetch(`${dbConfig()}/outra_om_viatura`, {
@@ -115,15 +117,31 @@ export default function OutraOmViatura() {
             // Converte a resposta da requisição para JSON
             const responseData = await response.json();
 
-            if(responseData.status != 400) {
+            if (responseData.status != 400) {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: `${responseData.message}`,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+
                 // Limpa o formulário após a inserção
                 clearForm();
                 // Atualiza os dados na tela após a inserção 
                 // (supõe-se que fetchData() é uma função que busca os dados atualizados)
                 await fetchData();
+            } else {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: responseData.message,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
             }
             // Exibe um alerta com a mensagem recebida do servidor após a inserção
-            alert(responseData.message);
+            // alert(responseData.message);
         } catch (error) {
             // Em caso de erro na requisição, exibe um alerta
             alert('Erro:', error);
@@ -175,8 +193,9 @@ export default function OutraOmViatura() {
 
         } catch (error) {
             // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-            alert(error);
-            console.error("Erro ao buscar dados:", error);
+            // alert(error);
+            // console.error("Erro ao buscar dados:", error);
+            toast.error("Erro ao buscar dados:", error);
         }
     };
 
@@ -197,21 +216,34 @@ export default function OutraOmViatura() {
                 destino,
             });
 
-            if(response.data.status != 400) {
-                // Limpa o formulário após a atualização dos dados
-                clearForm();
+            if (response.data.status != 400) {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: `${response.data.message}`,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+
                 fetchData();
             }
 
             // Exibe um alerta com a mensagem da resposta para informar o usuário sobre o resultado da operação
-            alert(response.data.message);
+            // alert(response.data.message);
 
             // Retorna os dados da resposta da requisição
             return response.data;
         } catch (error) {
             const mensagem = error.response.data.message;
             // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-            alert(mensagem);
+            // alert(mensagem);
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: `${mensagem}`,
+                showConfirmButton: false,
+                timer: 2000
+            });
         }
     };
 
@@ -229,13 +261,46 @@ export default function OutraOmViatura() {
             await fetchData();
 
             // Exibe um alerta da mensagem retornada após a exclusão (mensagem de sucesso ou erro)
-            alert(data.message);
+            // alert(data.message);
         } catch (error) {
             // Em caso de erro na requisição, Exibe um alerta
-            alert('Erro:', error)
+            toast.error(error);
+            // alert('Erro:', error)
         }
     };
 
+    // Função executada ao clicar no botao Deletar
+    const handleDeleteRegistro = (id, vtr, motorista) => {
+        Swal.fire({
+            title: 'Tem certeza de que deseja excluir este registro?',
+            html: `Motorista: ${vtr} <br> Placa / EB: ${motorista}`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sim, excluir!',
+            cancelButtonText: 'Cancelar',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                cancelButton: 'btn btn-secondary btn-lg'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteRegistro(id);
+                Swal.fire({
+                    title: 'Excluído!',
+                    text: 'O registro foi excluído com sucesso.',
+                    icon: 'success',
+                    customClass: {
+                        title: 'success-title',
+                        popup: 'success-popup',
+                        confirmButton: 'btn btn-primary btn-lg',
+                        content: 'success-content'
+                    }
+                });
+            }
+        });
+    };
+
+    /*
     // Função executada ao clicar no botao Deletar
     const handleDeleteRegistro = (id, vtr, motorista) => {
         // Exibe um diálogo de confirmação ao usuário, mostrando os detalhes do registro que será excluído
@@ -247,7 +312,7 @@ export default function OutraOmViatura() {
             // Chama a função de exclusão se o usuário confirmar
             deleteRegistro(id);
         }
-    };
+    }; */
 
     return (
         <>
