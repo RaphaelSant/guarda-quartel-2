@@ -21,6 +21,8 @@ import clearForm from "../../../components/util/clearForm";
 import { formatDate, formatTime } from "../../../components/util/formatDateTime";
 import dbConfig from "../../../components/util/dbConfig";
 import { getLatestConfigServicoId } from "../../../components/configServico";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 export default function OutraOmForaExpediente() {
     // Estado para receber os dados gravados no BD
@@ -39,8 +41,9 @@ export default function OutraOmForaExpediente() {
             setData(fetchedData);
         } catch (err) {
             // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-            alert(err)
-            console.log(err);
+            // alert(err)
+            // console.log(err);
+            toast.error(err);
         }
     };
 
@@ -78,7 +81,8 @@ export default function OutraOmForaExpediente() {
             }
         } catch (error) {
             // Em caso de erro, exibe um alerta e retorna
-            alert('Erro ao obter a configuração do serviço: ' + error.message);
+            // alert('Erro ao obter a configuração do serviço: ' + error.message);
+            toast.error('Erro ao obter a configuração do serviço: ' + error.message);
             return;
         }
 
@@ -94,8 +98,6 @@ export default function OutraOmForaExpediente() {
             origemRegistro,
             servConfigID,
         };
-
-        //console.log(dados);
 
         try {
             // Envia uma requisição POST para adicionar um novo registro
@@ -113,20 +115,37 @@ export default function OutraOmForaExpediente() {
             // Converte a resposta da requisição para JSON
             const responseData = await response.json();
 
-            if (response.status === 200) {
+            if (response.status != 400) {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: `${responseData.message}`,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+
                 // Limpa o formulário após a inserção
                 clearForm();
                 // Atualiza os dados na tela após a inserção 
                 // (supõe-se que fetchData() é uma função que busca os dados atualizados)
                 fetchData();
+            } else {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: responseData.message,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
             }
 
             // Exibe um alerta com a mensagem recebida do servidor após a inserção
-            alert(responseData.message);
+            // alert(responseData.message);
 
         } catch (error) {
             // Em caso de erro na requisição, exibe um alerta
-            alert('Erro: ' + error.message);
+            toast.error(error.message);
+            // alert('Erro: ' + error.message);
         }
     };
 
@@ -173,8 +192,9 @@ export default function OutraOmForaExpediente() {
 
         } catch (error) {
             // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-            alert(error);
-            console.error("Erro ao buscar dados:", error);
+            // alert(error);
+            // console.error("Erro ao buscar dados:", error);
+            toast.error("Erro ao buscar dados:", error);
         }
     };
 
@@ -195,18 +215,33 @@ export default function OutraOmForaExpediente() {
             });
 
             if (response.data.status != 400) {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: `${response.data.message}`,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+
                 fetchData();
             }
 
             // Exibe um alerta com a mensagem da resposta para informar o usuário sobre o resultado da operação
-            alert(response.data.message);
+            // alert(response.data.message);
 
             // Retorna os dados da resposta da requisição
             return response.data;
         } catch (error) {
             const mensagem = error.response.data.message;
             // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-            alert(mensagem);
+            // alert(mensagem);
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: `${mensagem}`,
+                showConfirmButton: false,
+                timer: 2000
+            });
 
             // Lança o erro novamente para ser tratado por quem chamou essa função
             // throw error;
@@ -227,13 +262,45 @@ export default function OutraOmForaExpediente() {
             await fetchData();
 
             // Exibe um alerta da mensagem retornada após a exclusão (mensagem de sucesso ou erro)
-            alert(data.message);
+            // alert(data.message);
         } catch (error) {
             // Em caso de erro na requisição, Exibe um alerta
             alert('Erro:', error)
         }
     };
 
+    // Função executada ao clicar no botao Deletar
+    const handleDeleteRegistro = (id, pg, nomeGuerra) => {
+        Swal.fire({
+            title: 'Tem certeza de que deseja excluir este registro?',
+            html: `PG: ${pg} <br> Nome: ${nomeGuerra}`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sim, excluir!',
+            cancelButtonText: 'Cancelar',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                cancelButton: 'btn btn-secondary btn-lg'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteRegistro(id);
+                Swal.fire({
+                    title: 'Excluído!',
+                    text: 'O registro foi excluído com sucesso.',
+                    icon: 'success',
+                    customClass: {
+                        title: 'success-title',
+                        popup: 'success-popup',
+                        confirmButton: 'btn btn-primary btn-lg',
+                        content: 'success-content'
+                    }
+                });
+            }
+        });
+    };
+
+    /*
     // Função executada ao clicar no botao Deletar
     const handleDeleteRegistro = (id, pg, nomeGuerra) => {
         // Exibe um diálogo de confirmação ao usuário, mostrando os detalhes do registro que será excluído
@@ -245,7 +312,7 @@ export default function OutraOmForaExpediente() {
             // Chama a função de exclusão se o usuário confirmar
             deleteRegistro(id);
         }
-    };
+    }; */
 
     return (
         <>
