@@ -10,9 +10,9 @@ import clearForm from "../../../components/util/clearForm";
 import dbConfig from "../../../components/util/dbConfig";
 import { Cancelar } from "../../../components/botao";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function ArmazenarServico() {
-
     const [isLoading, setIsLoading] = useState(false);
     const timeoutRef = useRef(null);
     const isLoadingRef = useRef(isLoading); // Usado para manter o valor mais recente de isLoading
@@ -25,38 +25,81 @@ export default function ArmazenarServico() {
     const handleFinalizarServico = () => {
         setIsLoading(true); // Ativa o estado de carregamento
 
-        // Mantém o estado de carregamento por pelo menos 5 segundos
-        timeoutRef.current = setTimeout(async () => {
-            if (isLoadingRef.current) {
-                try {
-                    const response = await axios.put(`${dbConfig()}/finaliza_servico`, {}, {
-                        headers: {
-                            "Content-Type": "application/json"
-                        }
-                    });
-
-                    alert(response.data.message);
-                    
-                    window.location.href = "/configServico";
-
-                } catch (error) {
-                    console.error("Erro:", error);
-                    alert("Ocorreu um erro ao finalizar o serviço.");
-                } finally {
-                    setIsLoading(false);
-                    timeoutRef.current = null;
-                }
+        // Exibe o SweetAlert2 com um temporizador, barra de progresso e botão de cancelar
+        Swal.fire({
+            title: "Finalizando serviço...",
+            html: "O serviço será finalizado em <b></b> segundos.",
+            timer: 5000,
+            timerProgressBar: true,
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            customClass: {
+                cancelButton: 'btn btn-danger btn-lg',
+            },
+            didOpen: () => {
+                Swal.showLoading();
+                const timer = Swal.getHtmlContainer().querySelector("b");
+                timeoutRef.current = setInterval(() => {
+                    timer.textContent = (Swal.getTimerLeft() / 1000).toFixed(1);
+                }, 100);
+            },
+            willClose: () => {
+                clearInterval(timeoutRef.current);
+                timeoutRef.current = null;
+                setIsLoading(false);
             }
-        }, 5000);
-    };
+        }).then(async (result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+                // Se o temporizador fechar o alerta
+                if (isLoadingRef.current) {
+                    try {
+                        const response = await axios.put(`${dbConfig()}/finaliza_servico`, {}, {
+                            headers: {
+                                "Content-Type": "application/json"
+                            }
+                        });
 
-    const handleCancel = () => {
-        if (timeoutRef.current) {
-            clearTimeout(timeoutRef.current);
-            timeoutRef.current = null;
-        }
-        setIsLoading(false);
-        alert("Operação cancelada");
+                        Swal.fire({
+                            title: 'Sucesso!',
+                            text: response.data.message,
+                            icon: 'success',
+                            confirmButtonText: 'OK',
+                            customClass: {
+                                confirmButton: 'btn btn-success btn-lg',
+                            }
+                        }).then(() => {
+                            window.location.href = "/configServico";
+                        });
+
+                    } catch (error) {
+                        console.error("Erro:", error);
+                        Swal.fire({
+                            title: 'Erro',
+                            text: 'Ocorreu um erro ao finalizar o serviço.',
+                            icon: 'error',
+                            confirmButtonText: 'OK',
+                            customClass: {
+                                confirmButton: 'btn btn-danger btn-lg',
+                            }
+                        });
+                    } finally {
+                        setIsLoading(false);
+                        isLoadingRef.current = false;
+                    }
+                }
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                // Se o usuário clicar no botão de cancelar
+                Swal.fire({
+                    title: 'Cancelado',
+                    text: 'A operação foi cancelada com sucesso.',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        confirmButton: 'btn btn-success btn-lg',
+                    }
+                });
+            }
+        });
     };
 
     return (
@@ -90,11 +133,6 @@ export default function ArmazenarServico() {
                             <button className="btn btn-danger" onClick={handleFinalizarServico} disabled={isLoading}>
                                 {isLoading ? "Finalizando..." : "Finalizar Serviço"}
                             </button>
-                            {isLoading && (
-                                <button className="btn btn-alert" onClick={handleCancel} disabled={!isLoading}>
-                                    Cancelar
-                                </button>
-                            )}
 
                             <button
                                 type="button"

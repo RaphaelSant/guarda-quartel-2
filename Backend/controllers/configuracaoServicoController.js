@@ -200,7 +200,7 @@ router.put("/finaliza_servico", (req, res) => {
     db.query(sql, (err, result) => {
         if (err) return res.status(500).send(err);
 
-        return res.status(200).json({ message: "Dados atualizados com sucesso!" });
+        return res.status(200).json({ message: "Serviço armazenado com sucesso!" });
     });
 });
 
