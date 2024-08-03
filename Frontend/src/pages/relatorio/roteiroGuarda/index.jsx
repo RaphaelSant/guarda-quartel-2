@@ -18,6 +18,8 @@ import {
 } from "../../../components/botao";
 import clearForm from "../../../components/util/clearForm";
 import dbConfig from "../../../components/util/dbConfig";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 export default function RelatorioRoteiroGuarda() {
     // Estado para receber os dados gravados no BD
@@ -38,8 +40,9 @@ export default function RelatorioRoteiroGuarda() {
             //console.log(configId);
         } catch (err) {
             // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-            alert(err)
-            console.log(err);
+            // alert(err)
+            // console.log(err);
+            toast.error(err);
         }
     };
 
@@ -73,7 +76,7 @@ export default function RelatorioRoteiroGuarda() {
             // Faz uma requisição GET para obter os dados de um registro específico com o ID fornecido
             const response = await axios.get(`${dbConfig()}/configuracao_servico/servico_configurado`);
             const data = response.data[0];
-            console.log(data);
+            //  console.log(data);
             // Cria uma instância de um modal usando Bootstrap
             const editModal = new bootstrap.Modal(document.getElementById("editarRegistro"));
 
@@ -104,8 +107,9 @@ export default function RelatorioRoteiroGuarda() {
 
         } catch (error) {
             // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-            alert(error);
-            console.error("Erro ao buscar dados:", error);
+            toast.error(error);
+            // alert(error);
+            // console.error("Erro ao buscar dados:", error);
         }
     };
 
@@ -125,9 +129,21 @@ export default function RelatorioRoteiroGuarda() {
                 motoristaNrArmamento: motoristaNrArmamento && motoristaNrArmamento.trim() !== "" ? motoristaNrArmamento : null,
                 motoristaQtdMun: motoristaQtdMun && motoristaQtdMun.trim() !== "" ? motoristaQtdMun : null,
             });
+            console.log(response.data.status);
+            if (response.data.status != 400) {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: `${response.data.message}`,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+
+                fetchData();
+            }
 
             // Exibe um alerta com a mensagem da resposta para informar o usuário sobre o resultado da operação
-            alert(response.data.message);
+            // alert(response.data.message);
 
             // Limpa o formulário após a atualização dos dados
             clearForm();
@@ -140,7 +156,14 @@ export default function RelatorioRoteiroGuarda() {
         } catch (error) {
             const mensagem = error.response.data.message;
             // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-            alert(mensagem);
+            //alert(mensagem);
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: `${mensagem}`,
+                showConfirmButton: false,
+                timer: 2000
+            });
         }
     };
 

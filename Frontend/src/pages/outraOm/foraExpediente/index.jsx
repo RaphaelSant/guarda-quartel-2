@@ -265,7 +265,8 @@ export default function OutraOmForaExpediente() {
             // alert(data.message);
         } catch (error) {
             // Em caso de erro na requisição, Exibe um alerta
-            alert('Erro:', error)
+            toast.error(error);
+            // alert('Erro:', error)
         }
     };
 
