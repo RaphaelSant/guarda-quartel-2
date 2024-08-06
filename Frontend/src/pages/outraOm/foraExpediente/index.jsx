@@ -518,7 +518,7 @@ export default function OutraOmForaExpediente() {
                                         required
                                     />
                                     <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo opcional.</div>
+                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-3">
@@ -533,7 +533,7 @@ export default function OutraOmForaExpediente() {
                                         required
                                     />
                                     <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo opcional.</div>
+                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-3">
@@ -681,7 +681,7 @@ export default function OutraOmForaExpediente() {
                                         required
                                     />
                                     <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo opcional.</div>
+                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-3">
@@ -698,7 +698,7 @@ export default function OutraOmForaExpediente() {
                                         required
                                     />
                                     <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo opcional.</div>
+                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-3">

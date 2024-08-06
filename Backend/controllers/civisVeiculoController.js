@@ -42,7 +42,7 @@ router.post("/civis_veiculo", (req, res) => {
 
     // Validação dos dados
     if (!nome || !cnh || !placa || !dataEntrada || !horaEntrada || !destino) {
-        return res.status(400).json({ message: "Todos os campos são obrigatórios.", status: 400 });
+        return res.status(400).json({ message: "Existem campos obrigatórios!", status: 400 });
     }
 
     db.query(sql, [nome, cnh, placa, dataEntrada, horaEntrada, horaSaida, destino, servConfigID], (err, result) => {
@@ -60,7 +60,7 @@ router.put("/civis_veiculo/:id", (req, res) => {
 
     // Validação dos dados
     if (!nome || !cnh || !placa || !dataEntrada || !horaEntrada || !destino || !horaSaida) {
-        return res.status(400).json({ message: "Todos os campos são obrigatórios.", status: 400 });
+        return res.status(400).json({ message: "Existem campos obrigatórios!", status: 400 });
     }
 
     db.query(sql, [nome, cnh, placa, dataEntrada, horaEntrada, horaSaida, destino, id], (err, result) => {

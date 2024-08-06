@@ -28,7 +28,7 @@ router.post("/outra_om_fora_expediente", (req, res) => {
 
     // Validação dos dados
     if (!postoGraduacaoRegistro || !nomeGuerraRegistro || !idtMilitarRegistro || !omRegistro || !dataEntradaRegistro || !origemRegistro || !servConfigID) {
-        return res.status(400).json({ message: "Todos os campos são obrigatórios.", status: 400 });
+        return res.status(400).json({ message: "Existem campos obrigatórios!", status: 400 });
     }
 
     db.query(sql, [postoGraduacaoRegistro, nomeGuerraRegistro, idtMilitarRegistro, omRegistro, dataEntradaRegistro, horaEntradaRegistro, horaSaidaRegistro, origemRegistro, servConfigID], (err, result) => {
@@ -61,7 +61,7 @@ router.put("/outra_om_fora_expediente/:id", (req, res) => {
 
     // Validação dos dados
     if (!pg || !nomeGuerra || !idtMil || !dataEntrada || !om || !origem) {
-        return res.status(400).json({ message: "Todos os campos são obrigatórios.", status: 400 });
+        return res.status(400).json({ message: "Existem campos obrigatórios!", status: 400 });
     }
 
     const sql = "UPDATE oom_fora_expediente SET pg=?, nomeGuerra=?, idtMil=?, om=?, dataEntrada=?, horaEntrada=?, horaSaida=?, origem=? WHERE id=?";

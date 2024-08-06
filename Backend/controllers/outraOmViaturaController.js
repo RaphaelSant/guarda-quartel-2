@@ -28,7 +28,7 @@ router.post("/outra_om_viatura", (req, res) => {
 
     // Validação dos dados
     if (!vtrRegistro || !dataRegistro || !motoristaRegistro || !destinoRegistro || !servConfigID) {
-        return res.status(400).json({ message: "Todos os campos são obrigatórios.", status: 400 });
+        return res.status(400).json({ message: "Existem campos obrigatórios!", status: 400 });
     }
 
     db.query(sql, [vtrRegistro, odmSaidaRegistro, odmEntradaRegistro, dataRegistro, horaSaidaRegistro, horaEntradaRegistro, motoristaRegistro, chefeVtrRegistro, destinoRegistro, servConfigID], (err, result) => {
@@ -61,7 +61,7 @@ router.put("/outra_om_viatura/:id", (req, res) => {
 
     // Validação dos dados
     if (!vtr || !dataRegistro || !motorista || !destino) {
-        return res.status(400).json({ message: "Todos os campos são obrigatórios.", status: 400 });
+        return res.status(400).json({ message: "Existem campos obrigatórios!", status: 400 });
     }
 
     const sql = "UPDATE oom_viatura SET vtr=?, odmSaida=?, odmEntrada=?, dataRegistro=?, horaSaida=?, horaEntrada=?, motorista=?, chefeVtr=?, destino=? WHERE id=?";

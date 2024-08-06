@@ -76,7 +76,7 @@ router.put("/roteiro_guarda", (req, res) => {
 
     // Validação dos dados
     if (!sgtTpArmamento || !sgtNrArmamento || !sgtQtdMun || !cbTpArmamento || !cbNrArmamento || !cbQtdMun || !motoristaTpArmamento || !motoristaNrArmamento || !motoristaQtdMun) {
-        return res.status(400).json({ message: "Todos os campos são obrigatórios." });
+        return res.status(400).json({ message: "Existem campos obrigatórios!" });
     }
 
     const sql = "UPDATE config_servico cs SET sgtTpArmamento=?, sgtNrArmamento=?, sgtQtdMun=?, cbTpArmamento=?, cbNrArmamento=?, cbQtdMun=?, motoristaTpArmamento=?, motoristaNrArmamento=?, motoristaQtdMun=? WHERE cs.configurado=1";

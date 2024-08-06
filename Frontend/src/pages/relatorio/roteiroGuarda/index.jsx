@@ -508,7 +508,7 @@ export default function RelatorioRoteiroGuarda() {
                                         onChange={(e) => setMotoristaNomeGuerra(e.target.value)}
                                     />
                                     <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo opcional.</div>
+                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
                                 </div>
                                 <div className="col-md-3">
                                     <label htmlFor="sd-tipo-armamento" className="form-label">
@@ -525,7 +525,7 @@ export default function RelatorioRoteiroGuarda() {
                                         onChange={(e) => setMotoristaTpArmamento(e.target.value)}
                                     />
                                     <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo opcional.</div>
+                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
                                 </div>
                                 <div className="col-md-3">
                                     <label htmlFor="sd-numero-armamento" className="form-label">
@@ -542,7 +542,7 @@ export default function RelatorioRoteiroGuarda() {
                                         onChange={(e) => setMotoristaNrArmamento(e.target.value)}
                                     />
                                     <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo opcional.</div>
+                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
                                 </div>
                                 <div className="col-md-3">
                                     <label htmlFor="sd-qtd-mun" className="form-label">
@@ -559,7 +559,7 @@ export default function RelatorioRoteiroGuarda() {
                                         onChange={(e) => setMotoristaQtdMun(e.target.value)}
                                     />
                                     <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo opcional.</div>
+                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
                                 </div>
 
                                 <hr />
