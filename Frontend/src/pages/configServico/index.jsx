@@ -31,7 +31,7 @@ export default function ConfigServico() {
             dataServico,
             sgtNomeGuerra,
             cbNomeGuerra,
-            motoristaNomeGuerra,
+            motoristaNomeGuerra: motoristaNomeGuerra && motoristaNomeGuerra.trim() !== "" ? motoristaNomeGuerra : null,
             sdPrimeiroHorario,
             sdSegundoHorario,
             sdTerceiroHorario,
@@ -79,7 +79,7 @@ export default function ConfigServico() {
             <h1 className="mt-4 text-center">Configuração do serviço</h1>
             <p className="mt-3 text-center">Esta página proporciona a configuração inicial do serviço, possibilitando a definição da data em que o serviço estará em vigor.</p>
 
-            <form className="row g-3 was-validated mt-4" onSubmit={handleRegistrarSubmit}>
+            <form className="row g-3 was-validated mt-4">
                 <h4>Data do serviço</h4>
                 <div className="col-md-3">
                     <label htmlFor="data-servico" className="form-label">
@@ -91,8 +91,8 @@ export default function ConfigServico() {
                         id="data-servico"
                         required
                     />
-                    <div className="valid-feedback">OK!</div>
-                    <div className="invalid-feedback">Campo obrigatório.</div>
+                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                        <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
                 <div className="col-md-3">
                     <label htmlFor="sgt-nome-guerra" className="form-label">
@@ -106,8 +106,8 @@ export default function ConfigServico() {
                         maxLength="100"
                         required
                     />
-                    <div className="valid-feedback">OK!</div>
-                    <div className="invalid-feedback">Campo obrigatório.</div>
+                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                        <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
                 <div className="col-md-3">
                     <label htmlFor="cb-nome-guerra" className="form-label">
@@ -121,8 +121,8 @@ export default function ConfigServico() {
                         maxLength="100"
                         required
                     />
-                    <div className="valid-feedback">OK!</div>
-                    <div className="invalid-feedback">Campo obrigatório.</div>
+                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                        <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
                 <div className="col-md-3">
                     <label htmlFor="motorista-nome-guerra" className="form-label">
@@ -136,8 +136,8 @@ export default function ConfigServico() {
                         maxLength="100"
                         required
                     />
-                    <div className="valid-feedback">OK!</div>
-                    <div className="invalid-feedback">Campo opcional.</div>
+                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                    <div className="invalid-feedback rounded text-center bg-warning bg-gradient text-black">Campo opcional.</div>
                 </div>
 
                 <hr />
@@ -155,8 +155,8 @@ export default function ConfigServico() {
                         maxLength="100"
                         required
                     />
-                    <div className="valid-feedback">OK!</div>
-                    <div className="invalid-feedback">Campo obrigatório.</div>
+                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                        <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
                 <div className="col-md-4">
                     <label htmlFor="sd-segundo-horario" className="form-label">
@@ -170,8 +170,8 @@ export default function ConfigServico() {
                         maxLength="100"
                         required
                     />
-                    <div className="valid-feedback">OK!</div>
-                    <div className="invalid-feedback">Campo obrigatório.</div>
+                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                        <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
                 <div className="col-md-4">
                     <label htmlFor="sd-terceiro-horario" className="form-label">
@@ -185,11 +185,13 @@ export default function ConfigServico() {
                         maxLength="100"
                         required
                     />
-                    <div className="valid-feedback">OK!</div>
-                    <div className="invalid-feedback">Campo obrigatório.</div>
+                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                        <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
-                <button className="btn btn-success" type="submit">Salvar</button>
+                <hr />
+
+                <button className="btn btn-success" onClick={handleRegistrarSubmit} type="submit">Salvar</button>
 
             </form>
         </div>

@@ -27,7 +27,7 @@ export default function RelatorioServicoAnterior() {
                     }
                     return null;
                 }).filter(date => date !== null); // Remove datas inválidas
-                console.log(dates);
+                //console.log(dates);
                 setAvailableDates(dates);
             } catch (error) {
                 console.error('Erro ao buscar as datas disponíveis:', error);

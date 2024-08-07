@@ -35,7 +35,7 @@ router.post("/configuracao_servico", (req, res) => {
     const { configurado, dataServico, sgtNomeGuerra, cbNomeGuerra, motoristaNomeGuerra, sdPrimeiroHorario, sdSegundoHorario, sdTerceiroHorario } = req.body;
 
     // Validação dos dados
-    if (!configurado || !dataServico || !sgtNomeGuerra || !cbNomeGuerra || !motoristaNomeGuerra || !sdPrimeiroHorario || !sdSegundoHorario || !sdTerceiroHorario) {
+    if (!configurado || !dataServico || !sgtNomeGuerra || !cbNomeGuerra || !sdPrimeiroHorario || !sdSegundoHorario || !sdTerceiroHorario) {
         return res.status(400).json({ message: "Todos os campos são obrigatórios.", status: 400 });
     }
 

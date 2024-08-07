@@ -30,7 +30,7 @@ export default function AtualizarServico() {
                 setData(format(new Date(ultimaConfiguracao.servico_ref), 'yyyy-MM-dd'));
                 setSgtNomeGuerra(ultimaConfiguracao.sgtNomeGuerra);
                 setCbNomeGuerra(ultimaConfiguracao.cbNomeGuerra);
-                setMotoristaNomeGuerra(ultimaConfiguracao.motoristaNomeGuerra);
+                setMotoristaNomeGuerra(ultimaConfiguracao.motoristaNomeGuerra || "");
                 setSdPrimeiroHorNome(ultimaConfiguracao.sdPrimeiroHorNome);
                 setSdSegundoHorNome(ultimaConfiguracao.sdSegundoHorNome);
                 setSdTerceiroHorNome(ultimaConfiguracao.sdTerceiroHorNome);
@@ -51,7 +51,7 @@ export default function AtualizarServico() {
             dataServico: data,
             sgtNomeGuerra: sgtNomeGuerra,
             cbNomeGuerra: cbNomeGuerra,
-            motoristaNomeGuerra: motoristaNomeGuerra,
+            motoristaNomeGuerra: motoristaNomeGuerra && motoristaNomeGuerra.trim() !== "" ? motoristaNomeGuerra : null,
             sdPrimeiroHorario: sdPrimeiroHorNome,
             sdSegundoHorario: sdSegundoHorNome,
             sdTerceiroHorario: sdTerceiroHorNome,
@@ -104,8 +104,9 @@ export default function AtualizarServico() {
                 <h1 className="mt-2 text-center">Atualizar Serviço</h1>
                 <p className="mt-3 text-center">Esta página proporciona a edição dos membros da guarnição de serviço, possibilitando a correção da data em que o serviço estará em vigor.</p>
 
-                <form className="row g-3 was-validated mt-4" onSubmit={handleRegistrarSubmit}>
+                <form className="row g-3 was-validated mt-4" id="needs-validation">
                     <h4>Data do serviço</h4>
+
                     <div className="col-md-3">
                         <label htmlFor="data-servico" className="form-label">Data do serviço</label>
                         <input
@@ -116,8 +117,8 @@ export default function AtualizarServico() {
                             onChange={(e) => setData(e.target.value)}
                             required
                         />
-                        <div className="valid-feedback">OK!</div>
-                        <div className="invalid-feedback">Campo obrigatório.</div>
+                        <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                        <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                     </div>
                     <div className="col-md-3">
                         <label htmlFor="sgt-nome-guerra" className="form-label">Sargento Permanência</label>
@@ -131,8 +132,8 @@ export default function AtualizarServico() {
                             onChange={(e) => setSgtNomeGuerra(e.target.value)}
                             required
                         />
-                        <div className="valid-feedback">OK!</div>
-                        <div className="invalid-feedback">Campo obrigatório.</div>
+                        <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                        <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                     </div>
                     <div className="col-md-3">
                         <label htmlFor="cb-nome-guerra" className="form-label">Cabo da guarda</label>
@@ -146,8 +147,8 @@ export default function AtualizarServico() {
                             onChange={(e) => setCbNomeGuerra(e.target.value)}
                             required
                         />
-                        <div className="valid-feedback">OK!</div>
-                        <div className="invalid-feedback">Campo obrigatório.</div>
+                        <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                        <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                     </div>
                     <div className="col-md-3">
                         <label htmlFor="motorista-nome-guerra" className="form-label">Soldado (Motorista de dia)</label>
@@ -161,8 +162,8 @@ export default function AtualizarServico() {
                             onChange={(e) => setMotoristaNomeGuerra(e.target.value)}
                             required
                         />
-                        <div className="valid-feedback">OK!</div>
-                        <div className="invalid-feedback">Campo opcional.</div>
+                        <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                        <div className="invalid-feedback rounded text-center bg-warning bg-gradient text-black">Campo opcional.</div>
                     </div>
 
                     <hr />
@@ -180,8 +181,8 @@ export default function AtualizarServico() {
                             onChange={(e) => setSdPrimeiroHorNome(e.target.value)}
                             required
                         />
-                        <div className="valid-feedback">OK!</div>
-                        <div className="invalid-feedback">Campo obrigatório.</div>
+                        <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                        <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                     </div>
                     <div className="col-md-4">
                         <label htmlFor="sd-segundo-horario" className="form-label">2° Horário</label>
@@ -195,8 +196,8 @@ export default function AtualizarServico() {
                             onChange={(e) => setSdSegundoHorNome(e.target.value)}
                             required
                         />
-                        <div className="valid-feedback">OK!</div>
-                        <div className="invalid-feedback">Campo obrigatório.</div>
+                        <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                        <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                     </div>
                     <div className="col-md-4">
                         <label htmlFor="sd-terceiro-horario" className="form-label">3° Horário</label>
@@ -210,11 +211,13 @@ export default function AtualizarServico() {
                             onChange={(e) => setSdTerceiroHorNome(e.target.value)}
                             required
                         />
-                        <div className="valid-feedback">OK!</div>
-                        <div className="invalid-feedback">Campo obrigatório.</div>
+                        <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                        <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                     </div>
 
-                    <button className="btn btn-success" type="submit">Salvar</button>
+                    <hr />
+
+                    <button className="btn btn-success" onClick={handleRegistrarSubmit} type="submit">Salvar</button>
                     <Link to="/home" className={`${estiloAtualizar.botao_cancelar}`}><button className={`${estiloAtualizar.botao_cancelar} btn btn-danger`} type="submit">Cancelar</button></Link>
                 </form>
             </div>
