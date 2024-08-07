@@ -428,8 +428,8 @@ export default function OutraOmViatura() {
                                         maxLength="20"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -445,8 +445,8 @@ export default function OutraOmViatura() {
                                         maxLength="20"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-warning bg-gradient text-black">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -462,8 +462,8 @@ export default function OutraOmViatura() {
                                         maxLength="20"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-warning bg-gradient text-black">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -478,8 +478,8 @@ export default function OutraOmViatura() {
                                         placeholder="Insira a data de registro"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -493,8 +493,8 @@ export default function OutraOmViatura() {
                                         placeholder="Insira o horário de saida"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-warning bg-gradient text-black">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -508,8 +508,8 @@ export default function OutraOmViatura() {
                                         placeholder="Insira o horário de saida"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-warning bg-gradient text-black">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -524,8 +524,8 @@ export default function OutraOmViatura() {
                                         maxLength="50"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -540,8 +540,8 @@ export default function OutraOmViatura() {
                                         maxLength="50"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-warning bg-gradient text-black">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -556,8 +556,8 @@ export default function OutraOmViatura() {
                                         maxLength="50"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                             </form>
                         </div>
@@ -592,8 +592,8 @@ export default function OutraOmViatura() {
                                         value={vtr}
                                         onChange={(e) => setVtr(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -610,8 +610,8 @@ export default function OutraOmViatura() {
                                         onChange={(e) => setOdmEntrada(e.target.value)}
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-warning bg-gradient text-black">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -628,8 +628,8 @@ export default function OutraOmViatura() {
                                         onChange={(e) => setOdmSaida(e.target.value)}
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-warning bg-gradient text-black">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -645,8 +645,8 @@ export default function OutraOmViatura() {
                                         placeholder="Insira a data de registro"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -662,8 +662,8 @@ export default function OutraOmViatura() {
                                         onChange={(e) => setHoraEntrada(e.target.value)}
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-warning bg-gradient text-black">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -679,8 +679,8 @@ export default function OutraOmViatura() {
                                         onChange={(e) => setHoraSaida(e.target.value)}
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-warning bg-gradient text-black">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -697,8 +697,8 @@ export default function OutraOmViatura() {
                                         maxLength="50"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -715,8 +715,8 @@ export default function OutraOmViatura() {
                                         maxLength="50"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-warning bg-gradient text-black">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -732,8 +732,8 @@ export default function OutraOmViatura() {
                                         onChange={(e) => setDestino(e.target.value)}
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                             </form>
                         </div>

@@ -364,8 +364,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={sgtNomeGuerra}
                                         onChange={(e) => setSgtNomeGuerra(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-3">
                                     <label htmlFor="sgt-tipo-armamento" className="form-label">
@@ -381,8 +381,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={sgtTpArmamento}
                                         onChange={(e) => setSgtTpArmamento(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-3">
                                     <label htmlFor="sgt-numero-armamento" className="form-label">
@@ -398,8 +398,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={sgtNrArmamento}
                                         onChange={(e) => setSgtNrArmamento(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-3">
                                     <label htmlFor="sgt-qtd-mun" className="form-label">
@@ -415,8 +415,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={sgtQtdMun}
                                         onChange={(e) => setSgtQtdMun(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <hr />
                                 <h4>Cabo da Guarda</h4>
@@ -435,8 +435,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={cbNomeGuerra}
                                         onChange={(e) => setCbNomeGuerra(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-3">
                                     <label htmlFor="cb-tipo-armamento" className="form-label">
@@ -452,8 +452,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={cbTpArmamento}
                                         onChange={(e) => setCbTpArmamento(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-3">
                                     <label htmlFor="cb-numero-armamento" className="form-label">
@@ -469,8 +469,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={cbNrArmamento}
                                         onChange={(e) => setCbNrArmamento(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-3">
                                     <label htmlFor="cb-qtd-mun" className="form-label">
@@ -486,8 +486,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={cbQtdMun}
                                         onChange={(e) => setCbQtdMun(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
 
                                 <hr />
@@ -507,8 +507,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={motoristaNomeGuerra}
                                         onChange={(e) => setMotoristaNomeGuerra(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-warning bg-gradient text-black">Campo opcional.</div>
                                 </div>
                                 <div className="col-md-3">
                                     <label htmlFor="sd-tipo-armamento" className="form-label">
@@ -524,8 +524,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={motoristaTpArmamento}
                                         onChange={(e) => setMotoristaTpArmamento(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-warning bg-gradient text-black">Campo opcional.</div>
                                 </div>
                                 <div className="col-md-3">
                                     <label htmlFor="sd-numero-armamento" className="form-label">
@@ -541,8 +541,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={motoristaNrArmamento}
                                         onChange={(e) => setMotoristaNrArmamento(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-warning bg-gradient text-black">Campo opcional.</div>
                                 </div>
                                 <div className="col-md-3">
                                     <label htmlFor="sd-qtd-mun" className="form-label">
@@ -558,8 +558,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={motoristaQtdMun}
                                         onChange={(e) => setMotoristaQtdMun(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-warning bg-gradient text-black">Campo opcional.</div>
                                 </div>
 
                                 <hr />
@@ -579,8 +579,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={sdPrimeiroHorNome}
                                         onChange={(e) => setSdPrimeiroHorNome(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-4">
                                     <label htmlFor="sd-segundo-horario" className="form-label">
@@ -597,8 +597,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={sdSegundoHorNome}
                                         onChange={(e) => setSdSegundoHorNome(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-4">
                                     <label htmlFor="sd-terceiro-horario" className="form-label">
@@ -615,8 +615,8 @@ export default function RelatorioRoteiroGuarda() {
                                         value={sdTerceiroHorNome}
                                         onChange={(e) => setSdTerceiroHorNome(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                             </form>
 

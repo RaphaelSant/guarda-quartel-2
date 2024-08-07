@@ -359,8 +359,8 @@ export default function RelatorioParteSgtPerm() {
                                         value={paradaDiaria}
                                         onChange={(e) => setParadaDiaria(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="recebimento-servico" className="form-label">
@@ -375,8 +375,8 @@ export default function RelatorioParteSgtPerm() {
                                         value={recebimentoServico}
                                         onChange={(e) => setRecebimentoServico(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="pessoal-servico" className="form-label">
@@ -391,8 +391,8 @@ export default function RelatorioParteSgtPerm() {
                                         required
                                         onChange={(e) => setPessoalServico(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <h5>04 - Energia Elétrica: Consumo</h5>
                                 <div className="col-md-6">
@@ -408,8 +408,8 @@ export default function RelatorioParteSgtPerm() {
                                         value={consPonta}
                                         onChange={(e) => setConsPonta(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="consumo-ponta-anterior" className="form-label">
@@ -424,8 +424,8 @@ export default function RelatorioParteSgtPerm() {
                                         required
                                         onChange={(e) => setConsPontaAnterior(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="consumo-fora-ponta-atual" className="form-label">
@@ -440,8 +440,8 @@ export default function RelatorioParteSgtPerm() {
                                         required
                                         onChange={(e) => setConsFPonta(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="consumo-fora-ponta-anterior" className="form-label">
@@ -456,8 +456,8 @@ export default function RelatorioParteSgtPerm() {
                                         required
                                         onChange={(e) => setConsFPontaAnterior(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="consumo-total" className="form-label">
@@ -500,8 +500,8 @@ export default function RelatorioParteSgtPerm() {
                                         required
                                         onChange={(e) => setRancho(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="lixeiras" className="form-label">
@@ -516,8 +516,8 @@ export default function RelatorioParteSgtPerm() {
                                         required
                                         onChange={(e) => setLixeiras(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="armto-municao" className="form-label">
@@ -532,8 +532,8 @@ export default function RelatorioParteSgtPerm() {
                                         required
                                         onChange={(e) => setArmtMunicao(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="dependencias" className="form-label">
@@ -548,8 +548,8 @@ export default function RelatorioParteSgtPerm() {
                                         required
                                         onChange={(e) => setDependencias(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="claviculario" className="form-label">
@@ -564,8 +564,8 @@ export default function RelatorioParteSgtPerm() {
                                         required
                                         onChange={(e) => setClaviculario(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="bombaAgua" className="form-label">
@@ -580,8 +580,8 @@ export default function RelatorioParteSgtPerm() {
                                         required
                                         onChange={(e) => setBombaAgua(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="revistaRecolher" className="form-label">
@@ -596,8 +596,8 @@ export default function RelatorioParteSgtPerm() {
                                         required
                                         onChange={(e) => setRevistaRecolher(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="radios" className="form-label">
@@ -612,8 +612,8 @@ export default function RelatorioParteSgtPerm() {
                                         required
                                         onChange={(e) => setRadios(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="cameras" className="form-label">
@@ -628,8 +628,8 @@ export default function RelatorioParteSgtPerm() {
                                         required
                                         onChange={(e) => setCameras(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="material-carga" className="form-label">
@@ -644,8 +644,8 @@ export default function RelatorioParteSgtPerm() {
                                         required
                                         onChange={(e) => setMaterialCarga(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="ocorrencias" className="form-label">
@@ -660,8 +660,8 @@ export default function RelatorioParteSgtPerm() {
                                         required
                                         onChange={(e) => setOcorrencias(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="correspondencias" className="form-label">
@@ -676,8 +676,8 @@ export default function RelatorioParteSgtPerm() {
                                         required
                                         onChange={(e) => setCorrespondencias(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="viaturas" className="form-label">
@@ -692,8 +692,8 @@ export default function RelatorioParteSgtPerm() {
                                         required
                                         onChange={(e) => setViaturas(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="passagem-servico" className="form-label">
@@ -708,8 +708,8 @@ export default function RelatorioParteSgtPerm() {
                                         required
                                         onChange={(e) => setPassagemServico(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                             </form>
                         </div>

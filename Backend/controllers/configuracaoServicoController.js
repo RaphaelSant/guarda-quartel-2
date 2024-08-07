@@ -75,7 +75,7 @@ router.put("/roteiro_guarda", (req, res) => {
     const { sgtTpArmamento, sgtNrArmamento, sgtQtdMun, cbTpArmamento, cbNrArmamento, cbQtdMun, motoristaTpArmamento, motoristaNrArmamento, motoristaQtdMun } = req.body;
 
     // Validação dos dados
-    if (!sgtTpArmamento || !sgtNrArmamento || !sgtQtdMun || !cbTpArmamento || !cbNrArmamento || !cbQtdMun || !motoristaTpArmamento || !motoristaNrArmamento || !motoristaQtdMun) {
+    if (!sgtTpArmamento || !sgtNrArmamento || !sgtQtdMun || !cbTpArmamento || !cbNrArmamento || !cbQtdMun) {
         return res.status(400).json({ message: "Existem campos obrigatórios!" });
     }
 

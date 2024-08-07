@@ -406,8 +406,8 @@ export default function CivisPe() {
                     id="nome-completo"
                     required
                   />
-                  <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-6">
@@ -426,7 +426,7 @@ export default function CivisPe() {
                     required
                   />
                   <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-6">
@@ -441,8 +441,8 @@ export default function CivisPe() {
                     placeholder="Insira a data de entrada"
                     required
                   />
-                  <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-6">
@@ -456,8 +456,8 @@ export default function CivisPe() {
                     placeholder="Insira o horário de entrada"
                     required
                   />
-                  <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-12">
@@ -471,8 +471,8 @@ export default function CivisPe() {
                     placeholder="Insira o destino"
                     required
                   />
-                  <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-6"></div>
@@ -510,8 +510,8 @@ export default function CivisPe() {
                     value={nome}
                     onChange={(e) => setNome(e.target.value)}
                   />
-                  <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-6">
@@ -528,8 +528,8 @@ export default function CivisPe() {
                     onChange={(e) => setCpf(e.target.value)}
                     required
                   />
-                  <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-4">
@@ -545,8 +545,8 @@ export default function CivisPe() {
                     placeholder="Insira a data de entrada"
                     required
                   />
-                  <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-4">
@@ -562,8 +562,8 @@ export default function CivisPe() {
                     onChange={(e) => setHoraEntrada(e.target.value)}
                     required
                   />
-                  <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-4">
@@ -579,8 +579,8 @@ export default function CivisPe() {
                     onChange={(e) => setHoraSaida(e.target.value)}
                     required
                   />
-                  <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-12">
@@ -596,8 +596,8 @@ export default function CivisPe() {
                     onChange={(e) => setDestino(e.target.value)}
                     required
                   />
-                  <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
               </form>
             </div>

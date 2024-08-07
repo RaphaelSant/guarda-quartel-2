@@ -432,8 +432,8 @@ export default function PelotaoForaExpediente() {
                                         <option value="General de Exército">General de Exército</option>
                                         <option value="Marechal">Marechal</option>
                                     </select>
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
                                 <div className="col-md-4">
                                     <label htmlFor="nome-guerra" className="form-label">
@@ -446,8 +446,8 @@ export default function PelotaoForaExpediente() {
                                         id="nome-guerra"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -463,8 +463,8 @@ export default function PelotaoForaExpediente() {
                                         maxLength="50"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-3">
@@ -479,8 +479,8 @@ export default function PelotaoForaExpediente() {
                                         placeholder="Insira a data de entrada"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-3">
@@ -494,8 +494,8 @@ export default function PelotaoForaExpediente() {
                                         placeholder="Insira o horário de entrada"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-warning bg-gradient text-black">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-3">
@@ -509,8 +509,8 @@ export default function PelotaoForaExpediente() {
                                         placeholder="Insira o horário de saída"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-warning bg-gradient text-black">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-3">
@@ -524,8 +524,8 @@ export default function PelotaoForaExpediente() {
                                         placeholder="Insira a Origem / Destino"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-6"></div>
@@ -570,8 +570,8 @@ export default function PelotaoForaExpediente() {
                                         <option value="General de Exército">General de Exército</option>
                                         <option value="Marechal">Marechal</option>
                                     </select>
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -587,8 +587,8 @@ export default function PelotaoForaExpediente() {
                                         value={nomeGuerra}
                                         onChange={(e) => setNomeGuerra(e.target.value)}
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-4">
@@ -605,8 +605,8 @@ export default function PelotaoForaExpediente() {
                                         onChange={(e) => setIdtMil(e.target.value)}
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-3">
@@ -622,8 +622,8 @@ export default function PelotaoForaExpediente() {
                                         placeholder="Insira a data de entrada"
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-3">
@@ -639,8 +639,8 @@ export default function PelotaoForaExpediente() {
                                         onChange={(e) => setHoraEntrada(e.target.value)}
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-warning bg-gradient text-black">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-3">
@@ -656,8 +656,8 @@ export default function PelotaoForaExpediente() {
                                         onChange={(e) => setHoraSaida(e.target.value)}
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback rounded text-center bg-secondary text-warning">Campo opcional.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-warning bg-gradient text-black">Campo opcional.</div>
                                 </div>
 
                                 <div className="col-md-3">
@@ -673,8 +673,8 @@ export default function PelotaoForaExpediente() {
                                         onChange={(e) => setOrigem(e.target.value)}
                                         required
                                     />
-                                    <div className="valid-feedback">OK!</div>
-                                    <div className="invalid-feedback">Campo obrigatório.</div>
+                                    <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                                    <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
 
                                 <div className="col-md-6"></div>

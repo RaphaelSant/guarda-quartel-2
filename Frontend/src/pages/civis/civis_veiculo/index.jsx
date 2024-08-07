@@ -425,8 +425,8 @@ export default function CivisVeiculo() {
                     id="nome-completo"
                     required
                   />
-                  <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-6">
@@ -442,8 +442,8 @@ export default function CivisVeiculo() {
                     maxLength="50"
                     required
                   />
-                  <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-4">
@@ -459,8 +459,8 @@ export default function CivisVeiculo() {
                     maxLength="8"
                     required
                   />
-                  <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-4">
@@ -475,8 +475,8 @@ export default function CivisVeiculo() {
                     placeholder="Insira a data de entrada"
                     required
                   />
-                  <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-4">
@@ -490,8 +490,8 @@ export default function CivisVeiculo() {
                     placeholder="Insira o horário de entrada"
                     required
                   />
-                  <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-12">
@@ -505,8 +505,8 @@ export default function CivisVeiculo() {
                     placeholder="Insira o destino"
                     required
                   />
-                  <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-6"></div>
@@ -544,8 +544,8 @@ export default function CivisVeiculo() {
                     value={nome}
                     onChange={(e) => setNome(e.target.value)}
                   />
-                  <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-6">
@@ -562,8 +562,8 @@ export default function CivisVeiculo() {
                     onChange={(e) => setCnh(e.target.value)}
                     required
                   />
-                  <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-6">
@@ -580,8 +580,8 @@ export default function CivisVeiculo() {
                     onChange={(e) => setPlaca(e.target.value)}
                     required
                   />
-                  <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-4">
@@ -597,8 +597,8 @@ export default function CivisVeiculo() {
                     placeholder="Insira a data de entrada"
                     required
                   />
-                  <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-4">
@@ -614,8 +614,8 @@ export default function CivisVeiculo() {
                     onChange={(e) => setHoraEntrada(e.target.value)}
                     required
                   />
-                  <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-4">
@@ -631,8 +631,8 @@ export default function CivisVeiculo() {
                     onChange={(e) => setHoraSaida(e.target.value)}
                     required
                   />
-                  <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-12">
@@ -648,8 +648,8 @@ export default function CivisVeiculo() {
                     onChange={(e) => setDestino(e.target.value)}
                     required
                   />
-                  <div className="valid-feedback">OK!</div>
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                  <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                 </div>
 
                 <div className="col-md-6"></div>
