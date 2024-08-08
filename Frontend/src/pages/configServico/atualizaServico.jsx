@@ -22,18 +22,17 @@ export default function AtualizarServico() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`${dbConfig()}/configuracao_servico`);
-                const configuracoes = res.data;
-                const ultimaConfiguracao = configuracoes[configuracoes.length - 1];
+                const res = await axios.get(`${dbConfig()}/configuracao_servico/servico_configurado`);
+                const servico_vigor = res.data[0];
 
-                setId(ultimaConfiguracao.id);
-                setData(format(new Date(ultimaConfiguracao.servico_ref), 'yyyy-MM-dd'));
-                setSgtNomeGuerra(ultimaConfiguracao.sgtNomeGuerra);
-                setCbNomeGuerra(ultimaConfiguracao.cbNomeGuerra);
-                setMotoristaNomeGuerra(ultimaConfiguracao.motoristaNomeGuerra || "");
-                setSdPrimeiroHorNome(ultimaConfiguracao.sdPrimeiroHorNome);
-                setSdSegundoHorNome(ultimaConfiguracao.sdSegundoHorNome);
-                setSdTerceiroHorNome(ultimaConfiguracao.sdTerceiroHorNome);
+                setId(servico_vigor.id);
+                setData(format(new Date(servico_vigor.servico_ref), 'yyyy-MM-dd'));
+                setSgtNomeGuerra(servico_vigor.sgtNomeGuerra);
+                setCbNomeGuerra(servico_vigor.cbNomeGuerra);
+                setMotoristaNomeGuerra(servico_vigor.motoristaNomeGuerra || "");
+                setSdPrimeiroHorNome(servico_vigor.sdPrimeiroHorNome);
+                setSdSegundoHorNome(servico_vigor.sdSegundoHorNome);
+                setSdTerceiroHorNome(servico_vigor.sdTerceiroHorNome);
             } catch (err) {
                 // alert(err);
                 // console.log(err);
