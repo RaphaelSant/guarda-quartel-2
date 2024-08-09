@@ -50,18 +50,14 @@ export default function Rotas() {
         const autenticado = await verificarAutenticacao();
         setAutenticado(autenticado);
 
-        const responseConfig = await axios.get(`${dbConfig()}/configuracao_servico`);        
-        const configuracoes = responseConfig.data; // Supondo que o retorno seja um array de objetos com as configurações
+        const { data: configuracoes } = await axios.get(`${dbConfig()}/configuracao_servico/servico_configurado`);
 
-        // CONFIGURAÇÃO DO SERVIÇO
         if (configuracoes.length > 0) {
-          const ultimaConfiguracao = configuracoes[configuracoes.length - 1]; // Pega o último elemento do array
-          const configurado = ultimaConfiguracao.configurado; // Extrai a propriedade 'configurado' do último objeto
+          const { configurado } = configuracoes[0];
           setConfigurado(configurado);
-          //console.log(configurado);
         } else {
           console.warn("Nenhuma configuração encontrada.");
-          setConfigurado(null); // Ou qualquer valor padrão apropriado
+          setConfigurado(null); // Definir valor padrão
         }
 
       } catch (error) {
@@ -92,7 +88,7 @@ export default function Rotas() {
         <Route
           exact
           path="/configServico"
-          element={autenticado ? <ConfigServico /> : <ErroPage />}
+          element={autenticado && configurado !== 0 ? <ConfigServico /> : <ErroPage />}
         />
         <Route
           exact
