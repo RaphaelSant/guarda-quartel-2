@@ -48,5 +48,6 @@ app.get("/recursoProtegido", verificarToken, (req, res) => {
 });
 
 app.listen(8081, () => {
-  console.log("listening");
+  const data = new Date().toLocaleDateString();
+  console.log("Servidor iniciado em: ", data);
 });

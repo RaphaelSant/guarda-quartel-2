@@ -8,8 +8,10 @@ router.get("/civis_pe", (req, res) => {
     // const sql = "SELECT * FROM civis_pe order by dataEntrada, horaEntrada";
     const sql = "SELECT cp.cpf, cp.dataEntrada, cp.destino, cp.horaEntrada, cp.horaSaida, cp.id, cp.nome FROM civis_pe cp INNER JOIN config_servico cs ON cp.config_servico_id = cs.id WHERE cs.configurado = 1 order by cp.dataEntrada, cp.horaEntrada";
     db.query(sql, (err, data) => {
-        if (err) return res.json(err);
-        return res.json(data);
+        if (err) {
+            return res.status(500).json({message: "Houve algum erro no servidor", status: 500});
+        }
+        return res.status(200).json({data: data, status: 200});
     });
 });
 
@@ -17,12 +19,16 @@ router.get("/civis_pe", (req, res) => {
 router.get("/civis_pe/selectId/:id", (req, res) => {
     const id = req.params.id;
     const sql = "SELECT * FROM civis_pe WHERE id = ?"; // Consulta SQL para buscar o registro pelo ID
+
     db.query(sql, id, (err, data) => {
-        if (err) return res.json(err);
-        if (data.length === 0) {
-            return res.json({ message: "Registro não encontrado" });
+        if (err) {
+            return res.status(500).json({message: "Houve algum erro no servidor", status: 500});
         }
-        return res.json(data[0]); // Retorna o primeiro registro encontrado (se houver)
+        
+        if (data.length === 0) {
+            return res.status(404).json({ message: "Registro não encontrado", status: 404 });
+        }
+        return res.status(200).json({data: data[0], status: 200}); // Retorna o primeiro registro encontrado (se houver)
     });
 });
 
@@ -37,9 +43,11 @@ router.post("/civis_pe", (req, res) => {
     }
 
     db.query(sql, [cpf, dataEntrada, destino, horaEntrada, horaSaida, nome, servConfigID], (err, result) => {
-        if (err) return res.status(500).send(err);
+        if (err) {
+            return res.status(500).json({message: "Houve algum erro no servidor", status: 500});
+        }
 
-        return res.status(200).json({ message: "Dados inseridos com sucesso!" });
+        return res.status(200).json({ message: "Dados inseridos com sucesso!", status: 200 });
     });
 });
 
@@ -50,13 +58,15 @@ router.put("/civis_pe/:id", (req, res) => {
     const sql = "UPDATE civis_pe SET cpf=?, dataEntrada=?, destino=?, horaEntrada=?, horaSaida=?, nome=? WHERE id=?";
 
     if (!cpf || !dataEntrada || !horaEntrada || !destino || !nome || !horaSaida) {
-        return res.status(400).json({ message: "Existem campos obrigatórios!" });
+        return res.status(400).json({ message: "Existem campos obrigatórios!", status: 400 });
     }
 
     db.query(sql, [cpf, dataEntrada, destino, horaEntrada, horaSaida, nome, id], (err, result) => {
-        if (err) return res.status(500).send(err);
+        if (err) {
+            return res.status(500).json({message: "Houve algum erro no servidor", status: 500});
+        }
 
-        return res.status(200).json({ message: "Dados atualizados com sucesso!" });
+        return res.status(200).json({ message: "Dados atualizados com sucesso!", status: 200 });
     });
 });
 
@@ -64,12 +74,14 @@ router.put("/civis_pe/:id", (req, res) => {
 router.delete("/civis_pe/:id", (req, res) => {
     const civisId = req.params.id;
     const sql = `DELETE FROM civis_pe WHERE id = ?`;
+
     db.query(sql, civisId, (err, result) => {
         if (err) return res.json(err);
         if (result.affectedRows === 0) {
-            return res.status(404).json({ message: "Registro não encontrado" });
+            return res.status(404).json({ message: "Registro não encontrado", status: 404 });
         }
-        return res.json({ message: "Registro deletado com sucesso" });
+        
+        return res.status(200).json({ message: "Registro deletado com sucesso", status: 200 });
     });
 });
 
