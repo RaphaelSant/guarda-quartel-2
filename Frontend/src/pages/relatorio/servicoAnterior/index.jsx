@@ -70,9 +70,9 @@ export default function RelatorioServicoAnterior() {
                 <p className="text-center d-print-none">Consulta ao serviço anterior</p>
                 <p className="text-center d-print-none pb-5">Escolha a data do serviço</p>
 
-                <div className={`d-flex align-items-center justify-content-center m-auto ${Estilo.card}`}>
+                <div className={`d-flex align-items-center justify-content-center m-auto mt-5 ${Estilo.card}`}>
                     <form onSubmit={handleFormSubmit} className="d-print-none">
-                        <div className="form-group">
+                        <div className="form-group mt-5">
                             <Calendar
                                 onChange={(date) => handleDateChange(date)}
                                 tileDisabled={({ date }) => !availableDates.includes(date.toISOString().split('T')[0])}
