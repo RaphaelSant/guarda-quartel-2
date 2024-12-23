@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import logoNav from "./LogoNavbar.png";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBook, faGear, faPowerOff } from "@fortawesome/free-solid-svg-icons";
+import { faBook, faGear, faPowerOff, faCar } from "@fortawesome/free-solid-svg-icons";
 
 export default function Navbar() {
   const [autenticado, setAutenticado] = useState(false);
@@ -24,6 +24,11 @@ export default function Navbar() {
         </Link>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
+            <li className="nav-item d-flex">
+              <Link to="/ficha_viaturas" className="nav-link">
+                <FontAwesomeIcon icon={faCar} /> Ficha de viatura
+              </Link>
+            </li>
             <li className="nav-item d-flex">
               <Link to="/manual" className="nav-link">
                 <FontAwesomeIcon icon={faBook} /> Manual
