@@ -47,3 +47,12 @@
     background-color: #9d6510 !important;
     color: #fff !important;
 }
+
+.fichavtr {
+    background-color: #0066ff !important;
+}
+
+.fichavtr:hover {
+    background-color: #024ec0 !important;
+    color: #fff !important;
+}

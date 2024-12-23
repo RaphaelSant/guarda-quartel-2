@@ -25,13 +25,13 @@ export default function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item d-flex">
-              <Link to="/ficha_viaturas" className="nav-link">
-                <FontAwesomeIcon icon={faCar} /> Ficha de viatura
+              <Link to="/manual" className="nav-link">
+                <FontAwesomeIcon icon={faBook} /> Manual
               </Link>
             </li>
             <li className="nav-item d-flex">
-              <Link to="/manual" className="nav-link">
-                <FontAwesomeIcon icon={faBook} /> Manual
+              <Link to="/ficha_viaturas" className="nav-link">
+                <FontAwesomeIcon icon={faCar} /> Ficha de viatura
               </Link>
             </li>
             <li className="nav-item d-flex">
