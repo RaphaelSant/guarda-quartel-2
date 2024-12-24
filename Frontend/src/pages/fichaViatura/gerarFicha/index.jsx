@@ -2,7 +2,99 @@ import React from "react";
 import '../../../css/geral.css';
 import Navbar from "../../../components/navbar";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
+import dbConfig from "../../../components/util/dbConfig";
+import clearForm from "../../../components/util/clearForm";
 
+// Registro de ficha de viatura:
+const handleRegistrarSubmit = async (event) => {
+
+    // Previne o comportamento padrão do formulário ao ser submetido (evita atualziar a página)
+    event.preventDefault();
+
+    // Coleta os valores dos campos do formulário
+    const velMax = document.getElementById('velMax').value;
+    const viatura = document.getElementById('viatura').value;
+    const placaEb = document.getElementById('placaEb').value;
+    const data = document.getElementById('data').value;
+    const motorista = document.getElementById('motorista').value;
+    const apresentarse = document.getElementById('apresentarse').value;
+    const porOrdem = document.getElementById('porOrdem').value;
+    const itinerario = document.getElementById('itinerario').value;
+    const horaSaida = document.getElementById('horaSaida').value;
+    const odmSaida = document.getElementById('odmSaida').value;
+    const combustivel = document.getElementById('combustivel').value;
+    const naturezaSv = document.getElementById('naturezaSv').value;
+
+    // Organiza os dados coletados em um objeto
+    const dados = {
+        velMax,
+        viatura,
+        placaEb,
+        data,
+        motorista,
+        apresentarse,
+        porOrdem,
+        itinerario,
+        horaSaida,
+        odmSaida,
+        combustivel,
+        naturezaSv
+    };
+
+    console.log(dados);
+
+    try {
+        // Envia uma requisição POST para adicionar um novo registro
+        const response = await fetch(`${dbConfig()}/ficha_viatura`, {
+            // Utiliza o método POST
+            method: 'POST',
+            headers: {
+                // Define o tipo de conteúdo como JSON
+                'Content-Type': 'application/json',
+            },
+            // Converte o objeto 'dados' para JSON e o envia no corpo da requisição
+            body: JSON.stringify(dados),
+        });
+
+        // Converte a resposta da requisição para JSON
+        const responseData = await response.json();
+
+        // Limpa o formulário após a inserção
+        if (responseData.status != 400) {
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: `${responseData.message}`,
+                showConfirmButton: false,
+                timer: 2000
+            });
+
+            clearForm();
+            // Atualiza os dados na tela após a inserção 
+            // (supõe-se que fetchData() é uma função que busca os dados atualizados)
+            fetchData();
+        } else {
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: responseData.message,
+                showConfirmButton: false,
+                timer: 2000
+            });
+        }
+
+        // Exibe um alerta com a mensagem recebida do servidor após a inserção
+        // alert(responseData.message);
+        // toast.success(responseData.message);
+
+    } catch (error) {
+        // Em caso de erro na requisição, exibe um alerta
+        // alert('Erro:', error);
+        toast.error(error);
+    }
+};
 
 export default function GerarFichaViatura() {
 
@@ -31,14 +123,14 @@ export default function GerarFichaViatura() {
             <div>
                 <form className="row g-3 was-validated">
                     <div className="col-md-3">
-                        <label htmlFor="velocidade-maxima" className="form-label">
+                        <label htmlFor="velMax" className="form-label">
                             Velocidade Máxima
                         </label>
                         <input
                             type="text"
                             className="form-control"
                             placeholder="Ex.: 60 KM/h"
-                            id="velocidade-maxima"
+                            id="velMax"
                             required
                         />
                         <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
@@ -56,18 +148,18 @@ export default function GerarFichaViatura() {
                             placeholder="Ex.: Triton"
                             required
                         />
-                        <div className="valid-feedback">OK!</div>
+                        <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
                         <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                     </div>
 
                     <div className="col-md-3">
-                        <label htmlFor="placa-eb" className="form-label">
+                        <label htmlFor="placaEb" className="form-label">
                             Placa / EB
                         </label>
                         <input
                             type="text"
                             className="form-control"
-                            id="placa-eb"
+                            id="placaEb"
                             placeholder="Placa ou EB"
                             required
                         />
@@ -137,13 +229,13 @@ export default function GerarFichaViatura() {
                     </div>
 
                     <div className="col-md-6">
-                        <label htmlFor="destino" className="form-label">
+                        <label htmlFor="itinerario" className="form-label">
                             Itinerário
                         </label>
                         <input
                             type="text"
                             className="form-control"
-                            id="destino"
+                            id="itinerario"
                             placeholder="Ex.: Pel Com > 17 bda > 17 Cia > Pel Com"
                             required
                         />
@@ -167,13 +259,13 @@ export default function GerarFichaViatura() {
                     </div>
 
                     <div className="col-md-3">
-                        <label htmlFor="destino" className="form-label">
+                        <label htmlFor="odmSaida" className="form-label">
                             Odômetro de Saída
                         </label>
                         <input
                             type="text"
                             className="form-control"
-                            id="destino"
+                            id="odmSaida"
                             placeholder="Informe o odômetro de saída"
                             required
                         />
@@ -182,13 +274,13 @@ export default function GerarFichaViatura() {
                     </div>
 
                     <div className="col-md-3">
-                        <label htmlFor="destino" className="form-label">
+                        <label htmlFor="combustivel" className="form-label">
                             Combustível
                         </label>
                         <input
                             type="text"
                             className="form-control"
-                            id="destino"
+                            id="combustivel"
                             placeholder="Ex.: 50%"
                             required
                         />
@@ -197,13 +289,13 @@ export default function GerarFichaViatura() {
                     </div>
 
                     <div className="col-md-3">
-                        <label htmlFor="destino" className="form-label">
+                        <label htmlFor="naturezaSv" className="form-label">
                             Natureza Sv
                         </label>
                         <input
                             type="text"
                             className="form-control"
-                            id="destino"
+                            id="naturezaSv"
                             placeholder="Ex.: Transporte de pessoal"
                             required
                         />
@@ -215,8 +307,8 @@ export default function GerarFichaViatura() {
                     <div className="col-md-6"></div>
                 </form>
             </div>
-            <div class="d-grid gap-2 mt-2">
-                <button type="submit" className="btn btn-success">Registrar</button>
+            <div className="d-grid gap-2 mt-2">
+                <button type="submit" onClick={handleRegistrarSubmit} className="btn btn-success">Registrar</button>
             </div>
         </div>
     </>

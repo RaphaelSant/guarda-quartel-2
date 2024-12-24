@@ -13,6 +13,7 @@ const outraOmDuranteExpedienteController = require("./controllers/outraOmDurante
 const outraOmForaExpedienteController = require("./controllers/outraOmForaExpedController.js");
 const outraOmViaturaController = require("./controllers/outraOmViaturaController.js");
 const servicoAnteriorController = require("./controllers/servicoAnteriorController.js");
+const gerarFichaVtrController = require("./controllers/gerarFichaVtrController.js");
 
 const verificarToken = require("./middlewares/authMiddleware.js");
 
@@ -42,11 +43,20 @@ app.use("/", outraOmViaturaController);
 
 app.use("/", servicoAnteriorController);
 
+app.use("/", gerarFichaVtrController);
+
 // Rota protegida
 app.get("/recursoProtegido", verificarToken, (req, res) => {
   res.status(200).send("Acesso permitido ao recurso protegido");
 });
 
 app.listen(8081, () => {
-  console.log("listening");
+  const now = new Date();
+  const day = String(now.getDate()).padStart(2, '0');
+  const month = String(now.getMonth() + 1).padStart(2, '0'); // Mês começa em 0
+  const year = now.getFullYear();
+  
+  const formattedDate = `${day}/${month}/${year}`;
+  
+  console.log(`Servidor iniciado em: ${formattedDate}`);
 });
