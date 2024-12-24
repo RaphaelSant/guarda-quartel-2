@@ -2,8 +2,6 @@ import React from "react";
 import '../../../css/geral.css';
 import Navbar from "../../../components/navbar";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 
 export default function GerarFichaViatura() {
@@ -39,7 +37,7 @@ export default function GerarFichaViatura() {
                         <input
                             type="text"
                             className="form-control"
-                            placeholder="Ex: 60 KM/h"
+                            placeholder="Ex.: 60 KM/h"
                             id="velocidade-maxima"
                             required
                         />
@@ -55,7 +53,7 @@ export default function GerarFichaViatura() {
                             type="text"
                             className="form-control"
                             id="viatura"
-                            placeholder="Ex: Triton"
+                            placeholder="Ex.: Triton"
                             required
                         />
                         <div className="valid-feedback">OK!</div>
@@ -78,14 +76,14 @@ export default function GerarFichaViatura() {
                     </div>
 
                     <div className="col-md-3">
-                        <label htmlFor="data-ficha" className="form-label">
+                        <label htmlFor="data" className="form-label">
                             Data
                         </label>
                         <input
                             type="date"
                             data-format="00/00/0000"
                             className="form-control"
-                            id="data-ficha"
+                            id="data"
                             placeholder="Data da Ficha"
                             required
                         />
@@ -101,7 +99,7 @@ export default function GerarFichaViatura() {
                             type="text"
                             className="form-control"
                             id="motorista"
-                            placeholder="Ex: Sd Nome"
+                            placeholder="Ex.: Sd Nome"
                             required
                         />
                         <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
@@ -109,32 +107,14 @@ export default function GerarFichaViatura() {
                     </div>
 
                     <div className="col-md-6">
-                        <label htmlFor="apresentar" className="form-label">
+                        <label htmlFor="apresentarse" className="form-label">
                             Apresentar-se
                         </label>
                         <input
                             type="text"
                             className="form-control"
-                            id="apresentar"
-                            placeholder="Ex: Cel Nome"
-                            required
-                        />
-                        <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
-                        <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
-                    </div>
-
-
-
-                    <div className="col-md-3">
-                        <label htmlFor="data-entrada" className="form-label">
-                            Horário
-                        </label>
-                        <input
-                            type="date"
-                            data-format="00/00/0000"
-                            className="form-control"
-                            id="data-entrada"
-                            placeholder="Insira a data de entrada"
+                            id="apresentarse"
+                            placeholder="Ex.: Cel Nome"
                             required
                         />
                         <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
@@ -142,30 +122,14 @@ export default function GerarFichaViatura() {
                     </div>
 
                     <div className="col-md-6">
-                        <label htmlFor="data-entrada" className="form-label">
+                        <label htmlFor="porOrdem" className="form-label">
                             Por Ordem:
-                        </label>
-                        <input
-                            type="date"
-                            data-format="00/00/0000"
-                            className="form-control"
-                            id="data-entrada"
-                            placeholder="Insira a data de entrada"
-                            required
-                        />
-                        <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
-                        <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
-                    </div>
-
-                    <div className="col-md-3">
-                        <label htmlFor="destino" className="form-label">
-                            Natureza Sv
                         </label>
                         <input
                             type="text"
                             className="form-control"
-                            id="destino"
-                            placeholder="Insira o destino"
+                            id="porOrdem"
+                            placeholder="Ex.: Cmt Pel Com"
                             required
                         />
                         <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
@@ -180,7 +144,7 @@ export default function GerarFichaViatura() {
                             type="text"
                             className="form-control"
                             id="destino"
-                            placeholder="Insira o destino"
+                            placeholder="Ex.: Pel Com > 17 bda > 17 Cia > Pel Com"
                             required
                         />
                         <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
@@ -188,14 +152,14 @@ export default function GerarFichaViatura() {
                     </div>
 
                     <div className="col-md-3">
-                        <label htmlFor="destino" className="form-label">
+                        <label htmlFor="horaSaida" className="form-label">
                             Horário de Saída
                         </label>
                         <input
-                            type="text"
-                            className="form-control"
-                            id="destino"
-                            placeholder="Insira o destino"
+                            type="time"
+                            className="form-control text-centera"
+                            id="horaSaida"
+                            placeholder="Insira o horário de saída"
                             required
                         />
                         <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
@@ -204,29 +168,56 @@ export default function GerarFichaViatura() {
 
                     <div className="col-md-3">
                         <label htmlFor="destino" className="form-label">
-                            Odômetro
+                            Odômetro de Saída
                         </label>
                         <input
                             type="text"
                             className="form-control"
                             id="destino"
-                            placeholder="Insira o destino"
+                            placeholder="Informe o odômetro de saída"
                             required
                         />
                         <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
                         <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                     </div>
 
+                    <div className="col-md-3">
+                        <label htmlFor="destino" className="form-label">
+                            Combustível
+                        </label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="destino"
+                            placeholder="Ex.: 50%"
+                            required
+                        />
+                        <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                        <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
+                    </div>
+
+                    <div className="col-md-3">
+                        <label htmlFor="destino" className="form-label">
+                            Natureza Sv
+                        </label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="destino"
+                            placeholder="Ex.: Transporte de pessoal"
+                            required
+                        />
+                        <div className="valid-feedback rounded text-center bg-success text-light">OK!</div>
+                        <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
+                    </div>
 
 
                     <div className="col-md-6"></div>
                 </form>
             </div>
-            <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" className="btn btn-md btn-success">Registrar</button>
+            <div class="d-grid gap-2 mt-2">
+                <button type="submit" className="btn btn-success">Registrar</button>
             </div>
-            <div className="status"></div>
         </div>
     </>
 }
