@@ -47,6 +47,24 @@ CREATE TABLE `config_servico` (
   PRIMARY KEY (`id`)
 );
 
+CREATE TABLE `ficha_viatura` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `velMax` varchar(255) DEFAULT NULL,
+  `viatura` varchar(255) DEFAULT NULL,
+  `eb` varchar(255) DEFAULT NULL,
+  `motNome` varchar(255) DEFAULT NULL,
+  `apresentarse` varchar(255) DEFAULT NULL,
+  `porOrdem` varchar(255) DEFAULT NULL,
+  `naturezaSv` varchar(255) DEFAULT NULL,
+  `itinerario` varchar(255) DEFAULT NULL,
+  `horaSaida` time DEFAULT NULL,
+  `data` date DEFAULT NULL,
+  `odmSaida` varchar(255) DEFAULT NULL,
+  `combustivel` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+
 CREATE TABLE `civis_pe` (
   `cpf` varchar(14) DEFAULT NULL,
   `dataEntrada` date DEFAULT NULL,
