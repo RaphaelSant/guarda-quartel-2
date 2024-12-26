@@ -40,6 +40,7 @@ import RelatorioConsulta from "../../pages/relatorio/servicoAnterior/consulta.js
 import FichaViatura from "../../pages/fichaViatura/index.jsx";
 import GerarFichaViatura from "../../pages/fichaViatura/gerarFicha/index.jsx";
 import ConsultarFichaViatura from "../../pages/fichaViatura/consultarFicha/index.jsx";
+import VizualizarFichaViatura from "../../pages/fichaViatura/visualizarFicha/index.jsx";
 
 export default function Rotas() {
   const [autenticado, setAutenticado] = useState(false);
@@ -248,6 +249,12 @@ export default function Rotas() {
           exact
           path="/ficha_viaturas/consultar_ficha"
           element={autenticado ? (configurado == 1 ? <ConsultarFichaViatura /> : <ConfigServico />) : <ErroPage />}
+        />
+        
+        <Route
+          exact
+          path="/ficha_viaturas/vizualizar_ficha"
+          element={autenticado ? (configurado == 1 ? <VizualizarFichaViatura /> : <ConfigServico />) : <ErroPage />}
         />
 
       </Routes>

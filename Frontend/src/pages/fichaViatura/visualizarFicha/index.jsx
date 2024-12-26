@@ -8,7 +8,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPenToSquare, faEye } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import dbConfig from "../../../components/util/dbConfig";
-import { formatDate, formatTime } from "../../../components/util/formatDateTime";
+import ImpressaoAnteriorHeader from "../../../components/impressao/impressaoAnteriorHeader";
+import { formatDate } from "../../../components/util/formatDateTime";
+import ministerioLogo from "../../../assets/img/ministerio-logo.jpg";
 
 
 // Busca de dados por Id para a edição
@@ -150,7 +152,9 @@ const handleDeleteRegistro = (id, nome, cpf) => {
     });
 };
 
-export default function ConsultarFichaViatura() {
+console.log(localStorage.fichaId);
+
+export default function VizualizarFichaViatura() {
     const [registroCpf, setRegistroCpf] = useState(['']);
 
     // Estado para receber os dados gravados no BD
@@ -231,15 +235,6 @@ export default function ConsultarFichaViatura() {
 
     const visiblePageNumbers = getVisiblePageNumbers();
 
-    // Função para tratar o clique no botão
-    const consultarFicha = (id, nome, cpf) => {
-        // Salvar o id no localStorage
-        localStorage.setItem('fichaId', id);
-
-        // Redirecionar para a página específica, por exemplo, "ficha-detalle"
-        window.location.href = "/ficha_viaturas/vizualizar_ficha";
-    };
-
     return (
         <>
             <Navbar />
@@ -249,82 +244,43 @@ export default function ConsultarFichaViatura() {
                         <li className="breadcrumb-item">
                             <Link to="/home">Página Inicial</Link>
                         </li>
-                        <li className="breadcrumb-item active" aria-current="page">
+                        <li className="breadcrumb-item" aria-current="page">
                             <Link to="/ficha_viaturas">Ficha de Viatura</Link>
                         </li>
+                        <li className="breadcrumb-item" aria-current="page">
+                            <Link to="/ficha_viaturas/consultar_ficha">Consultar de Viatura</Link>
+                        </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            Consultar Ficha de Viatura
+                            Vizualizar Ficha de Viatura
                         </li>
                     </ol>
                 </nav>
             </div>
-            <div className="container mt-2">
-                <h1 className="text-center">Consultar Ficha de Viatura</h1>
+
+            <div className="container mt-2 d-flex flex-column justify-content-center align-items-center">
+                <h1 className="text-center">Vizualizar Ficha de Viatura</h1>
                 <hr />
 
-                <Table className="table text-center table-bordered border-dark table-hover">
-                    <thead>
-                        <tr>
-                            <th>Motorista</th>
-                            <th>Apresentar-se</th>
-                            <th>Viatura</th>
-                            <th>Placa</th>
-                            <th>Data</th>
-                            <th>Hora Saída</th>
-                            <th>Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {currentItems.map((row) => (
-                            <tr key={row.id}>
-                                <td>{row.motNome}</td>
-                                <td>{row.apresentarse}</td>
-                                <td>{row.viatura}</td>
-                                <td>{row.eb}</td>
-                                <td>{formatDate(row.data)}</td>
-                                <td>{formatTime(row.horaSaida)}</td>
-                                <td className="d-print-none">
-                                    <div className="d-flex align-items-center justify-content-center gap-3">
-                                        <div>
-                                            <button className="bnt-acao" onClick={() => consultarFicha(row.id)}>
-                                                <FontAwesomeIcon icon={faEye} color="#003aff" />
-                                            </button>
-                                        </div>
-                                        <div>
-                                            <button className="bnt-acao" onClick={() => buscarDadosPorId(civis.id)} >
-                                                <FontAwesomeIcon icon={faPenToSquare} color="#FFD700" />
-                                            </button>
-                                        </div>
-                                        <div>
-                                            <button className="bnt-acao" onClick={() => handleDeleteRegistro(civis.id, civis.nome, civis.cpf)}>
-                                                <FontAwesomeIcon icon={faTrash} color="#FF0000" />
-                                            </button>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
+                <img
+                    src={ministerioLogo}
+                    width={"100px"}
+                    alt="sdasd"
+                    className="d-print-block"
+                />
 
-                <div className="d-flex justify-content-center align-items-center">
-                    {/* Paginação */}
-                    <Pagination>
-                        <Pagination.Prev onClick={prevPage} />
-                        {visiblePageNumbers.map((number) => (
-                            <Pagination.Item
-                                key={number}
-                                active={number === currentPage}
-                                onClick={() => goToPage(number)}
-                            >
-                                {number}
-                            </Pagination.Item>
-                        ))}
-                        <Pagination.Next onClick={nextPage} />
-                    </Pagination>
+                <div className="d-print-block text-center">
+                    <p>
+                        <b>
+                            Ministério da Defesa
+                            <br />
+                            Exército Brasileiro
+                            <br />
+                            17° Pelotão de Comunicações de Selva
+                        </b>
+                    </p>
                 </div>
-
             </div>
+
         </>
     );
 }
