@@ -3,18 +3,19 @@ const db = require("./dbConfig");
 
 const router = express.Router();
 
-/*
 
 // Rota para ler (Read) os dados a serem exibidos para o usuário
-router.get("/ficha_vuatura", (req, res) => {
-    //const sql = "SELECT * FROM civis_veiculo order by dataEntrada, horaEntrada";
-    const sql = "SELECT  cv.id, cv.nome, cv.cnh, cv.placa, cv.dataEntrada, cv.horaEntrada, cv.horaSaida, cv.destino FROM civis_veiculo cv INNER JOIN config_servico cs ON cv.config_servico_id = cs.id WHERE cs.configurado = 1 ORDER BY cv.dataEntrada, cv.horaEntrada";
+router.get("/ficha_viatura", (req, res) => {
+    // const sql = "SELECT  cv.id, cv.nome, cv.cnh, cv.placa, cv.dataEntrada, cv.horaEntrada, cv.horaSaida, cv.destino FROM civis_veiculo cv INNER JOIN config_servico cs ON cv.config_servico_id = cs.id WHERE cs.configurado = 1 ORDER BY cv.dataEntrada, cv.horaEntrada";
+    const sql = "SELECT * FROM ficha_viatura ORDER BY data DESC, horaSaida DESC";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
     });
 });
 
+
+/*
 // Rota para ler (Read) os dados a serem exibidos para o usuário em serviço anterior
 router.get("/servico_anterior_civis_veiculo", (req, res) => {
     const sql = "SELECT * FROM bk_civis_veiculo order by dataEntrada, horaEntrada";
@@ -36,9 +37,7 @@ router.get("/civis_veiculo/selectId/:id", (req, res) => {
         return res.json(data[0]); // Retorna o primeiro registro encontrado (se houver)
     });
 });
-a
 */
-
 // Rota para realizar novos registro de dados.
 router.post("/ficha_viatura", (req, res) => {
     const { velMax, viatura, placaEb, data, motorista, apresentarse, porOrdem, itinerario, horaSaida, odmSaida, combustivel, naturezaSv } = req.body;

@@ -39,6 +39,7 @@ import AtualizarServico from "../../pages/configServico/atualizaServico.jsx";
 import RelatorioConsulta from "../../pages/relatorio/servicoAnterior/consulta.jsx";
 import FichaViatura from "../../pages/fichaViatura/index.jsx";
 import GerarFichaViatura from "../../pages/fichaViatura/gerarFicha/index.jsx";
+import ConsultarFichaViatura from "../../pages/fichaViatura/consultarFicha/index.jsx";
 
 export default function Rotas() {
   const [autenticado, setAutenticado] = useState(false);
@@ -241,6 +242,12 @@ export default function Rotas() {
           exact
           path="/ficha_viaturas/gerar_ficha"
           element={autenticado ? (configurado == 1 ? <GerarFichaViatura /> : <ConfigServico />) : <ErroPage />}
+        />
+        
+        <Route
+          exact
+          path="/ficha_viaturas/consultar_ficha"
+          element={autenticado ? (configurado == 1 ? <ConsultarFichaViatura /> : <ConfigServico />) : <ErroPage />}
         />
 
       </Routes>

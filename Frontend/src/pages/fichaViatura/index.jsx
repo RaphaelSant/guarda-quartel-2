@@ -36,7 +36,7 @@ export default function FichaViatura() {
                 <div className="p-5 text-center">
                     <h3>Consultar Fichas de Viatura</h3>
                     <div className="d-flex justify-content-center mt-2">
-                        <CardViaturas link="/civis_pe" titulo="Consultar Ficha" icone={faBook} />
+                        <CardViaturas link="/ficha_viaturas/consultar_ficha" titulo="Consultar Ficha" icone={faBook} />
                     </div>
                 </div>
             </div>

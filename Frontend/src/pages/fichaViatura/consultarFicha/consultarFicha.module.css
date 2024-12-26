@@ -1,0 +1,19 @@
+/* Adicione estas classes no seu arquivo CSS */
+
+.dataGridWrapper {
+    background-color: #fff;
+    /* Fundo branco */
+    border-radius: 8px;
+    /* Bordas arredondadas, se necessário */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    /* Sombras para um efeito mais bonito */
+    overflow: hidden;
+    /* Para esconder bordas irregulares */
+    padding: 10px;
+    /* Padding para espaçamento interno */
+    text-align: center;
+}
+
+.titulocoluna {
+    font-weight: bold !;
+}
