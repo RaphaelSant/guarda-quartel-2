@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import '../../../css/geral.css';
 import Navbar from "../../../components/navbar";
-import { Link } from "react-router-dom";
+import { Link, Navigate, redirect } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Table, Pagination } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -231,8 +231,12 @@ export default function ConsultarFichaViatura() {
 
     const visiblePageNumbers = getVisiblePageNumbers();
 
+    const handleClick = () => {
+        Navigate("//ficha_viaturas/vizualizar_ficha");
+    }
+
     // Função para tratar o clique no botão
-    const consultarFicha = (id, nome, cpf) => {
+    const consultarFicha = (id) => {
         // Salvar o id no localStorage
         localStorage.setItem('fichaId', id);
 

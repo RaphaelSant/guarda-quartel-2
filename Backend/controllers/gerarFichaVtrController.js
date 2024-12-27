@@ -24,11 +24,12 @@ router.get("/servico_anterior_civis_veiculo", (req, res) => {
         return res.json(data);
     });
 });
+*/
 
 // Rota para selecionar os dados por ID
-router.get("/civis_veiculo/selectId/:id", (req, res) => {
+router.get("/ficha_viatura/selectId/:id", (req, res) => {
     const id = req.params.id;
-    const sql = "SELECT * FROM civis_veiculo WHERE id = ?"; // Consulta SQL para buscar o registro pelo ID
+    const sql = "SELECT * FROM ficha_viatura WHERE id = ?"; // Consulta SQL para buscar o registro pelo ID
     db.query(sql, id, (err, data) => {
         if (err) return res.json(err);
         if (data.length === 0) {
@@ -37,7 +38,7 @@ router.get("/civis_veiculo/selectId/:id", (req, res) => {
         return res.json(data[0]); // Retorna o primeiro registro encontrado (se houver)
     });
 });
-*/
+
 // Rota para realizar novos registro de dados.
 router.post("/ficha_viatura", (req, res) => {
     const { velMax, viatura, placaEb, data, motorista, apresentarse, porOrdem, itinerario, horaSaida, odmSaida, combustivel, naturezaSv } = req.body;

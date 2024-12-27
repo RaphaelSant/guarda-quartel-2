@@ -3,242 +3,82 @@ import '../../../css/geral.css';
 import Navbar from "../../../components/navbar";
 import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Table, Pagination } from 'react-bootstrap';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faPenToSquare, faEye } from "@fortawesome/free-solid-svg-icons";
-import Swal from "sweetalert2";
+import { Table } from 'react-bootstrap';
 import dbConfig from "../../../components/util/dbConfig";
-import ImpressaoAnteriorHeader from "../../../components/impressao/impressaoAnteriorHeader";
-import { formatDate } from "../../../components/util/formatDateTime";
 import ministerioLogo from "../../../assets/img/ministerio-logo.jpg";
-
-
-// Busca de dados por Id para a edição
-const buscarDadosPorId = async (id) => {
-    try {
-        // Faz uma requisição GET para obter os dados de um registro específico com o ID fornecido
-        const response = await axios.get(`${dbConfig()}/civis_pe/selectId/${id}`);
-        const data = response.data;
-
-        // Cria uma instância de um modal usando Bootstrap
-        const editModal = new bootstrap.Modal(document.getElementById("editarRegistro"));
-
-
-        // Verifica se há dados retornados antes de definir os estados para evitar erros
-        if (data) {
-
-            // Formata a data de entrada para o formato 'yyyy-MM-dd'
-            const dataEntrada = format(new Date(data.dataEntrada), 'yyyy-MM-dd');
-
-            // Define os estados com os dados obtidos da requisição, usando valores padrão vazios caso não haja dados
-            setId(data.id || "");
-            setNome(data.nome || "");
-            setCpf(data.cpf || "");
-            setDataEntrada(dataEntrada || "");
-            setDestino(data.destino || "");
-            setHoraEntrada(data.horaEntrada || "");
-            setHoraSaida(data.horaSaida || "");
-
-            // Mostra o modal de edição após definir os estados com os dados
-            editModal.show();
-        }
-
-    } catch (error) {
-        // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-        toast.error(error);
-        // alert(error);
-        // console.error("Erro ao buscar dados:", error);
-    }
-};
-
-// Ao clicar no botão atualizar dados do modal de edição essa função será executada
-const atualizarDadosPorId = async (id) => {
-    try {
-        // Envia uma requisição PUT para atualizar os dados do registro com o ID fornecido
-        const response = await axios.put(`${dbConfig()}/civis_pe/${id}`, {
-            // Envia os dados a serem atualizados no corpo da requisição
-            nome,
-            cpf,
-            dataEntrada,
-            destino,
-            horaEntrada,
-            // Verifica se horaSaida está presente e não é uma string vazia, caso contrário, envia null
-            horaSaida: horaSaida && horaSaida.trim() !== "" ? horaSaida : null,
-        });
-
-        // Exibe um alerta com a mensagem da resposta para informar o usuário sobre o resultado da operação
-        // alert(response.data.message);
-        // toast.success(response.data.message);
-        Swal.fire({
-            position: "center",
-            icon: "success",
-            title: `${response.data.message}`,
-            showConfirmButton: false,
-            timer: 2000
-        });
-        await fetchData();
-
-        // Retorna os dados da resposta da requisição
-        return response.data;
-    } catch (error) {
-        const msg = error.response.data.message;
-        // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-        //alert('Erro ao atualizar dados:', msg);
-        // toast.error(msg);
-        Swal.fire({
-            position: "center",
-            icon: "error",
-            title: `${msg}`,
-            showConfirmButton: false,
-            timer: 2000
-        });
-        // alert(`Erro ao atualizar dados: ${msg}`);
-        // console.log('Erro ao atualizar dados:', msg);
-
-        // Lança o erro novamente para ser tratado por quem chamou essa função
-        throw error;
-    }
-};
-
-// Função para deletar um registro pelo ID
-const deleteRegistro = async (id) => {
-    // Envia uma requisição DELETE para a URL específica do ID fornecido
-    try {
-        const response = await fetch(`${dbConfig()}/civis_pe/${id}`, {
-            method: 'DELETE', // Utiliza o método DELETE para indicar a exclusão do recurso
-        });
-
-        // Converte a resposta da requisição para JSON
-        const data = await response.json();
-
-        await fetchData();
-
-        // Exibe um alerta da mensagem retornada após a exclusão (mensagem de sucesso ou erro)
-        // alert(data.message);
-    } catch (error) {
-        // Em caso de erro na requisição, Exibe um alerta
-        // toast.error(error);
-    }
-};
-
-// Função executada ao clicar no botao Deletar
-const handleDeleteRegistro = (id, nome, cpf) => {
-    Swal.fire({
-        title: 'Tem certeza de que deseja excluir este registro?',
-        html: `Nome: ${nome} <br> CPF: ${cpf}`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Sim, excluir!',
-        cancelButtonText: 'Cancelar',
-        customClass: {
-            confirmButton: 'btn btn-primary btn-lg',
-            cancelButton: 'btn btn-secondary btn-lg'
-        }
-    }).then((result) => {
-        if (result.isConfirmed) {
-            deleteRegistro(id);
-            Swal.fire({
-                title: 'Excluído!',
-                text: 'O registro foi excluído com sucesso.',
-                icon: 'success',
-                customClass: {
-                    title: 'success-title',
-                    popup: 'success-popup',
-                    confirmButton: 'btn btn-primary btn-lg',
-                    content: 'success-content'
-                }
-            });
-        }
-    });
-};
-
-console.log(localStorage.fichaId);
+import { toast } from "react-toastify";
+import axios from "axios";
+import { formatDate, formatTime } from "../../../components/util/formatDateTime";
+import estiloImpressao from "../../../components/impressao/css/PrintPortrait.module.css";
+import { Imprimir } from "../../../components/botao";
+import ImpressaoFooter from "../../../components/impressao/impressaoFooter";
 
 export default function VizualizarFichaViatura() {
-    const [registroCpf, setRegistroCpf] = useState(['']);
+    // Estado para armazenar o ID e os dados da viatura
+    const [id, setId] = useState(null);
+    const [dados, setDados] = useState(null);
+    const [isLoading, setIsLoading] = useState(true); // Novo estado para controlar o carregamento
 
-    // Estado para receber os dados gravados no BD
-    const [data, setData] = useState([]);
+    const imprime = () => {
+        return console.log(dados);
+    }
 
-    // Função para buscar dados da API e atualizar o estado 'data'
-    const fetchData = async () => {
+    // Função para buscar os dados
+    const buscarDadosPorId = async (id, setDados) => {
         try {
-            // Faz uma requisição para buscar dados da API
-            const res = await fetch(`${dbConfig()}/ficha_viatura`);
+            // Fazendo a requisição ao servidor para buscar os dados pelo ID
+            const response = await axios.get(`${dbConfig()}/ficha_viatura/selectId/${id}`);
+            const data = response.data;
+            console.log(data); // Para verificar o que está sendo retornado
 
-            // Converte a resposta da requisição para o formato JSON
-            const fetchedData = await res.json();
-
-            // Atualiza o estado 'data' do componente com os dados obtidos da API
-            setData(fetchedData);
-        } catch (err) {
-            // Em caso de erro na requisição, exibe um alerta e imprime o erro no console
-            toast.error(err);
-            // console.log(err);
+            if (data) {
+                // Se os dados foram encontrados, armazene-os no estado
+                setDados(data);
+            } else {
+                toast.error("Nenhum dado encontrado para o ID fornecido.");
+            }
+        } catch (error) {
+            // Caso haja erro na requisição, exibe uma mensagem de erro
+            toast.error(`Erro ao buscar dados: ${error.message}`);
+            console.error("Erro ao buscar dados:", error);
+        } finally {
+            setIsLoading(false); // Defina como false após o carregamento
         }
     };
 
-    // Este useEffect será executado após a montagem inicial do componente
     useEffect(() => {
-        // Chama a função fetchData para buscar dados da API e atualizar o estado 'data'
-        fetchData();
+        // Recupera o id armazenado no localStorage
+        const storedId = localStorage.getItem('fichaId');
+        console.log(storedId); // Verifique se o id foi recuperado corretamente
+
+        if (storedId) {
+            setId(storedId); // Se o id existir no localStorage, atualiza o estado
+        } else {
+            toast.error("ID não encontrado no localStorage.");
+        }
     }, []);
 
-
-    // Estado para controlar a página atual e o número de itens por página
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10; // Exibindo 5 itens por página
-
-    // Calculando o índice de início e fim dos itens na página atual
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
-    // Pegando os itens da página atual
-    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-
-    // Função para ir para a página seguinte
-    const nextPage = () => {
-        if (currentPage < Math.ceil(data.length / itemsPerPage)) {
-            setCurrentPage(currentPage + 1);
+    useEffect(() => {
+        // Quando o id for encontrado, chama a função para buscar os dados
+        if (id) {
+            setIsLoading(true); // Define como true para mostrar o carregamento
+            buscarDadosPorId(id, setDados);
         }
-    };
+    }, [id]); // Este useEffect é chamado quando o 'id' muda
 
-    // Função para ir para a página anterior
-    const prevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    };
-
-    // Função para ir a uma página específica
-    const goToPage = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
-
-    // Função para gerar os números de página visíveis dinamicamente
-    const getVisiblePageNumbers = () => {
-        const totalPages = Math.ceil(data.length / itemsPerPage);
-        const maxVisiblePages = 20;
-
-        // Determina o número inicial e final da página a ser exibida na paginação
-        let startPage = Math.max(currentPage - Math.floor(maxVisiblePages / 2), 1);
-        let endPage = startPage + maxVisiblePages - 1;
-
-        // Ajuste para não ultrapassar o número total de páginas
-        if (endPage > totalPages) {
-            endPage = totalPages;
-            startPage = Math.max(endPage - maxVisiblePages + 1, 1);
-        }
-
-        return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
-    };
-
-    const visiblePageNumbers = getVisiblePageNumbers();
+    // Verifique se os dados estão carregados antes de renderizar
+    if (isLoading) {
+        return (
+            <div class="spinner-grow text-primary d-flex align-items-center justify-content-center" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        ); // Exiba uma mensagem ou componente de carregamento
+    }
 
     return (
         <>
             <Navbar />
-            <div className="d-flex align-items-center justify-content-center mt-4 p-0 d-print-none">
+            <div className="d-flex d-print-none align-items-center justify-content-center mt-4 p-0 d-print-none">
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -257,30 +97,135 @@ export default function VizualizarFichaViatura() {
                 </nav>
             </div>
 
-            <div className="container mt-2 d-flex flex-column justify-content-center align-items-center">
-                <h1 className="text-center">Vizualizar Ficha de Viatura</h1>
-                <hr />
+            <div className={`container mt-2 d-flex flex-column justify-content-center align-items-center ${estiloImpressao.container_local}`}>
+                <h1 className="text-center d-print-none">Vizualizar Ficha de Viatura</h1>
+                <hr className="d-print-none" />
 
-                <img
-                    src={ministerioLogo}
-                    width={"100px"}
-                    alt="sdasd"
-                    className="d-print-block"
-                />
-
-                <div className="d-print-block text-center">
-                    <p>
+                <div className="d-print-blockborder border p-2 border-dark bg-white mb-4">
+                    <div className="text-center">
+                        <img
+                            src={ministerioLogo}
+                            width={"80px"}
+                            alt="ministerio logo"
+                        />
+                    </div>
+                    <p className="text-center">
                         <b>
                             Ministério da Defesa
                             <br />
                             Exército Brasileiro
                             <br />
+                            17ª Brigada de Infantaria de Selva
+                            <br />
                             17° Pelotão de Comunicações de Selva
                         </b>
                     </p>
-                </div>
-            </div>
 
+                    {/* Tabela com dados da viatura */}
+                    <Table className="table table-bordered border-dark table-hover">
+                        <tbody>
+                            <tr>
+                                <td><b>Velocidade Max:</b> {dados?.velMax}</td>
+                                <td><b>Viatura:</b> {dados.viatura}</td>
+                                <td><b>EB:</b> {dados.eb}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Motorista:</b> {dados.motNome}</td>
+                                <td colSpan={2}><b>Apresentar-se:</b> {dados.apresentarse}</td>
+                            </tr>
+                            <tr>
+                                <td colSpan={3}><b>Natureza Sv:</b> {dados.naturezaSv}</td>
+                            </tr>
+                            <tr>
+                                <td colSpan={3}><b>Itinerário:</b> {dados.itinerario}</td>
+                            </tr>
+                        </tbody>
+                    </Table>
+
+                    <p>Viatura está em condições e autorizada de ser utilizada no serviço e itinerário acima.</p>
+
+                    <div className="d-flex align-items-center justify-content-center">
+                        <div className="border-bottom border-dark w-50 mt-5" style={{ height: 1 + 'px' }}></div>
+                    </div>
+                    <p className="text-center">Ass: S4 do 17º Pel Com Sl</p>
+
+                    <br />
+                    <br />
+                    <p className="text-center">Liberei a viatura as ______h do dia ____/____/______, com a seguinte marcação do odômetro:__________________.</p>
+                    <br />
+                    <br />
+                    <div className="assinatura"></div>
+                    <div className="d-flex align-items-center justify-content-center">
+                        <div className="border-bottom border-dark w-50 mt-2" style={{ height: 1 + 'px' }}></div>
+                    </div>
+                    <p className="text-center">Pessoa que utilizou a viatura</p>
+
+                    <Table className="table table-bordered border-dark table-hover">
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td className="text-center"><b>Horas</b></td>
+                                <td className="text-center"><b>Odômetro</b></td>
+                                <td className="text-center"><b>Combústivel</b></td>
+                            </tr>
+                            <tr>
+                                <td className="text-center"><b>Saída</b></td>
+                                <td className="text-center">{formatTime(dados.horaSaida)}</td>
+                                <td className="text-center">{dados.odmSaida}</td>
+                                <td className="text-center">{dados.combustivel}</td>
+                            </tr>
+                            <tr>
+                                <td className="text-center"><b>Regresso</b></td>
+                                <td className="text-center">{dados?.horaRegresso}</td>
+                                <td className="text-center">{dados?.odometroRegresso}</td>
+                                <td className="text-center">{dados?.combustivelRegresso}</td>
+                            </tr>
+                            <tr>
+                                <td className="text-center"><b>Diferença</b></td>
+                                <td className="text-center">{dados?.diferencaHora}</td>
+                                <td className="text-center">{dados?.diferencaOdometro}</td>
+                                <td className="text-center">{dados?.diferencaCombustivel}</td>
+                            </tr>
+                        </tbody>
+                    </Table>
+
+                    <div className="my-5" style={{borderTop: 'dashed 2px'}}></div>
+
+                    <Table className="table">
+                        <tbody>
+                            <tr>
+                                <td className="col-5" style={{ border: 'none' }}><b>EB:</b> {dados.eb}</td>
+                                <td className="col-4" style={{ border: 'none' }}><b>Viatura: </b> {dados.viatura}</td>
+                                <td className="text-center" style={{ borderLeft: 'solid 1px black', borderRight: 'solid 1px black', borderTop: 'solid 1px black', borderBottom: 'none' }}>AUTORIZO</td>
+                            </tr>
+                            <tr>
+                                <td style={{ border: 'none' }}><b>Data: </b> {formatDate(dados.data)}</td>
+                                <td style={{ border: 'none' }}></td>
+                                <td className="text-center" style={{ borderLeft: 'solid 1px black', borderRight: 'solid 1px black', borderBottom: 'none' }}></td>
+                            </tr>
+                            <tr>
+                                <td style={{ border: 'none' }}><b>Nome: </b>{dados.motNome}</td>
+                                <td style={{ border: 'none' }}></td>
+                                <td className="text-center" style={{ borderLeft: 'solid 1px black', borderRight: 'solid 1px black', borderBottom: 'none' }}></td>
+                            </tr>
+                            <tr>
+                                <td style={{ border: 'none' }}><b>Hora saída: </b>{formatTime(dados.horaSaida)}</td>
+                                <td style={{ border: 'none' }}></td>
+                                <td className="text-center" style={{ borderLeft: 'solid 1px black', borderRight: 'solid 1px black', borderBottom: 'none' }}>_____________________</td>
+                            </tr>
+                            <tr>
+                                <td style={{ border: 'none' }}><b>Odômetro saída: </b>{dados.odmSaida}</td>
+                                <td style={{ border: 'none' }}></td>
+                                <td className="text-center" style={{ borderLeft: 'solid 1px black', borderRight: 'solid 1px black', borderBottom: 'solid 1px black' }}>Padrinho de VTR</td>
+                            </tr>
+                        </tbody>
+                    </Table>
+
+                </div>
+
+                <Imprimir />
+
+            </div>
         </>
     );
 }
