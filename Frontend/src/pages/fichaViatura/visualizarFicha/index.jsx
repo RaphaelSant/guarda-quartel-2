@@ -69,8 +69,8 @@ export default function VizualizarFichaViatura() {
     // Verifique se os dados estão carregados antes de renderizar
     if (isLoading) {
         return (
-            <div class="spinner-grow text-primary d-flex align-items-center justify-content-center" role="status">
-                <span class="visually-hidden">Loading...</span>
+            <div className="spinner-grow text-primary d-flex align-items-center justify-content-center" role="status">
+                <span className="visually-hidden">Loading...</span>
             </div>
         ); // Exiba uma mensagem ou componente de carregamento
     }

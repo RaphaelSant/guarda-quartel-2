@@ -56,27 +56,29 @@ router.post("/ficha_viatura", (req, res) => {
     });
 });
 
-/*
-
 // Rota para atualizar dados
-router.put("/civis_veiculo/:id", (req, res) => {
+router.put("/ficha_viatura/:id", (req, res) => {
     const id = req.params.id;
-    const { nome, cnh, placa, dataEntrada, horaEntrada, horaSaida, destino } = req.body;
-    const sql = "UPDATE civis_veiculo SET nome=?, cnh=?, placa=?, dataEntrada=?, horaEntrada=?, horaSaida=?, destino=? WHERE id=?";
-
+    const { apresentarse, chVtr, combustivel, dataSaida, eb, horaSaida, itinerario, motNome, naturezaSv, odmSaida, porOrdem, velMax, viatura } = req.body;
+    //const sql = "UPDATE civis_veiculo SET nome=?, cnh=?, placa=?, dataEntrada=?, horaEntrada=?, horaSaida=?, destino=? WHERE id=?";
+    const sql = "UPDATE ficha_viatura SET apresentarse=?, chVtr=?, combustivel=?, data=?, eb=?, horaSaida=?, itinerario=?, motNome=?, naturezaSv=?, odmSaida=?, porOrdem=?, velMax=? ,viatura=? WHERE id=?";
+    
+    
     // Validação dos dados
+    /*
     if (!nome || !cnh || !placa || !dataEntrada || !horaEntrada || !destino || !horaSaida) {
         return res.status(400).json({ message: "Existem campos obrigatórios!", status: 400 });
     }
+    */
 
-    db.query(sql, [nome, cnh, placa, dataEntrada, horaEntrada, horaSaida, destino, id], (err, result) => {
+    db.query(sql, [apresentarse, chVtr, combustivel, dataSaida, eb, horaSaida, itinerario, motNome, naturezaSv, odmSaida, porOrdem, velMax, viatura, id], (err, result) => {
         if (err) return res.status(500).send(err);
 
         return res.status(200).json({ message: "Dados atualizados com sucesso!" });
     });
 });
 
-
+/*
 // Rota para deletar dados.
 router.delete("/civis_veiculo/:id", (req, res) => {
     const civisId = req.params.id;
