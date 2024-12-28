@@ -19,17 +19,13 @@ export default function VizualizarFichaViatura() {
     const [dados, setDados] = useState(null);
     const [isLoading, setIsLoading] = useState(true); // Novo estado para controlar o carregamento
 
-    const imprime = () => {
-        return console.log(dados);
-    }
-
     // Função para buscar os dados
     const buscarDadosPorId = async (id, setDados) => {
         try {
             // Fazendo a requisição ao servidor para buscar os dados pelo ID
             const response = await axios.get(`${dbConfig()}/ficha_viatura/selectId/${id}`);
             const data = response.data;
-            console.log(data); // Para verificar o que está sendo retornado
+            // console.log(data); // Para verificar o que está sendo retornado
 
             if (data) {
                 // Se os dados foram encontrados, armazene-os no estado
@@ -49,7 +45,7 @@ export default function VizualizarFichaViatura() {
     useEffect(() => {
         // Recupera o id armazenado no localStorage
         const storedId = localStorage.getItem('fichaId');
-        console.log(storedId); // Verifique se o id foi recuperado corretamente
+        // console.log(storedId); // Verifique se o id foi recuperado corretamente
 
         if (storedId) {
             setId(storedId); // Se o id existir no localStorage, atualiza o estado
