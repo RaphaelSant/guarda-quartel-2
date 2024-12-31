@@ -4,6 +4,7 @@ import { CardViaturas } from "../../components/card";
 import Navbar from "../../components/navbar";
 import { faBook, faGear, faPowerOff, faCar } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import Footer from "../../components/footer";
 
 
 export default function FichaViatura() {
@@ -42,5 +43,8 @@ export default function FichaViatura() {
             </div>
 
         </div>
+
+        <Footer />
+        
     </>
 }

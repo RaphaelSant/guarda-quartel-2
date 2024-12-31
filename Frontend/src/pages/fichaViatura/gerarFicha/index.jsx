@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import dbConfig from "../../../components/util/dbConfig";
 import clearForm from "../../../components/util/clearForm";
+import Footer from "../../../components/footer";
 
 // Registro de ficha de viatura:
 const handleRegistrarSubmit = async (event) => {
@@ -115,7 +116,7 @@ export default function GerarFichaViatura() {
                 </ol>
             </nav>
         </div>
-        <div className="container mt-2">
+        <div className="container mt-2 mb-5">
             <h1 className="text-center">Gerar Ficha de Viatura</h1>
             <hr />
 
@@ -311,5 +312,6 @@ export default function GerarFichaViatura() {
                 <button type="submit" onClick={handleRegistrarSubmit} className="btn btn-success">Registrar</button>
             </div>
         </div>
+        <Footer />
     </>
 }

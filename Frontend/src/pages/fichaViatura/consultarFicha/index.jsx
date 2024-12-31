@@ -13,6 +13,7 @@ import { formatDate, formatTime } from "../../../components/util/formatDateTime"
 import { toast } from "react-toastify";
 import axios from "axios";
 import { format } from "date-fns";
+import Footer from "../../../components/footer";
 
 
 
@@ -574,15 +575,6 @@ export default function ConsultarFichaViatura() {
                                     <div className="invalid-feedback rounded text-center bg-danger text-light">Campo obrigatório.</div>
                                 </div>
 
-                                
-
-
-
-                                
-
-                                
-
-
                             </form>
                         </div>
                         <div className="modal-footer">
@@ -592,6 +584,7 @@ export default function ConsultarFichaViatura() {
                     </div>
                 </div>
             </div>
+            <Footer />
         </>
     );
 }
