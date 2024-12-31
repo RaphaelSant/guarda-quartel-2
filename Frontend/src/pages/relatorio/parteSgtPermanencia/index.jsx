@@ -19,6 +19,7 @@ import clearForm from "../../../components/util/clearForm";
 import dbConfig from "../../../components/util/dbConfig.jsx";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import Footer from "../../../components/footer/index.jsx";
 
 export default function RelatorioParteSgtPerm() {
     // Estado para armazenar os dados obtidos da API
@@ -240,7 +241,7 @@ export default function RelatorioParteSgtPerm() {
 
             </div>
 
-            <div className={`container border border-dark bg-white ${estiloImpressao.container_local}`}>
+            <div className={`container mb-4 border border-dark bg-white ${estiloImpressao.container_local}`}>
                 <table className="table text-center table-bordered border-dark table-hover d-none d-print-block">
                     <thead>
                         <tr className="row">
@@ -720,6 +721,7 @@ export default function RelatorioParteSgtPerm() {
                     </div>
                 </div>
             </div>
+            <Footer />
         </>
     );
 }

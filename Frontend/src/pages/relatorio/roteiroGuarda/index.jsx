@@ -20,6 +20,7 @@ import clearForm from "../../../components/util/clearForm";
 import dbConfig from "../../../components/util/dbConfig";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import Footer from "../../../components/footer";
 
 export default function RelatorioRoteiroGuarda() {
     // Estado para receber os dados gravados no BD
@@ -628,6 +629,7 @@ export default function RelatorioRoteiroGuarda() {
                     </div>
                 </div>
             </div>
+            <Footer />
         </>
     );
 }

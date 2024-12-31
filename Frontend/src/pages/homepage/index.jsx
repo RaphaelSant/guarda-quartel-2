@@ -3,6 +3,7 @@ import '../../css/geral.css';
 import { CardCivis, CardMilitares, CardOutrasOm, CardRelatorio } from "../../components/card";
 import Navbar from "../../components/navbar";
 import { jwtDecode } from "jwt-decode";
+import Footer from "../../components/footer";
 
 
 export default function HomePage() {
@@ -63,5 +64,6 @@ export default function HomePage() {
             </div>
 
         </div>
+        <Footer />
     </>
 }

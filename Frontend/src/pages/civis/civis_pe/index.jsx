@@ -24,6 +24,7 @@ import dbConfig from "../../../components/util/dbConfig";
 import { getLatestConfigServicoId } from "../../../components/configServico/index.jsx";
 import { toast } from "react-toastify";
 import Swal from 'sweetalert2';
+import Footer from "../../../components/footer/index.jsx";
 
 export default function CivisPe() {
   const [registroCpf, setRegistroCpf] = useState(['']);
@@ -608,6 +609,7 @@ export default function CivisPe() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

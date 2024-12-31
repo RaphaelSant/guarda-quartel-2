@@ -10,6 +10,7 @@ import axios from "axios";
 import "../../../css/estiloTabela.css";
 import Navbar from "../../../components/navbar";
 import dbConfig from "../../../components/util/dbConfig";
+import Footer from "../../../components/footer";
 
 export default function RelatorioServicoAnterior() {
     const [selectedDate, setSelectedDate] = useState(null);
@@ -66,7 +67,7 @@ export default function RelatorioServicoAnterior() {
                 </nav>
             </div>
 
-            <div className="container">
+            <div className="container mb-5">
                 <p className="text-center d-print-none">Consulta ao serviço anterior</p>
                 <p className="text-center d-print-none pb-5">Escolha a data do serviço</p>
 
@@ -82,6 +83,7 @@ export default function RelatorioServicoAnterior() {
                     </form>
                 </div>
             </div>
+            <Footer />
         </>
     );
 }

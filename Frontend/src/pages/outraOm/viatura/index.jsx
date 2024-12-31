@@ -23,6 +23,7 @@ import dbConfig from "../../../components/util/dbConfig";
 import { getLatestConfigServicoId } from "../../../components/configServico";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import Footer from "../../../components/footer";
 
 export default function OutraOmViatura() {
     // Estado para receber os dados gravados no BD
@@ -744,6 +745,7 @@ export default function OutraOmViatura() {
                     </div>
                 </div>
             </div>
+            <Footer />
         </>
     );
 }
