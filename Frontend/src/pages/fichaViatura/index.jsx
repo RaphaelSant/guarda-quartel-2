@@ -1,10 +1,10 @@
 import React from "react";
 import '../../css/geral.css';
-import { CardViaturas } from "../../components/card";
 import Navbar from "../../components/navbar";
-import { faBook, faGear, faPowerOff, faCar } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import Footer from "../../components/footer";
+import img1 from "../../assets/img/1.png";
+import img2 from "../../assets/img/2.png";
 
 
 export default function FichaViatura() {
@@ -26,20 +26,26 @@ export default function FichaViatura() {
             </div>
             <h1 className="text-center">Ficha de Viatura</h1>
             <hr />
+
             <div className="d-flex align-items-center justify-content-center">
                 <div className="p-5 text-center">
                     <h3>Gerar Ficha de Viatura</h3>
                     <div className="d-flex justify-content-center mt-2">
-                        <CardViaturas link="/ficha_viaturas/gerar_ficha" titulo="Consultar Ficha" icone={faGear} />
+                        <Link to="/ficha_viaturas/gerar_ficha">
+                            <img src={img1} alt="Marruá" className="rounded w-50" />
+                        </Link>
                     </div>
                 </div>
 
                 <div className="p-5 text-center">
                     <h3>Consultar Fichas de Viatura</h3>
                     <div className="d-flex justify-content-center mt-2">
-                        <CardViaturas link="/ficha_viaturas/consultar_ficha" titulo="Consultar Ficha" icone={faBook} />
+                        <Link to="/ficha_viaturas/consultar_ficha">
+                            <img src={img2} alt="L-200 Triton" className="rounded w-50" />
+                        </Link>
                     </div>
                 </div>
+
             </div>
 
         </div>

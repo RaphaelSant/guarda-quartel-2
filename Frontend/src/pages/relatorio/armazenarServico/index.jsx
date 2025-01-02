@@ -11,6 +11,7 @@ import dbConfig from "../../../components/util/dbConfig";
 import { Cancelar } from "../../../components/botao";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import Footer from "../../../components/footer";
 
 export default function ArmazenarServico() {
     const [isLoading, setIsLoading] = useState(false);
@@ -148,7 +149,7 @@ export default function ArmazenarServico() {
             </div>
 
             <Navbar />
-            <div className="container">
+            <div className="container mb-5">
                 <div className="d-flex align-items-center justify-content-center mt-4 p-0 d-print-none">
                     <nav aria-label="breadcrumb">
                         <ol className="breadcrumb">
@@ -182,6 +183,8 @@ export default function ArmazenarServico() {
                     <Cancelar link="/home" />
                 </div>
             </div>
+
+            <Footer />
         </>
     );
 }

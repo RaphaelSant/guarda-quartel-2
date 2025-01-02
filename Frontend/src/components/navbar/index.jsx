@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import logoNav from "./LogoNavbar.png";
+import logoNav from "../../assets/img/system_logo.png";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook, faGear, faPowerOff, faCar } from "@fortawesome/free-solid-svg-icons";
@@ -20,7 +20,7 @@ export default function Navbar() {
     <nav className="navbar navbar-expand bg-body-tertiary shadow d-print-none">
       <div className="container">
         <Link className="navbar-brand" to="/home">
-          <img src={logoNav} alt="Logo 17 PelCom" width="30" />
+          <img src={logoNav} alt="Logo 17 PelCom" width="150" />
         </Link>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">

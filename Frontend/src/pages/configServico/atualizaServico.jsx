@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import estiloAtualizar from "./atualiza.module.css";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import Footer from "../../components/footer";
 
 export default function AtualizarServico() {
     const [id, setId] = useState(null);
@@ -86,7 +87,7 @@ export default function AtualizarServico() {
     return (
         <>
             <Navbar />
-            <div className="container">
+            <div className="container mb-5">
                 <div className="d-flex align-items-center justify-content-center mt-4 p-0 d-print-none">
                     <nav aria-label="breadcrumb">
                         <ol className="breadcrumb">
@@ -220,6 +221,8 @@ export default function AtualizarServico() {
                     <Link to="/home" className={`${estiloAtualizar.botao_cancelar}`}><button className={`${estiloAtualizar.botao_cancelar} btn btn-danger`} type="submit">Cancelar</button></Link>
                 </form>
             </div>
+
+            <Footer />
         </>
     );
 }

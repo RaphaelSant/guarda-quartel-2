@@ -3,6 +3,7 @@ import axios from "axios";
 
 import estiloLogin from "./login.module.css";
 import logo from "../../assets/img/Logo.png";
+import logo2 from "../../assets/img/system_logo.png";
 
 import { verificarAutenticacao } from '../../components/autenticacao';
 import dbConfig from "../../components/util/dbConfig";
@@ -73,8 +74,9 @@ export default function Login() {
     <>
       <div>
         <div className={estiloLogin.login_container}>
-          <h6 className="position-absolute top-0 end-0 mt-4 me-4">Versão: 02.00.00</h6>
-          <h1 className="text-center mb-0">Sistema de Registro Eletrônico</h1>
+
+          <img src={logo2} alt="Logo do sistema" className="w-25" />
+
           <p className="text-center mt-0 fs-5">
             17º Pelotão de Comunicações de Selva
           </p>
@@ -87,6 +89,7 @@ export default function Login() {
             </div>
 
             <form className={estiloLogin.login_form}>
+            <h6 className="position-absolute bottom-0 end-0 me-3 mb-3">Versão: 02.02.00</h6>
               <div className="mb-3">
                 <label htmlFor="exampleInputEmail1" className="form-label">
                   Usuário
